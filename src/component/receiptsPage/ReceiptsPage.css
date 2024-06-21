@@ -34,11 +34,18 @@ body {
   height: calc(100vh - 70px);
 }
 
+.upper-search-bar {
+  height: max-content;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid grey;
+  padding: 0px 10px;
+}
+
 .receipt-input {
   width: 100%;
   padding: 15px 20px;
   border: none;
-  border-bottom: 2px solid grey;
 }
 
 .receipt-date-box {
@@ -69,13 +76,13 @@ body {
   justify-content: space-between;
 }
 
-.recipt-tile-title{
-    font-size: 16px;
-    color: rgb(40, 39, 39);
+.recipt-tile-title {
+  font-size: 16px;
+  color: rgb(40, 39, 39);
 }
-.recipt-tile-subtitle{
-    color: grey;
+.recipt-tile-subtitle {
+  color: grey;
 }
-.recipt-tile-content-right{
-    padding: 0px 20px;
+.recipt-tile-content-right {
+  padding: 0px 20px;
 }

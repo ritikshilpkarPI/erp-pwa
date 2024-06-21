@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReceiptsNavbar from "./ReceiptsNavbar";
 import "./ReceiptsPage.css";
 import ReceiptsTile from "./ReceiptsTile";
+import SearchIcons from "../icons/SearchIcons";
 
 const ReceiptsPage = () => {
   const ReciptData = [
@@ -41,7 +42,10 @@ const ReceiptsPage = () => {
     <div>
       <ReceiptsNavbar />
       <div className="receipt-body">
-        <input type="search" className="receipt-input" placeholder="Search"/>
+        <div className="upper-search-bar">
+          <SearchIcons />
+          <input type="search" className="receipt-input" placeholder="Search" />
+        </div>
         <div className="receipt-date-box"> Friday, 15 April 2022 </div>
         {reciptdata.map((e) => {
           return (
