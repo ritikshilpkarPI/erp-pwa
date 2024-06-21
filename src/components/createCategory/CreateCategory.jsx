@@ -21,13 +21,10 @@ const CreateCategory = () => {
 
     const saveFun = () => {
         if ((addCategory.length > 0) && (addColor.length > 0)) {
-            console.log(addCategory, addColor);
         } else {
-            console.log("Please select both category and color.");
         }
     };
 
-    console.log({ globalState });
 
     return (
         <div className='create-category-container'>

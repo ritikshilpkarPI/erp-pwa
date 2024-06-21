@@ -1,9 +1,5 @@
 .create-category-container {
-    /* height: 100vh; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* justify-content: space-between; */
-
+    
     >.create-category-nav {
 
         display: flex;
@@ -39,7 +35,6 @@
     >.input-container {
 
         padding: 15px 10px 0px;
-        /* margin-top: 20px; */
 
         >.category-name-input {
             width: 100%;
@@ -70,7 +65,6 @@
 
         >.color-input-container {
             display: flex;
-            /* flex-direction: row; */
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 10px;
