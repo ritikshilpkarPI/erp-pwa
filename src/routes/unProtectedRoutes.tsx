@@ -15,7 +15,6 @@ export const UnProtectedRoute = () => {
     <Routes>
       {
         Object.entries(unProtectedRouteMap)?.map(([route, component]) => {
-          console.log({route})
           return <Route key={route} path={route} element={component} />
         })
       }
