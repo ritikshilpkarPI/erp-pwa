@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "cross-env ENV_NAME=dev npm-run-all --parallel server client",
-    "build": "npm run build:functions && npm run build:app",
+    "build": "npm run build:app",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "start:backend": "node server/app.ts",
