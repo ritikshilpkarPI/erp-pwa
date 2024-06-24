@@ -6,9 +6,6 @@ const Home : React.FC= () => {
   return (
     <>
     <h1>ERP PWA APP</h1>
-     <p onClick={()=> navigate('/login')}>Login</p>
-     <p onClick={()=> navigate('/about')}>About</p>
-     <p onClick={()=> navigate('/contact')}>Contact</p>
      <p onClick={()=> navigate('/create-category')}>Create Category</p>
      <p onClick={()=> navigate('/receipts')}>Receipts</p>
      <p onClick={()=> navigate('/tickets')}>Tickets</p>
