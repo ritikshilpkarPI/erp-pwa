@@ -34,6 +34,7 @@ const SplashScreen = () => {
                 </div>
             </div>
 
+
             <div className='splash-button-container'>
                 <ButtonInput
                     className='splash-Sign-up-button'
