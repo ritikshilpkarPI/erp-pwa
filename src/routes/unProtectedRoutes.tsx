@@ -6,7 +6,9 @@ import Login from "../pages/Login";
 const unProtectedRouteMap = Object.freeze({
   "/": <Home />,
   "/login": <Login />,
-  "/contact": <Contact />
+  "/contact": <Contact />,
+  // "/splash":<Splash/>,
+  
 })
 
 

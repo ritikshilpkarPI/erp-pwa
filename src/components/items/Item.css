@@ -1,0 +1,44 @@
+.item-container {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    
+    flex-direction: row;
+    gap: 10px;
+
+    >.item-photo-container {
+        height: 100%;
+        width: 50px;
+        padding: 6px;
+        margin-left: 4px;
+
+        >.item-photo {
+
+            height: 100%;
+            width: 100%;
+            background-color: gray;
+            flex-shrink: 0;
+        }
+
+    }
+
+    >.item-name-container {
+        width: inherit;
+        height: 100%;
+        border-bottom: 1px solid grey;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 10px;
+
+        >.item-name,
+        .item-amount {
+            font-size: 16px;
+            font-weight: 500;
+
+        }
+
+
+
+    }
+}

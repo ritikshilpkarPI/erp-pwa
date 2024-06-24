@@ -1,11 +1,12 @@
 import React from 'react';
-import CreateMenuPage from './component/createMenuPage/CreateMenuPage';
+
+import { RouteList } from './routes/routeList';
 
 function App() {
   return (
     <div className="App">
-      {/* <RouteList /> */}
-      <CreateMenuPage/>
+      <RouteList />
+      
     </div>
   );
 }
