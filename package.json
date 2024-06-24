@@ -38,7 +38,7 @@
     "workbox-streams": "^6.6.0"
   },
   "scripts": {
-    "start": "cross-env ENV_NAME=dev npm-run-all --parallel server client",
+    "start": "react-scripts start",
     "build": "npm run build:app",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
@@ -46,7 +46,7 @@
     "local-dev": "nodemon server/app.js",
     "dev": "nodemon --exec npm run restart",
     "restart": "rimraf dist && npm run build && npm run start",
-    "client": "react-scripts start ",
+    "client": "react-scripts start",
     "server": "netlify-lambda serve server -t 900",
     "build:app": "react-scripts build",
     "debug": "netlify dev --inspect",

@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import  { useState } from 'react';
 import './CreateCategory.css';
 import ArrowLeft from '../icons/ArrowLeft';
 import ColorInput from '../colorInput/ColorInput';
 import ButtonInput from '../buttonInput/ButtonInput';
-import { AppStateContext } from '../../appState/appStateContext';
+
 
 const CreateCategory = () => {
   const colorList = [
@@ -16,7 +16,7 @@ const CreateCategory = () => {
     'gray',
     'purple',
   ];
-  const { globalState, dispatch } = useContext(AppStateContext);
+  
   const [addCategory, setAddCategory] = useState('');
   const [addColor, setAddColor] = useState('');
 
