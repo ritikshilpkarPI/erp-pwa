@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import ReceiptsNavbar from "./ReceiptsNavbar";
 import "./ReceiptsPage.css";
 import ReceiptsTile from "./ReceiptsTile";
@@ -37,7 +37,7 @@ const ReceiptsPage = () => {
       randomNum: "#6969",
     },
   ];
-  const [reciptdata, setreciptdata] = useState(ReciptData);
+  const [reciptdata] = useState(ReciptData);
   return (
     <div>
       <ReceiptsNavbar />

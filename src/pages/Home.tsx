@@ -11,6 +11,7 @@ const Home : React.FC= () => {
      <p onClick={()=> navigate('/contact')}>Contact</p>
      <p onClick={()=> navigate('/create-category')}>Create Category</p>
      <p onClick={()=> navigate('/receipts')}>Receipts</p>
+     <p onClick={()=> navigate('/tickets')}>Tickets</p>
     </>
   )
 }

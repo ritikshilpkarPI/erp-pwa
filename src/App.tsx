@@ -1,3 +1,4 @@
+
 import { RouteList } from './routes/routeList';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
        <h1>ERP PWA APP</h1>
       </header> */}
       
+
       <RouteList />
     </div>
   );
