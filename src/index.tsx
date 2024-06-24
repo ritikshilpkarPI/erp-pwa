@@ -4,13 +4,16 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import AppStateProvider from "./appState/appStateContext"
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <AppStateProvider>
+      <App />
+    </AppStateProvider>
   </React.StrictMode>
 );
 
