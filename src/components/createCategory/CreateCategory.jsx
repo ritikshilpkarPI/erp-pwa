@@ -16,7 +16,7 @@ const CreateCategory = () => {
     'gray',
     'purple',
   ];
-  const { globalState, dispatch } = useContext(AppStateContext);
+  
   const [addCategory, setAddCategory] = useState('');
   const [addColor, setAddColor] = useState('');
 

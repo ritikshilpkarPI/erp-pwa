@@ -1,0 +1,26 @@
+import React, { useState } from "react";
+import "./CreateMenuPage.css";
+import SelectMenu from "../icons/SelectMenu";
+import SelectStar from "../icons/SelectStar";
+import SelectCalc from "../icons/SelectCalc";
+import TotalBar from "./TotalBar";
+
+const CreateBottomNav = () => {
+  const [clickBtn, SetClickBtn] = useState(null);
+  const handleBtn1 = (btn) => {
+    SetClickBtn(btn);
+  };
+  console.log(clickBtn);
+  return (
+    <div className="bottom-bar-outter">
+      <TotalBar />
+      <div className="create-bottom-nav">
+        <SelectMenu onTap={() => SetClickBtn("btn1")} click={clickBtn} />
+        <SelectStar onTap={() => SetClickBtn("btn2")} click={clickBtn} />
+        <SelectCalc onTap={() => SetClickBtn("btn3")} click={clickBtn}/>
+      </div>
+    </div>
+  );
+};
+
+export default CreateBottomNav;
