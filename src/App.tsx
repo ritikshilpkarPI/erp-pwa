@@ -1,5 +1,4 @@
-import React from 'react';
-import ReceiptsPage from './component/receiptsPage/ReceiptsPage';
+import { RouteList } from './routes/routeList';
 
 function App() {
   return (
@@ -7,7 +6,8 @@ function App() {
       {/* <header className="App-header">
        <h1>ERP PWA APP</h1>
       </header> */}
-      <ReceiptsPage/>
+      
+      <RouteList />
     </div>
   );
 }
