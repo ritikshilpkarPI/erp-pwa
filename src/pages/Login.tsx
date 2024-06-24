@@ -1,13 +1,18 @@
-import React from 'react'
-
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
-    
-    return (
-      <>
+  const navigate = useNavigate();
+
+  return (
+    <>
       <h1>ERP PWA APP</h1>
-      
-      </>
-    )
-  }
-export default Login
+      <p onClick={() => navigate('/login')}>Login</p>
+      <p onClick={() => navigate('/about')}>About</p>
+      <p onClick={() => navigate('/contact')}>Contact</p>
+
+    </>
+  );
+};
+
+export default Login;
