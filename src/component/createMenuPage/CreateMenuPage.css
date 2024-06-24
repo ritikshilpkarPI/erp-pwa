@@ -78,10 +78,10 @@ body {
 }
 
 .tile-traling{
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   background-color: #156CD5;
-  border-radius: 12px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
