@@ -7,10 +7,7 @@ import TotalBar from "./TotalBar";
 
 const CreateBottomNav = () => {
   const [clickBtn, SetClickBtn] = useState(null);
-  const handleBtn1 = (btn) => {
-    SetClickBtn(btn);
-  };
-  console.log(clickBtn);
+  
   return (
     <div className="bottom-bar-outter">
       <TotalBar />

@@ -10,47 +10,51 @@ body {
   height: 100%;
 }
 
-.main-nav-bar{
-    width: 100%;
-    height: 7rem;
+.main-nav-bar {
+  width: 100%;
+  height: 7rem;
+  box-shadow: 3px 3px 4px rgb(173, 173, 173);
 }
 
-.main-header{
-    display: flex;
-    align-items: center;
-    gap: 7rem;
-    height: 50%;
-    background-color: white;
+.main-header {
+  display: flex;
+  align-items: center;
+  gap: 7rem;
+  height: 50%;
+  background-color: white;
 }
 
-.main-header-h1{
-    color: #1A72DD;
-    font-size: 22px;
+.main-header-h1 {
+  color: #1A72DD;
+  font-size: 22px;
 }
 
-.main-header-menu{
-    width: 100%;
-    height: 50%;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    background-color: white;
-    
+.main-header-menu {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  background-color: white;
+  padding: 0px 10px 0px 0px;
 }
 
-.main-heaer-menu-select{
-    padding: 13px 0px;
-    width: 100%;
-    border: none;
-    background-color: white;
-    border: 1px solid grey;
+.main-heaer-menu-select {
+  padding: 13px 8px;
+  width: 100%;
+  border: none;
+  background-color: white;
+  border: none;
+  border-top: 0.5px solid #d1d1d1;
+  border-right: 0.5px solid #d1d1d1;
 }
 
-.search-icon-outer{
-    height: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid grey;
-    padding: 8px 12px;
+.search-icon-outer {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 0.5px solid #d1d1d1;
+  border-top: 0.5px solid #d1d1d1;
+  padding: 8px 12px;
 }
