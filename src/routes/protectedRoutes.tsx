@@ -1,11 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import About from "../pages/About";
-import CreateCategory from "../components/createCategory/CreateCategory";
-
+// import CreateCategory from "../components/createCategory/CreateCategory";
+import Splash from "../pages/Splash";
 const protectedRouteMap = Object.freeze({
   
   "/about": <About />,
-  "/create-category":<CreateCategory/>
+  "/Splash":<Splash/>
+
+  // "/create-category":<CreateCategory/>
 })
 
 

@@ -1,13 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-const ButtonInput = (props) => {
-  const { title, className } = props;
+const Buttonnput = (props) => {
+
+    const{className, title, onClick} = props
 
   return (
-    <button className={className}>
-      {title}
-    </button>
-  );
-};
+    <button className={className} onClick={onClick} >{title}</button>
+  )
+}
 
-export default ButtonInput;
+export default Buttonnput
