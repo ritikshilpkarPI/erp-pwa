@@ -50,7 +50,6 @@
     "debug": "netlify dev --inspect",
     "build:functions": "netlify-lambda build server",
     "format": "git diff --name-only HEAD | grep '\\.jsx$, \\.js$' | xargs prettier --write",
-    "prepare": "husky install",
     "imagesToCloudinary": "node server/scripts/imagesToCloudinaryAndDB.js"
   },
   "eslintConfig": {
