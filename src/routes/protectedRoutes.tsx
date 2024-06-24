@@ -1,11 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import About from "../pages/About";
 import CreateCategory from "../components/createCategory/CreateCategory";
+import Ticket from "../components/ticket/Ticket";
 
 const protectedRouteMap = Object.freeze({
   
   "/about": <About />,
-  "/create-category":<CreateCategory/>
+  "/create-category":<CreateCategory/>,
+  "/tickets": <Ticket/>
 })
 
 
