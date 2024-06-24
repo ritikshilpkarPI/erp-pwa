@@ -25,7 +25,7 @@
                 >.charge-title,.charge-amount{
                     font-size: 16px;
                     font-weight: 500;
-                    opacity: .6;
+                    /* opacity: .6; */
                 }
             }
 
