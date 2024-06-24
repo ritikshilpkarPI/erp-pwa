@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.ticket-container {  
+
+    >.prise-display-container {
+        padding: 15px;
+        background-color: #e7e7e7;
+
+        >.prise-display {
+            width: 100%;
+            height: 70px;
+            background-color: green;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            >.text-container {
+                text-align: center;
+                color: #fff;
+
+                >.charge-title,.charge-amount{
+                    font-size: 16px;
+                    font-weight: 500;
+                    opacity: .6;
+                }
+            }
+
+        }
+    }
+    >.items-select-search-container{
+
+        border-top :1px solid grey ;
+        border-bottom :1px solid grey ;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 50px;
+        padding: 2px 0;
+        width: 100%;        
+        
+        >.items-select-search-container-left{
+            padding: 0 10px;
+            width: inherit;
+
+            >.items-selecter, >.items-search{
+                width: 100%;
+                border: none;
+                outline: none;
+            }
+            >.items-selecter{
+                font-size: 16px;
+                font-weight: 500;
+            }
+           
+        }
+        >.items-select-search-container-right{
+            height: 100%;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid grey;
+        }        
+    }
+}

@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Contact from "../pages/Contact";
 import Login from "../pages/Login";
-import Splash from "../pages/Splash";
 
 const unProtectedRouteMap = Object.freeze({
   "/": <Home />,
