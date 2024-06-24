@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const ArrowLeft = () => {
+    const navigate = useNavigate()
     return (
 
         <svg
@@ -14,6 +16,7 @@ const ArrowLeft = () => {
             strokeWidth="2"
             className="lucide lucide-arrow-left"
             viewBox="0 0 24 24"
+            onClick={()=> navigate(-1)}
         >
             <path d="M12 19l-7-7 7-7M19 12H5"></path>
         </svg>
