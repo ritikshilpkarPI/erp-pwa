@@ -4,12 +4,14 @@ import Login from "../pages/Login";
 import Splash from "../pages/Splash";
 
 import PlaceOrder from "../pages/PlaceOrder";
+import Customers from "../pages/Customers";
 
 const unProtectedRouteMap = Object.freeze({
   "/": <Splash />,
   "/login": <Login />,
   "/contact": <Contact />,
-  "/placeorder": <PlaceOrder />
+  "/placeorder": <PlaceOrder />,
+  "/customer":<Customers />
   
   
 })
