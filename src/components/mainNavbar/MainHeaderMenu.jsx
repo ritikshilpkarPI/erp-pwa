@@ -15,9 +15,15 @@ const MainHeaderMenu = () => {
         <option value="one">one</option>
         <option value="one">one</option>
       </select>
-      <SearchIcon />
-      <BarCodeIcon />
-      <ListIcon />
+      <div className="search-icon-outer">
+        <SearchIcon />
+      </div>
+      <div className="search-icon-outer">
+        <BarCodeIcon />
+      </div>
+      <div className="search-icon-outer">
+        <ListIcon />
+      </div>
     </div>
   );
 };
