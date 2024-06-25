@@ -11,7 +11,7 @@ const protectedRouteMap = Object.freeze({
   "/receipts": <ReceiptsPage />,
   "/tickets": <Ticket />,
   "/Splash": <Splash />,
-  "/menu":<CreateMenuPage/>
+  "/cart":<CreateMenuPage/>
 })
 
 

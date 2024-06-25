@@ -10,7 +10,7 @@ const SplashScreen = () => {
     const navigate = useNavigate();
      
     const signUpNavigateFunc = () => {
-        navigate('/signUp'); 
+        navigate('/cart'); 
     };
     
     const signInNavigateFunc = () => {
