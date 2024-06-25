@@ -1,8 +1,8 @@
 import React from "react";
 import "./MainNav.css";
-import SearchIcon from "../icons/SearchIcon";
-import BarCodeIcon from "../icons/BarCodeIcon";
-import ListIcon from "../icons/ListIcon";
+import SearchIcon from "../../icons/SearchIcon";
+import BarCodeIcon from "../../icons/BarCodeIcon";
+import ListIcon from "../../icons/ListIcon";
 
 const MainHeaderMenu = () => {
   return (

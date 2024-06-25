@@ -2,7 +2,7 @@ import  { useState } from "react";
 import ReceiptsNavbar from "./ReceiptsNavbar";
 import "./ReceiptsPage.css";
 import ReceiptsTile from "./ReceiptsTile";
-import SearchIcons from "../icons/SearchIcons";
+import SearchIcons from "../../icons/SearchIcons";
 
 const ReceiptsPage = () => {
   const ReciptData = [
