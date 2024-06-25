@@ -24,7 +24,7 @@
                 >.login-user-id-input-label,
                 .login-user-password-input-label {
                     font-family: Rubik;
-                    font-size: 16px;
+                    font-size: 18px;
                     font-weight: 400;
                     line-height: 18.96px;
 
@@ -39,7 +39,7 @@
                     border: none;
                     padding: 0 15px;
                     font-family: Rubik;
-                    font-size: 12px;
+                    font-size: 14px;
                     font-weight: 400;
                     line-height: 14.22px;
                     outline: none;
@@ -54,11 +54,12 @@
                 height: 56px;
                 border-radius: 16px;
                 font-family: Rubik;
-                font-size: 16px;
+                font-size: 18px;
                 font-weight: 500;
                 line-height: 18.96px;
                 background: #1A72DD;
                 border: none;
+                color: #fff;
             }
         }
 
@@ -86,10 +87,10 @@
 
                 }
 
-                >span:nth-child(1) {
+                >span:nth-child(2) {
                     font-family: Rubik;
                     font-size: 16px;
-                    font-weight: 500;
+                    font-weight: 700;
                     line-height: 18.96px;
 
                 }
