@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.splash-screen-container {
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+
+    >.splash-intro {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+        >.app-name-container {
+
+            >.app-name {
+                font-family: Rubik;
+                font-size: 32px;
+                font-weight: 500;
+                line-height: 37.92px;
+
+            }
+        }
+
+        >.splash-image-container {
+            >.splash-image {
+                width: 256.42px;
+                height: 284px;
+            }
+
+        }
+
+        >.splash-text-container {
+
+            >.splash-text {
+                font-family: Rubik;
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 18.96px;
+            }
+        }
+
+        >.splash-scroll-image-container {
+            
+            >.splash-scroll-image {
+                width: 69.38px;
+                height: 5px;
+
+            }
+        }
+    }
+
+    >.splash-button-container {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+
+        >.splash-Sign-up-button,
+        .splash-Sign-in-button {
+
+
+            width: 327px;
+            height: 57px;
+            top: 615px;
+            left: 23px;
+            padding: 19px 64px 19px 64px;
+            gap: 0px;
+            border-radius: 15px;
+            /* opacity: 0px; */
+            font-family: Rubik;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 18.96px;
+
+        }
+
+        >.splash-Sign-up-button {
+            background-color: #1A72DD;
+            color: #fff;
+        }
+
+        >.splash-Sign-in-button {
+            background: transparent;
+            border: 1px solid #1A72DD;
+            color: #1A72DD;
+
+        }
+
+    }
+
+}

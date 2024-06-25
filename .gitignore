@@ -5,7 +5,7 @@
 functions-build
 .netlify
 
-
+/package-lock.json
 # testing
 /coverage
 
