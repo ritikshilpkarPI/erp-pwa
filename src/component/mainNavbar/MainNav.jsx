@@ -6,7 +6,7 @@ import MainHeaderMenu from "./MainHeaderMenu";
 const MainNav = () => {
   return (
     <div className="main-nav-bar">
-      <MainHeader />
+      <MainHeader apptitle={"Caissier"}/>
       <MainHeaderMenu/>
     </div>
   );
