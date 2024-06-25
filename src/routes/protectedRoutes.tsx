@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import About from "../pages/About";
-import ReceiptsPage from "../component/receiptsPage/ReceiptsPage";
+import ReceiptsPage from "../components/receiptsPage/ReceiptsPage";
 import Ticket from "../components/ticket/Ticket";
 import Splash from "../pages/Splash";
-import CreateMenuPage from "../component/createMenuPage/CreateMenuPage";
+import CreateMenuPage from "../components/createMenuPage/CreateMenuPage";
 
 const protectedRouteMap = Object.freeze({
 
