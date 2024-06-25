@@ -6,7 +6,7 @@ const SearchInput = (props) => {
     <input 
     type="text"
     className={ClassName}
-     placeholder='Search items..' />
+     placeorder='Search items..' />
   )
 }
 

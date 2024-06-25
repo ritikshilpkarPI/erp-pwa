@@ -44,7 +44,7 @@ const ReceiptsPage = () => {
       <div className="receipt-body">
         <div className="upper-search-bar">
           <SearchIcons />
-          <input type="search" className="receipt-input" placeholder="Search" />
+          <input type="search" className="receipt-input" placeorder="Search" />
         </div>
         <div className="receipt-date-box"> Friday, 15 April 2022 </div>
         {reciptdata.map((e) => {

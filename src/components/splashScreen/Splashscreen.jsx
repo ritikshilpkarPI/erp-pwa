@@ -1,6 +1,6 @@
 import './SplashScreen.css';
-import splashImage from '../image/SplashImage.svg';
-import splashScrollImage from '../image/SplashScrollImage.svg';
+import splashImage from '../../image/SplashImage.svg';
+import splashScrollImage from '../../image/SplashScrollImage.svg';
 import ButtonInput from '../buttonInput/ButtonInput';
 import { useNavigate } from "react-router-dom";
 
