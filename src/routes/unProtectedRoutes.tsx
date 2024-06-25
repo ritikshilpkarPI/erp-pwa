@@ -6,9 +6,7 @@ import Splash from "../pages/Splash";
 const unProtectedRouteMap = Object.freeze({
   "/": <Splash />,
   "/login": <Login />,
-  "/contact": <Contact />,
-  
-  
+  "/contact": <Contact />,  
 })
 
 

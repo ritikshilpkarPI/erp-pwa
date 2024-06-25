@@ -3,13 +3,15 @@ import About from "../pages/About";
 import ReceiptsPage from "../component/receiptsPage/ReceiptsPage";
 import Ticket from "../components/ticket/Ticket";
 import Splash from "../pages/Splash";
+import CreateMenuPage from "../component/createMenuPage/CreateMenuPage";
 
 const protectedRouteMap = Object.freeze({
 
   "/about": <About />,
   "/receipts": <ReceiptsPage />,
   "/tickets": <Ticket />,
-  "/Splash": <Splash />
+  "/Splash": <Splash />,
+  "/menu":<CreateMenuPage/>
 })
 
 
