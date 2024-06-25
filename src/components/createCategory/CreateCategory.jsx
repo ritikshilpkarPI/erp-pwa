@@ -52,7 +52,7 @@ const CreateCategory = () => {
         <input
           className="category-name-input"
           type="text"
-          placeholder="Category Name"
+          placeorder="Category Name"
           onChange={inputCategory}
           value={addCategory}
         />
