@@ -10,6 +10,11 @@ const MenuPageBody = () => {
         subtitle={"nice product"}
         price={12.9}
       />
+      <CreateListTile
+        title={"sikh kabab"}
+        subtitle={"nice product"}
+        price={12.9}
+      />
     </div>
   );
 };

@@ -4,19 +4,14 @@ const HamburgerMenu = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width="18"
+      height="14"
       fill="none"
-      stroke="#fff"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      className="lucide lucide-align-justify"
-      viewBox="0 0 24 24"
+      viewBox="0 0 18 14"
     >
-      <path d="M3 6L21 6"></path>
-      <path d="M3 12L21 12"></path>
-      <path d="M3 18L21 18"></path>
+      <rect width="18" height="2" fill="#1A72DD" rx="1"></rect>
+      <rect width="12.96" height="2" y="6" fill="#1A72DD" rx="1"></rect>
+      <rect width="18" height="2" y="12" fill="#1A72DD" rx="1"></rect>
     </svg>
   );
 };
