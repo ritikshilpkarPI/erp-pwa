@@ -1,10 +1,15 @@
 import React from "react";
 import "./CreateMenuPage.css";
 import CartIcon from "../../icons/CartIcon";
+import { useNavigate } from "react-router-dom";
 
 const TotalBar = ({ element, totalprize }) => {
+  const navigate = useNavigate();
+  const onclick =()=>{
+   navigate('/placeorder')
+  }
   return (
-    <div className="total-bar">
+    <div className="total-bar" onClick={onclick}>
       <div className="total-bar-left">
         <CartIcon />
         <h4 className="total-bar-left-h4">

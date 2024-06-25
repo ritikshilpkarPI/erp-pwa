@@ -29,7 +29,7 @@ const LoginPage = () => {
                         className='login-user-id-input'
                         type='text'
                         labelTitle='Email or Phone Number'
-                        placeholder='Email or Phone Number'
+                        placeorder='Email or Phone Number'
                         value={emailOrPhone}
                         onChange={(e) => setEmailOrPhone(e.target.value)}
                     />
@@ -38,7 +38,7 @@ const LoginPage = () => {
                         className='login-user-password-input'
                         type='password'
                         labelTitle='Password'
-                        placeholder='Password'
+                        placeorder='Password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />

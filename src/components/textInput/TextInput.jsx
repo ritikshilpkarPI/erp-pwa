@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TextInput = (props) => {
-    const { className, type, placeholder, labelTitle, value, onChange } = props;
+    const { className, type, placeorder, labelTitle, value, onChange } = props;
     
     return (
         <div className='text-input-container'>
@@ -10,7 +10,7 @@ const TextInput = (props) => {
                 className={className}
                 id={className}
                 type={type}
-                placeholder={placeholder}
+                placeorder={placeorder}
                 value={value}
                 onChange={onChange}
             />
