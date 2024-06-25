@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 import "./MainNav.css";
-import HamburgerIcon from '../icons/HamburgerIcon';
+import HamburgerMenu from "../icons/HamburgerMenu";
 
-const MainHeader = () => {
+const MainHeader = ({apptitle}) => {
   return (
-    <div className='main-header'>
-        <HamburgerIcon/>
-        <h1 className='main-header-h1'>Caissier</h1>
+    <div className="main-header">
+      <HamburgerMenu />
+      <h1 className="main-header-h1">{apptitle} </h1>
     </div>
-  )
-}
+  );
+};
 
-export default MainHeader
+export default MainHeader;
