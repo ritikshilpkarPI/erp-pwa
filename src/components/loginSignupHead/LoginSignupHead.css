@@ -2,13 +2,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 30px 10px;
 
     >.login-signup-title-container {
         >.login-signup-title {
             font-family: Rubik;
             font-size: 32px;
-            font-weight: 500;
+            font-weight: 700;
             line-height: 37.92px;
+            color: #1A72DD;
+
         }
     }
     >.dummy-div {
