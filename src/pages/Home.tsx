@@ -10,7 +10,6 @@ const Home: React.FC = () => {
                <p onClick={() => navigate('/splash')}>Splash</p>
                <p onClick={() => navigate('/receipts')}>Receipts</p>
                <p onClick={() => navigate('/tickets')}>Tickets</p>
-               <p onClick={() => navigate('/menu')}>Menu</p>
           </>
      )
 }

@@ -1,0 +1,6 @@
+.back-button-container {
+    >.back-button {
+        width: 34px;
+        height: 34px;
+    }
+}

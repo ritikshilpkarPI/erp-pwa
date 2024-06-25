@@ -14,7 +14,7 @@ const SplashScreen = () => {
     };
     
     const signInNavigateFunc = () => {
-        navigate('/signIn'); 
+        navigate('/login'); 
     };
 
     return (
