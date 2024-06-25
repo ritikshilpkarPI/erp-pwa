@@ -1,5 +1,4 @@
 import React from 'react'
-import backButton from '../../image/BackButton.svg'
 import './BackButton.css'
 
 
