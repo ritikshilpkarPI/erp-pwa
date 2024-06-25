@@ -1,6 +1,6 @@
 import React from "react";
 import "./ReceiptsPage.css";
-import HamburgerMenu from "../icons/HamburgerMenu";
+import HamburgerMenu from "../../icons/HamburgerMenu";
 
 
 const ReceiptsNavbar = () => {

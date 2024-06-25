@@ -1,6 +1,6 @@
 import React from "react";
 import "./MainNav.css";
-import HamburgerMenu from "../icons/HamburgerMenu";
+import HamburgerMenu from "../../icons/HamburgerMenu";
 
 const MainHeader = ({apptitle}) => {
   return (

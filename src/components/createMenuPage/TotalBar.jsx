@@ -1,6 +1,6 @@
 import React from "react";
 import "./CreateMenuPage.css";
-import CartIcon from "../icons/CartIcon";
+import CartIcon from "../../icons/CartIcon";
 
 const TotalBar = ({ element, totalprize }) => {
   return (

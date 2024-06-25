@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./CreateMenuPage.css";
-import SelectMenu from "../icons/SelectMenu";
-import SelectStar from "../icons/SelectStar";
-import SelectCalc from "../icons/SelectCalc";
+import SelectMenu from "../../icons/SelectMenu";
+import SelectStar from "../../icons/SelectStar";
+import SelectCalc from "../../icons/SelectCalc";
 import TotalBar from "./TotalBar";
 
 const CreateBottomNav = () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import './CreateMenuPage.css'
-import AddIcon from '../icons/AddIcon'
+import AddIcon from '../../icons/AddIcon'
 
 const CreateListTile = ({title,subtitle,price}) => {
   return (
