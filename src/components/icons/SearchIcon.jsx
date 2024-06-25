@@ -1,23 +1,24 @@
-import React from 'react'
+import React from "react";
 
-const Search = () => {
+const SearchIcon = ({className}) => {
   return (
-    <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth="2"
-    className="lucide lucide-search"
-    viewBox="0 0 24 24"
-  >
-    <circle cx="11" cy="11" r="8"></circle>
-    <path d="M21 21l-4.3-4.3"></path>
-  </svg>
-  )
-}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        fill="none"
+        className={className}
+        viewBox="0 0 18 18"
+      >
+        <path
+          stroke="#262F56"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+          d="M17 17l-4.904-4.904m0 0a6.5 6.5 0 10-9.192-9.192 6.5 6.5 0 009.192 9.192z"
+        ></path>
+      </svg>
+  );
+};
 
-export default Search
+export default SearchIcon;
