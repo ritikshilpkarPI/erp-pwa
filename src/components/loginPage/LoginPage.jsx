@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './LoginPage.css';
 import LoginSignupHead from '../loginSignupHead/LoginSignupHead';
 import ButtonInput from '../buttonInput/ButtonInput';
 import TextInput from '../textInput/TextInput';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
@@ -10,8 +11,8 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
 
     const htmlErrow = '>'
-
-
+    
+    const navigate = useNavigate();
 
     const loginUserFormFunc = (event) => {
         event.preventDefault();
@@ -46,6 +47,7 @@ const LoginPage = () => {
                         type='submit'
                         className='login-submit-button-input'
                         title='Submit'
+                        onClick={()=> navigate('/cart')}
                     />
                 </form>
                 <div className='login-page-information-container'>

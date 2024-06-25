@@ -1,4 +1,3 @@
-import React from 'react';
 import './SplashScreen.css';
 import splashImage from '../image/SplashImage.svg';
 import splashScrollImage from '../image/SplashScrollImage.svg';
@@ -10,7 +9,7 @@ const SplashScreen = () => {
     const navigate = useNavigate();
      
     const signUpNavigateFunc = () => {
-        navigate('/cart'); 
+        // navigate('/cart'); 
     };
     
     const signInNavigateFunc = () => {
@@ -21,7 +20,7 @@ const SplashScreen = () => {
         <div className='splash-screen-container'>
             <div className='splash-intro'>
                 <div className='app-name-container'>
-                    <h1 className='app-name'>AppName</h1>
+                    <h1 className='app-name'>ERP - PWA</h1>
                 </div>
                 <div className='splash-image-container'>
                     <img src={splashImage} alt="Splash" />
