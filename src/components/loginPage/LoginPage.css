@@ -1,3 +1,99 @@
-.login-page-container{
-    padding: 10px;
+.login-page-container {
+    height: 100svh;
+    text-align: center;
+
+    >.login-form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+
+        >.login-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+
+
+            >.text-input-container {
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                gap: 10px;
+
+                >.login-user-id-input-label,
+                .login-user-password-input-label {
+                    font-family: Rubik;
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 18.96px;
+
+                }
+
+                >.login-user-id-input,
+                .login-user-password-input {
+                    width: 327px;
+                    height: 56px;
+                    border-radius: 16px;
+                    background-color: rgba(0, 0, 0, 0.05);
+                    border: none;
+                    padding: 0 15px;
+                    font-family: Rubik;
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 14.22px;
+                    outline: none;
+
+
+                }
+
+            }
+
+            >.login-submit-button-input {
+                width: 327px;
+                height: 56px;
+                border-radius: 16px;
+                font-family: Rubik;
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 18.96px;
+                background: #1A72DD;
+                border: none;
+            }
+        }
+
+        >.login-page-information-container {
+            width: 327px;
+            height: 93px;
+            border-radius: 16px;
+            background: #1A72DD1A;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+
+            >.login-page-information {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+
+                >span:nth-child(1) {
+                    font-family: Rubik;
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 18.96px;
+
+                }
+
+                >span:nth-child(1) {
+                    font-family: Rubik;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 18.96px;
+
+                }
+            }
+        }
+    }
 }
