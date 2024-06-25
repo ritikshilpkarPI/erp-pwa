@@ -19,7 +19,7 @@
     justify-content: center;
     gap: 20px;
     width: 100%;
-    padding: 20px 0;
+    padding: 10px 0;
     > .icon {
       font-size: 28px;
       margin-top: 20px;
@@ -46,7 +46,7 @@
 
     > .placeorder-head-bottom-heading {
       font-size: 18px;
-      font-weight: 200;
+      font-weight: 500;
       
     }
     > .icon2 {
@@ -91,6 +91,12 @@
         }
         > div{
             font-size: 15px;
+        }
+        > .placeorder-price{
+          font-weight: 600;
+        }
+        > .placeorder-menu{
+          width: 100%;
         }
     }
     > .placeorder-diskon{
@@ -137,6 +143,10 @@
  
     position: fixed;
   bottom: 0;
+  height: 139px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
  
     /* height: 100%; */
     border-top-left-radius: 30px;
@@ -147,6 +157,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 10px 20px;
+        
        
         >h1{
             font-size: 18px;
@@ -155,12 +166,12 @@
        
     }
     > .placeorder-bottom-button{
-        margin: 20px;
+        
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 25px 60px;
+        padding: 20px 40px;
         background-color: #1a72dd;
         border-radius: 5px;
     }
