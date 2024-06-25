@@ -1,9 +1,11 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import About from "../pages/About";
 import ReceiptsPage from "../components/receiptsPage/ReceiptsPage";
 import Ticket from "../components/ticket/Ticket";
 import Splash from "../pages/Splash";
 import CreateMenuPage from "../components/createMenuPage/CreateMenuPage";
+import { TransactionHistory } from "../components/transactionHistory/TransactionHistory";
 
 const protectedRouteMap = Object.freeze({
 
@@ -11,7 +13,8 @@ const protectedRouteMap = Object.freeze({
   "/receipts": <ReceiptsPage />,
   "/tickets": <Ticket />,
   "/Splash": <Splash />,
-  "/cart":<CreateMenuPage/>
+  "/cart": <CreateMenuPage />,
+  "/history": <TransactionHistory />
 })
 
 
