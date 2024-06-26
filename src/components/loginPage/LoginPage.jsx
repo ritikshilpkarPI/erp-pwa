@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import './LoginPage.css';
-import LoginSignupHead from '../loginSignupHead/LoginSignupHead';
+import NavigationHeader from '../navigationHeader/NavigationHeader';
 import ButtonInput from '../buttonInput/ButtonInput';
 import TextInput from '../textInput/TextInput';
+import backButtonImage from '../../image/BackButton.svg'
+
+
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -11,17 +14,28 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
 
     const htmlErrow = '>'
-    
+
     const navigate = useNavigate();
 
     const loginUserFormFunc = (event) => {
         event.preventDefault();
     };
 
+
+    const backFunc = () => {
+        navigate(-1);
+    }
+
     return (
         <div className='login-page-container'>
-            <LoginSignupHead />
-
+            <NavigationHeader 
+            title='Log in'
+            titleClassName='navigation-header-login'
+            NavigationHeaderImage={backButtonImage}
+            NavigationHeaderImageClassName='back-button-image-full'
+            onClick={backFunc}
+            />
+            
             <div className='login-form-container' >
 
                 <form className='login-form' onSubmit={loginUserFormFunc} action="">
@@ -29,7 +43,7 @@ const LoginPage = () => {
                         className='login-user-id-input'
                         type='text'
                         labelTitle='Email or Phone Number'
-                        placeorder='Email or Phone Number'
+                        placeholder='Email or Phone Number'
                         value={emailOrPhone}
                         onChange={(e) => setEmailOrPhone(e.target.value)}
                     />
@@ -38,7 +52,7 @@ const LoginPage = () => {
                         className='login-user-password-input'
                         type='password'
                         labelTitle='Password'
-                        placeorder='Password'
+                        placeholder='Password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
@@ -47,7 +61,7 @@ const LoginPage = () => {
                         type='submit'
                         className='login-submit-button-input'
                         title='Submit'
-                        onClick={()=> navigate('/cart')}
+                        onClick={() => navigate('/cart')}
                     />
                 </form>
                 <div className='login-page-information-container'>
