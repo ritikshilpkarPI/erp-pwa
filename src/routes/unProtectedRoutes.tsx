@@ -5,15 +5,15 @@ import Splash from "../pages/Splash";
 
 import PlaceOrder from "../pages/PlaceOrder";
 import Customers from "../pages/Customers";
+import { AddProductForm } from "../pages/AddProduct";
 
 const unProtectedRouteMap = Object.freeze({
   "/": <Splash />,
   "/login": <Login />,
   "/contact": <Contact />,
   "/placeorder": <PlaceOrder />,
-  "/customer":<Customers />
-  
-  
+  "/customer":<Customers />,
+  "/addProduct": <AddProductForm/>
 })
 
 
