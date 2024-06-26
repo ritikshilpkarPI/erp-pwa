@@ -24,7 +24,8 @@ export const ProtectedRoute = () => {
   const { globalState } = useAppContext();
   return (
     <>
-      {globalState.isOpen && <SideMenu />}
+      {/* {globalState.isOpen && <SideMenu />} */}
+      <SideMenu/>
       <Routes>
         {Object.entries(protectedRouteMap).map(([route, component]) => {
           return (

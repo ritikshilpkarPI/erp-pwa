@@ -31,7 +31,7 @@ const SideMenu = () => {
 
   return (
     <div className={`sidemenu-main-overlay ${globalState.isOpen ? 'open' : ''}`}>
-      <div className={`sidemenu-main ${globalState.isOpen ? 'open' : ''}`}>
+      <div className={`sidemenu-main ${globalState.isOpen ? 'open' : ''}}`}>
         <div className="side-menu">
           <div className="sidemenu-header">
             <div className="logo-app-name">

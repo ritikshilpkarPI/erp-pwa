@@ -5,6 +5,17 @@
   width: 100%;
   height: 100%;
   z-index: 1000;
+  overflow: hidden;
+
+  &.open {
+    .sidemenu-main {
+      transform: translateX(0);
+    }
+
+    .overlay {
+      display: block;
+    }
+  }
 
   .sidemenu-main {
     position: absolute;
@@ -13,139 +24,9 @@
     width: 70%;
     height: 100%;
     background-color: #1a72dd;
-    transition: transform 0.3s ease-out;
     transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
     z-index: 2;
-
-    &.open {
-      transform: translateX(0);
-    }
-
-    .side-menu {
-      color: #f7f8fa;
-      padding-top: 15px;
-      padding-left: 24px;
-
-      .sidemenu-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 26px;
-        margin-left: -24px;
-        width: 100%;
-
-        .logo-app-name {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-
-          .logo {
-            margin-top: -18px;
-          }
-        }
-
-        .sidemenu-header-button {
-          .sidemenu-header-btn {
-            width: 70px;
-            padding: 3px;
-          }
-        }
-      }
-
-      .user-name {
-        width: 148px;
-        height: 26px;
-        margin-top: 18px;
-        font-size: 22px;
-        font-weight: 500;
-        line-height: 26.07px;
-        text-align: left;
-      }
-
-      .line {
-        height: 1px;
-        background-color: rgba(255, 255, 255, 0.3);
-        margin-top: 24px;
-        width: 90%;
-      }
-
-      .sidemenu-items {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        padding-top: 28px;
-        margin-left: -4px;
-
-        .item {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          padding: 8px 4px;
-          width: 90%;
-          border-radius: 8px;
-          cursor: pointer;
-
-          &:hover {
-            background-color: rgb(203, 203, 203);
-            color: #357ace;
-          }
-
-          &.selected .item-logo svg {
-            color: blue;
-          }
-
-          .item-label {
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 18.96px;
-            text-align: left;
-            user-select: none;
-          }
-        }
-      }
-
-      .login-history {
-        display: flex;
-        gap: 10px;
-        position: fixed;
-        bottom: 120px;
-
-        .ellipse-icon {
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 8px;
-          background-color: #3a87e4;
-        }
-
-        .content {
-          font-weight: 400;
-          font-size: 12px;
-          line-height: 14.22px;
-        }
-      }
-    }
-
-    .sidemenu-footer-btn {
-      height: 90px;
-      background-color: #357ace;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 24px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-
-      .sidemenu-footer-button {
-        width: 80%;
-        padding: 10px;
-        border: none;
-        border-radius: 8px;
-      }
-    }
   }
 
   .overlay {
@@ -158,9 +39,131 @@
     z-index: 1;
     display: none;
   }
+}
 
-  &.open .overlay {
-    display: block;
+.side-menu {
+  color: #f7f8fa;
+  padding-top: 15px;
+  padding-left: 24px;
+
+  .sidemenu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 26px;
+    margin-left: -24px;
+    width: 100%;
+
+    .logo-app-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .logo {
+        margin-top: -18px;
+      }
+    }
+
+    .sidemenu-header-button {
+      .sidemenu-header-btn {
+        width: 70px;
+        padding: 3px;
+      }
+    }
+  }
+
+  .user-name {
+    width: 148px;
+    height: 26px;
+    margin-top: 18px;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 26.07px;
+    text-align: left;
+  }
+
+  .line {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-top: 24px;
+    width: 90%;
+  }
+
+  .sidemenu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 28px;
+    margin-left: -4px;
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 8px 4px;
+      width: 90%;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(203, 203, 203);
+        color: #357ace;
+      }
+
+      &.selected .item-logo svg {
+        color: blue;
+      }
+
+      .item-label {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 18.96px;
+        text-align: left;
+        user-select: none;
+      }
+    }
+  }
+
+  .login-history {
+    display: flex;
+    gap: 10px;
+    position: fixed;
+    bottom: 120px;
+
+    .ellipse-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background-color: #3a87e4;
+    }
+
+    .content {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14.22px;
+    }
+  }
+}
+
+.sidemenu-footer-btn {
+  height: 90px;
+  background-color: #357ace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  .sidemenu-footer-button {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
   }
 }
 
@@ -173,8 +176,6 @@
         }
 
         .login-history {
-          display: flex;
-          gap: 10px;
           position: fixed;
           bottom: 100px;
         }
@@ -182,46 +183,11 @@
 
       .sidemenu-footer-btn {
         height: 80px;
-        background-color: #357ace;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 24px;
-        position: fixed;
         bottom: -2px;
-        width: 100%;
       }
     }
   }
 }
-
-@media screen and (max-height: 700px) {
-  .sidemenu-main-overlay {
-    .sidemenu-main {
-      .side-menu {
-        .sidemenu-items {
-          gap: 8px;
-        }
-        > .login-history {
-          display: flex;
-          gap: 10px;
-          position: fixed;
-          bottom: 100px;
-      }
-    }
-    > .sidemenu-footer-btn {
-      height: 80px;
-      background-color: #357ace;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 24px;
-      position: fixed;
-      bottom: -2px;
-      width: 100%;
-    }
-  }
-}}
 
 @media (min-height: 700px) and (max-height: 950px) {
   .sidemenu-main-overlay {
@@ -229,11 +195,12 @@
       .side-menu {
         .sidemenu-items {
           gap: 10px;
+
           .item {
             padding: 12px 4px;
           }
         }
       }
-     }
+    }
   }
 }
