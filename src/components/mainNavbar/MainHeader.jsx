@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"; 
 import "./MainNav.css";
 import HamburgerMenu from "../../icons/HamburgerMenu";
 
