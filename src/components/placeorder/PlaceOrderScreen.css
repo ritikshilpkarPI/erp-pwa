@@ -15,12 +15,12 @@
 
   > .placeorder-head {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+   
+   
     width: 100%;
     padding: 10px 0;
     > .icon {
+      width: 16%;
       font-size: 28px;
       margin-top: 20px;
       color: #1a72dd;
@@ -31,6 +31,7 @@
       text-align: center;
       margin-top: 20px;
       font-weight: bold;
+      padding-left: 50px;
     }
   }
   > .placeorder-head-bottom {
