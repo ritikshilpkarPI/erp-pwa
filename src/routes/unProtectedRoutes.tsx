@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Splash from "../pages/Splash";
 
 import PlaceOrder from "../pages/PlaceOrder";
+import Customers from "../pages/Customers";
 import { AddProductForm } from "../pages/AddProduct";
 
 const unProtectedRouteMap = Object.freeze({
@@ -11,6 +12,7 @@ const unProtectedRouteMap = Object.freeze({
   "/login": <Login />,
   "/contact": <Contact />,
   "/placeorder": <PlaceOrder />,
+  "/customer":<Customers />,
   "/addProduct": <AddProductForm/>
 })
 

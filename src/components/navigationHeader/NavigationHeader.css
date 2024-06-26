@@ -1,0 +1,11 @@
+.navigation-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 15px 50px;
+
+    >.dummy-div {
+        width: 34px;
+        height: 34px;
+    }
+}

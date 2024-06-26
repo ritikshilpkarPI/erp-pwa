@@ -22,7 +22,7 @@ const PlaceOrderScreen = ()=>{
            </div>
            <hr />
           <div className='placeorder-head-bottom' >
-          <h1 className='placeorder-head-bottom-heading'> Client </h1>
+          <h1 className='placeorder-head-bottom-heading'> Customer </h1>
           <RiArrowRightSLine className="arrow-icon icon2" onClick={onclick2} />
           </div>
           <div className='placeorder-buttons'>
