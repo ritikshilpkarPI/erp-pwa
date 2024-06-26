@@ -18,7 +18,7 @@
     z-index: 2;
 
     &.open {
-      transform: translateX(0); 
+      transform: translateX(0);
     }
 
     .side-menu {
@@ -43,8 +43,9 @@
             margin-top: -18px;
           }
         }
-        >.sidemenu-header-button{
-          >.sidemenu-header-btn{
+
+        .sidemenu-header-button {
+          .sidemenu-header-btn {
             width: 70px;
             padding: 3px;
           }
@@ -83,7 +84,7 @@
           width: 90%;
           border-radius: 8px;
           cursor: pointer;
-          
+
           &:hover {
             background-color: rgb(203, 203, 203);
             color: #357ace;
@@ -148,7 +149,7 @@
   }
 
   .overlay {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -160,6 +161,37 @@
 
   &.open .overlay {
     display: block;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .sidemenu-main-overlay {
+    .sidemenu-main {
+      .side-menu {
+        .sidemenu-items {
+          gap: 8px;
+        }
+
+        .login-history {
+          display: flex;
+          gap: 10px;
+          position: fixed;
+          bottom: 100px;
+        }
+      }
+
+      .sidemenu-footer-btn {
+        height: 80px;
+        background-color: #357ace;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+        position: fixed;
+        bottom: -2px;
+        width: 100%;
+      }
+    }
   }
 }
 

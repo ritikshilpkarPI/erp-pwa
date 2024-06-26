@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import About from "../pages/About";
 import ReceiptsPage from "../components/receiptsPage/ReceiptsPage";
@@ -7,7 +7,8 @@ import Splash from "../pages/Splash";
 import CreateMenuPage from "../components/createMenuPage/CreateMenuPage";
 import { TransactionHistory } from "../components/transactionHistory/TransactionHistory";
 import SideMenu from "../components/sideMenu/SideMenu";
-import { appGlobalState, appStateReducer } from "../appState/appStateReducer";
+
+import { useAppContext } from "../appState/appStateContext";
 
 const protectedRouteMap = Object.freeze({
   "/about": <About />,
@@ -20,8 +21,7 @@ const protectedRouteMap = Object.freeze({
 
 export const ProtectedRoute = () => {
   const isLoggedIn = true;
-  const [globalState] = useReducer(appStateReducer, appGlobalState);
-
+  const { globalState } = useAppContext();
   return (
     <>
       {globalState.isOpen && <SideMenu />}

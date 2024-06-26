@@ -1,7 +1,7 @@
 export const appGlobalState: any = {
   items: [],
   bills: {},
-  isOpen: false
+  isOpen: true
 };
 // import this in every component to access global state
 
