@@ -9,7 +9,7 @@ const SplashScreen = () => {
     const navigate = useNavigate();
      
     const signUpNavigateFunc = () => {
-        // navigate('/cart'); 
+        navigate('/signup'); 
     };
     
     const signInNavigateFunc = () => {

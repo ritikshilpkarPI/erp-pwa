@@ -76,9 +76,8 @@
             padding: 19px 64px 19px 64px;
             gap: 0px;
             border-radius: 15px;
-            /* opacity: 0px; */
             font-family: Rubik;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
             line-height: 18.96px;
 
@@ -87,6 +86,7 @@
         >.splash-Sign-up-button {
             background-color: #1A72DD;
             color: #fff;
+            border: none;
         }
 
         >.splash-Sign-in-button {

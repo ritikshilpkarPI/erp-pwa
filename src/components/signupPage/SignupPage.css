@@ -1,8 +1,8 @@
-.login-page-container {
+.signup-page-container{
     height: 100svh;
     text-align: center;
 
-    .navigation-header-login {
+    .navigation-header-signup {
         font-family: Rubik;
         font-size: 32px;
         font-weight: 700;
@@ -11,20 +11,18 @@
 
 
     }
-
     .back-button-image-full {
         height: 100%;
         width: 100%;
         object-fit: cover;
     }
-
-    >.login-form-container {
+    >.signup-form-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 30px;
 
-        >.login-form {
+        >.signup-form {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -37,8 +35,9 @@
                 align-items: start;
                 gap: 10px;
 
-                >.login-user-id-input-label,
-                .login-user-password-input-label {
+                >.signup-user-email-input-label,
+                .signup-user-phone-number-input-label,
+                .signup-user-password-input-label {
                     font-family: Rubik;
                     font-size: 18px;
                     font-weight: 400;
@@ -46,7 +45,9 @@
 
                 }
 
-                >.login-user-id-input {
+                >.signup-user-email-input,
+                .signup-user-phone-number-input
+                 {
                     width: 327px;
                     height: 56px;
                     border-radius: 16px;
@@ -59,9 +60,9 @@
                     line-height: 14.22px;
                     outline: none;
 
-                }
 
-                >.login-user-password-input-container {
+                }
+                >.signup-user-password-input-container{
                     width: 327px;
                     height: 56px;
                     border-radius: 16px;
@@ -72,8 +73,8 @@
                     align-items: center;
                     justify-content: space-between;
 
-
-                    >.login-user-password-input {
+                    
+                    >.signup-user-password-input{
                         font-family: Rubik;
                         font-size: 14px;
                         font-weight: 400;
@@ -84,28 +85,19 @@
                         height: 100%;
                         background: transparent;
                     }
-
-                    >.login-user-password-input-toggle-button {
+                    >.signup-user-password-input-toggle-button{
                         background-color: transparent;
                         border: none;
                         outline: none;
                         height: 56px;
                         width: 56px;
-                        font-family: Rubik;
-                        font-size: 14px;
-                        font-weight: 500;
-                        line-height: 14.22px;
-                        color: #1A72DD;
-                        
-
-                        
 
                     }
                 }
 
             }
 
-            >.login-submit-button-input {
+            >.signup-submit-button-input {
                 width: 327px;
                 height: 56px;
                 border-radius: 16px;
@@ -130,27 +122,7 @@
             justify-content: center;
             padding: 10px;
 
-            >.login-page-information {
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-
-                >span:nth-child(1) {
-                    font-family: Rubik;
-                    font-size: 16px;
-                    font-weight: 400;
-                    line-height: 18.96px;
-
-                }
-
-                >span:nth-child(2) {
-                    font-family: Rubik;
-                    font-size: 16px;
-                    font-weight: 700;
-                    line-height: 18.96px;
-
-                }
-            }
+            
         }
     }
 }
