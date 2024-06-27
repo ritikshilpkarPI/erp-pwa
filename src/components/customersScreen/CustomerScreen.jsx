@@ -8,7 +8,7 @@ import { AppStateContext } from '../../appState/appStateContext'
 const CustomerScreen = () => {
     const { globalState, dispatch } = useContext(AppStateContext);
     const [selectedCustomer, setSelectedCustomer] = useState('');
-    const API = 'http://localhost:8000/api/v1/customers';
+    const API = `${process.env.REACT_APP_SIGNUP_URL}/customers`;
 
     useEffect(() => {
         fetch(API)

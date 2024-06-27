@@ -7,11 +7,13 @@ import ButtonInput from "../buttonInput/ButtonInput";
 import TextInput from "../textInput/TextInput";
 
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -25,6 +27,15 @@ const SignupPage = () => {
 
   const signupHandler = async () => {
     try {
+
+
+      if (!username || !newEmail || !newPassword) {
+        enqueueSnackbar("Please fill all the fields", { variant: "error" });
+        return;
+      }    
+
+      setLoading(true); 
+
       const responst = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/signup`, {
         method: "POST",
         headers: {
@@ -38,10 +49,20 @@ const SignupPage = () => {
       });
 
       const result = await responst.json();
+
+      setLoading(false);
+      
+      if (result?.error) {
+        enqueueSnackbar(result.error?.message, { variant: "error" }); 
+      }
       if (result.token) {
         navigate("/login");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
   };
 
   return (
@@ -88,8 +109,8 @@ const SignupPage = () => {
             title="Submit"
             onClick={() => {
               signupHandler();
-              
             }}
+            isLoading={loading}
           />
         </form>
       </div>

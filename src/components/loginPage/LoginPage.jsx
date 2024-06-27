@@ -6,10 +6,12 @@ import TextInput from "../textInput/TextInput";
 import backButtonImage from "../../image/BackButton.svg";
 
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const htmlErrow = ">";
 
@@ -24,8 +26,16 @@ const LoginPage = () => {
   };
   const logInHandler = async () => {
     try {
+    
+      if (!emailOrPhone || !password) {
+        enqueueSnackbar("Please fill all the fields", { variant: "error" });
+        return;
+      }
+
+      setLoading(true);
+
       const responst = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/login`,
+        `${process.env.REACT_APP_SIGNUP_URL}/signin`,
         {
           method: "POST",
           headers: {
@@ -39,10 +49,22 @@ const LoginPage = () => {
       );
 
       const result = await responst.json();
+
+      setLoading(false);
+
+
+      if (result?.error) {
+        enqueueSnackbar(result.error?.message, { variant: "error" });
+      }
+
       if (result.token) {
         navigate("/cart");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
   };
 
   return (
@@ -82,6 +104,7 @@ const LoginPage = () => {
             onClick={() => {
               logInHandler();
             }}
+            isLoading={loading}
           />
         </form>
         <div className="login-page-information-container">
