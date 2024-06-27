@@ -24,11 +24,6 @@ export const appStateReducer = (state: any, action: any) => {
 
     case "REMOVE_ITEM_FROM_BILL":
       return { ...state };
-      case "TOGGLE_DRAWER":
-        return {
-          ...state,
-          isOpen: !state.isOpen,
-        };
     default:
       return state;
   }
