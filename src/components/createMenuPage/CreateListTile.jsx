@@ -2,7 +2,7 @@ import React from 'react'
 import './CreateMenuPage.css'
 import AddIcon from '../../icons/AddIcon'
 
-const CreateListTile = ({title,subtitle,price}) => {
+const CreateListTile = ({title,subtitle,price,onClick}) => {
   return (
     <div className='create-list-tile'>
         <div className="list-tile-outter">
@@ -10,11 +10,13 @@ const CreateListTile = ({title,subtitle,price}) => {
         <div className="tile-content">
           <h3 className='tile-content-title'>{title} </h3>
           <h3 className='tile-content-subtitle'>({subtitle})</h3>
-          <h3 className='tile-content-prize'>₹ {price} </h3>
+          <h3 className='tile-content-prize'>₹ {price.toFixed(2)} </h3>
         </div>
         </div>
         <div className="tile-traling">
-          <AddIcon/>
+          <AddIcon
+              onClick={onClick}
+          />
         </div>
     </div>
   )

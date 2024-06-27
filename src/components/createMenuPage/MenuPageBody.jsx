@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./CreateMenuPage.css";
 import CreateListTile from "./CreateListTile";
+import {AppStateContext, useAppContext } from "../../appState/appStateContext";
 
 const MenuPageBody = () => {
   const [itemList, setItemList] = useState([]);
+  const {dispatch}= useAppContext(AppStateContext);
 
   const fetchData = async () => {
     try {
@@ -17,9 +19,15 @@ const MenuPageBody = () => {
       console.error("Error fetching data:", error);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  const addItem = (index) => {
+    const item = itemList[index];
+    dispatch({ type: 'ADD_ITEM_TO_CART', payload: item });
+  }
 
   return (
     <div className="menu-page-body">
@@ -30,6 +38,7 @@ const MenuPageBody = () => {
             title={item.name}
             subtitle={item.sold_by}
             price={item.price_per_unit}
+            onClick={() => addItem(index)}
           />
         );
       })}
