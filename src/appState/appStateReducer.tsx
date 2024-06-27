@@ -1,6 +1,7 @@
 export const appGlobalState: any = {
     items: [],
-    bills: {}
+    bills: {},
+    customer: []
 }
 // import this in every component to access global state
 
@@ -12,6 +13,12 @@ export const appStateReducer = (state: any, action: any) => {
             return { ...state, items: newItems };
         case "REMOVE_ITEM_FROM_BILL":
             return { ...state }
+        case "ADD_CUSTOMER":
+            const newCustomer = [...state.customer];
+            newCustomer.push(action.payload);
+            return { ...state, customer: newCustomer };
+        case "SET_CUSTOMER_LIST":
+            return { ...state, customer: action.payload };
         default:
             return state
     }

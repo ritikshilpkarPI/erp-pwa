@@ -6,7 +6,7 @@ import Ticket from "../components/ticket/Ticket";
 import Splash from "../pages/Splash";
 import CreateMenuPage from "../components/createMenuPage/CreateMenuPage";
 import { TransactionHistory } from "../components/transactionHistory/TransactionHistory";
-import AddCustomerPage from "../components/addCustomer/AddCustomerPage";
+import AddCustomers from "../pages/AddCustomers";
 
 const protectedRouteMap = Object.freeze({
 
@@ -16,7 +16,7 @@ const protectedRouteMap = Object.freeze({
   "/Splash": <Splash />,
   "/cart": <CreateMenuPage />,
   "/history": <TransactionHistory />,
-  "/addcustomer":<AddCustomerPage/>
+  "/addcustomer":<AddCustomers/>
 })
 
 
