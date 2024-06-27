@@ -1,27 +1,32 @@
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { RiArrowLeftSLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import './CustomerScreen.css';
 import SearchIcon from '../../icons/SearchIcon';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AppStateContext } from '../../appState/appStateContext'
 
 const CustomerScreen = () => {
-    const [customerList, setCustomerList] = useState([]);
+    const { globalState, dispatch } = useContext(AppStateContext);
+    const [selectedCustomer, setSelectedCustomer] = useState('');
     const API = 'http://localhost:8000/api/v1/customers';
 
     useEffect(() => {
         fetch(API)
             .then((res) => res.json())
-            .then((res) => setCustomerList(res))
+            .then((res) => {
+                dispatch({ type: 'SET_CUSTOMER_LIST', payload: res });
+            })
             .catch((error) => console.error('Error fetching customer data:', error));
-    }, []); 
-
-    useEffect(() => {
-        console.log(customerList);
-    }, [customerList]);
+    }, [dispatch]);
+    
 
     const navigate = useNavigate();
     const handleBackClick = () => {
         navigate(-1);
+    };
+
+    const handleOptionChange = (event) => {
+        setSelectedCustomer(event.target.value);
     };
 
     return (
@@ -43,14 +48,20 @@ const CustomerScreen = () => {
                 </div>
             </div>
             <div className="customer-content">
-                {customerList.map((customer) => (
-                    <div key={customer.id} className="customer-content-div">
+                {globalState?.customer?.map((customer, index) => (
+                    <div key={index} className="customer-content-div">
                         <h1 className="customer-content-heading">{customer.name}</h1>
-                        <RiArrowRightSLine className="arrow-icon icon2" />
+                        <input
+                            type="radio"
+                            name="customer"
+                            value={customer._id}
+                            checked={selectedCustomer === customer._id}
+                            onChange={handleOptionChange}
+                        />
                     </div>
                 ))}
             </div>
-            <div className="customer-bottom" onClick={()=>navigate(-1)}>
+            <div className="customer-bottom" onClick={() => navigate('/addcustomer')}>
                 <div className="customer-bottom-button">Add a new client</div>
             </div>
         </div>
