@@ -13,7 +13,6 @@ const MenuPageBody = () => {
       }
       const data = await response.json();
       setItemList(data);
-      console.log(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -24,22 +23,13 @@ const MenuPageBody = () => {
 
   return (
     <div className="menu-page-body">
-      {/* <CreateListTile
-        title={"sikh kabab"}
-        subtitle={"nice product"}
-        price={12.9}
-      />
-      <CreateListTile
-        title={"sikh kabab"}
-        subtitle={"nice product"}
-        price={12.9}
-      /> */}
-      {itemList.map((index, item) => {
+      {itemList.map((item, index) => {
         return (
-          <CreateListTile key={index}
-            title={"sikh kabab"}
-            subtitle={"nice product"}
-            price={12.9}
+          <CreateListTile
+            key={index}
+            title={item.name}
+            subtitle={item.sold_by}
+            price={item.price_per_unit}
           />
         );
       })}
