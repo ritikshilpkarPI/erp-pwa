@@ -6,20 +6,58 @@ import ButtonInput from "../buttonInput/ButtonInput";
 import { useNavigate } from "react-router-dom";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIconImage from "../../image/BackIcon.svg";
+import { useContext } from "react"; 
+import { AppStateContext } from "../../appState/appStateContext"; 
 
 const AddCustomerPage = () => {
   const [username, setUsername] = useState("");
-  const [telephone, setTelephone] = useState("");
+  const [telephone, setTelephone] = useState();
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [creditLimit, setCreditLimit] = useState()
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(true);
 
-  const submitHandler = (e) => {
+  // Accessing global state and dispatch function from context
+  const { dispatch } = useContext(AppStateContext);
+
+  const randomId=(length) =>{
+    return Math.random().toString(36).substring(2, length+2);
+  };
+
+  
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log({email});
-    handleBlur()
-  }
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_ADD_CUSTOMER_URL}/customers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: username,
+          address: address,
+          id_number: randomId(8), 
+          credit_limit: 677, 
+          telephone: telephone,
+          is_deleted:false
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: 'ADD_CUSTOMER', payload: data });
+        navigate("/customer"); 
+      } else {
+        console.error('Failed to submit form:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
   const backFunc = () => {
     navigate(-1);
   };
@@ -63,8 +101,17 @@ const AddCustomerPage = () => {
           labelTitle="Email"
           placeholder="Email or Phone Number"
           value={email}
-          onblur={handleBlur}
+          onBlur={handleBlur} 
           onChange={(e) => setEmail(e.target.value)}
+        />
+         <TextInput
+          className={`login-user-credit-limit-input`}
+          type="Credit limit"
+          labelTitle="Credit limit"
+          placeholder="Credit limit"
+          value={creditLimit}
+          onBlur={handleBlur} 
+          onChange={(e) => setCreditLimit(e.target.value)}
         />
         <TextArea
           className="login-user-id-input-area"
@@ -76,15 +123,14 @@ const AddCustomerPage = () => {
         />
 
         <ButtonInput
-          disable={username && telephone && email && address && isValid ? false : true}
+          disabled={!username || !telephone || !email || !address|| creditLimit || !isValid} 
           type="submit"
           className={
-            username && telephone && email && address && isValid
+            username && telephone && email && address && isValid && creditLimit
               ? "login-submit-button-input"
               : "login-submit-button-input-def"
           }
           title="Submit"
-          onClick={() => navigate("/cart")}
         />
       </form>
     </div>
