@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { appGlobalState, appStateReducer } from "./appStateReducer";
 
 
@@ -12,5 +12,6 @@ const AppStateProvider = ({ children }: any) => {
 }
 
 
-export const AppStateContext = createContext(appGlobalState)
+export const AppStateContext = createContext(appGlobalState);
+export const useAppContext = () => useContext(AppStateContext);
 export default AppStateProvider;

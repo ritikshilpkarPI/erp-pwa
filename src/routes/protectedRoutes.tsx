@@ -7,9 +7,11 @@ import Splash from "../pages/Splash";
 import CreateMenuPage from "../components/createMenuPage/CreateMenuPage";
 import { TransactionHistory } from "../components/transactionHistory/TransactionHistory";
 import AddCustomerPage from "../components/addCustomer/AddCustomerPage";
+import SideMenu from "../components/sideMenu/SideMenu";
+
+
 
 const protectedRouteMap = Object.freeze({
-
   "/about": <About />,
   "/receipts": <ReceiptsPage />,
   "/tickets": <Ticket />,
@@ -22,13 +24,21 @@ const protectedRouteMap = Object.freeze({
 
 export const ProtectedRoute = () => {
   const isLoggedIn = true;
-  return <>
-    <Routes>
-      {
-        Object.entries(protectedRouteMap)?.map(([route, component]) => {
-          return <Route key={route} path={route} element={isLoggedIn ? component : <></>} />
-        })
-      }
-    </Routes>
-  </>
-}
+ 
+  return (
+    <>
+      <SideMenu/>
+      <Routes>
+        {Object.entries(protectedRouteMap).map(([route, component]) => {
+          return (
+            <Route
+              key={route}
+              path={route}
+              element={isLoggedIn ? component : <></>}
+            />
+          );
+        })}
+      </Routes>
+    </>
+  );
+};

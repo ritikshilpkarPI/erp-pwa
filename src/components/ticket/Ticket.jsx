@@ -3,7 +3,8 @@ import './Ticket.css'
 import SearchIcon from '../../icons/SearchIcon'
 import CloseIcon from '../../icons/CloseIcon'
 import SelectInput from '../selectInput/SelectInput'
-import SearchInput from '../searchInput/SearchInput'
+
+import SearchInput from '../../pages/searchInput/SearchInput'
 import Item from '../items/Item'
 // add barcode cart hamburgermenu list money search searchs selectcalc select menu select star
 const Ticket = () => {
