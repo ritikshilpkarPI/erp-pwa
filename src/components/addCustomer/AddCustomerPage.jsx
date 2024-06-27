@@ -31,7 +31,7 @@ const AddCustomerPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_ADD_CUSTOMER_URL}/customers`, {
+      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/customers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
