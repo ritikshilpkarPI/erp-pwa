@@ -6,6 +6,7 @@ import TextInput from "../textInput/TextInput";
 import backButtonImage from "../../image/BackButton.svg";
 
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
@@ -24,8 +25,14 @@ const LoginPage = () => {
   };
   const logInHandler = async () => {
     try {
+    
+      if (!emailOrPhone || !password) {
+        enqueueSnackbar("Please fill all the fields", { variant: "error" });
+        return;
+      }
+
       const responst = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/login`,
+        `${process.env.REACT_APP_SIGNUP_URL}/signin`,
         {
           method: "POST",
           headers: {
@@ -39,10 +46,19 @@ const LoginPage = () => {
       );
 
       const result = await responst.json();
+
+
+      if (result?.error) {
+        enqueueSnackbar(result.error?.message, { variant: "error" });
+      }
+
       if (result.token) {
         navigate("/cart");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
   };
 
   return (
