@@ -11,6 +11,7 @@ import { enqueueSnackbar } from "notistack";
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const htmlErrow = ">";
 
@@ -31,6 +32,8 @@ const LoginPage = () => {
         return;
       }
 
+      setLoading(true);
+
       const responst = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/signin`,
         {
@@ -47,6 +50,8 @@ const LoginPage = () => {
 
       const result = await responst.json();
 
+      setLoading(false);
+
 
       if (result?.error) {
         enqueueSnackbar(result.error?.message, { variant: "error" });
@@ -57,6 +62,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error(error);
+      setLoading(false);
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
@@ -98,6 +104,7 @@ const LoginPage = () => {
             onClick={() => {
               logInHandler();
             }}
+            isLoading={loading}
           />
         </form>
         <div className="login-page-information-container">

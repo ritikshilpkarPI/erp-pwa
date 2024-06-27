@@ -13,6 +13,7 @@ const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,6 +34,7 @@ const SignupPage = () => {
         return;
       }    
 
+      setLoading(true); 
 
       const responst = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/signup`, {
         method: "POST",
@@ -47,6 +49,8 @@ const SignupPage = () => {
       });
 
       const result = await responst.json();
+
+      setLoading(false);
       
       if (result?.error) {
         enqueueSnackbar(result.error?.message, { variant: "error" }); 
@@ -56,6 +60,7 @@ const SignupPage = () => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
@@ -104,8 +109,8 @@ const SignupPage = () => {
             title="Submit"
             onClick={() => {
               signupHandler();
-              
             }}
+            isLoading={loading}
           />
         </form>
       </div>
