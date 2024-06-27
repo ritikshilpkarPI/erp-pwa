@@ -42,7 +42,7 @@ const SignupPage = () => {
         navigate("/login");
       }
     } catch (error) {
-      throw new error(error);
+      
     }
   };
 
