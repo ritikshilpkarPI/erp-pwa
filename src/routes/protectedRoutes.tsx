@@ -6,6 +6,7 @@ import Ticket from "../components/ticket/Ticket";
 import Splash from "../pages/Splash";
 import CreateMenuPage from "../components/createMenuPage/CreateMenuPage";
 import { TransactionHistory } from "../components/transactionHistory/TransactionHistory";
+import AddCustomerPage from "../components/addCustomer/AddCustomerPage";
 import SideMenu from "../components/sideMenu/SideMenu";
 
 
@@ -17,14 +18,15 @@ const protectedRouteMap = Object.freeze({
   "/Splash": <Splash />,
   "/cart": <CreateMenuPage />,
   "/history": <TransactionHistory />,
-});
+  "/addcustomer":<AddCustomerPage/>
+})
+
 
 export const ProtectedRoute = () => {
   const isLoggedIn = true;
  
   return (
     <>
-     
       <SideMenu/>
       <Routes>
         {Object.entries(protectedRouteMap).map(([route, component]) => {

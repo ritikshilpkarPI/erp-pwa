@@ -1,8 +1,10 @@
 import React from 'react';
 
 const TextInput = (props) => {
-    const { className, type, placeorder, labelTitle, value, onChange } = props;
+    const { className, type, placeholder, labelTitle, value, onChange,onblur } = props;
     
+    
+
     return (
         <div className='text-input-container'>
             <label className={`${className}-label`} htmlFor={className}>{labelTitle}</label>
@@ -10,9 +12,10 @@ const TextInput = (props) => {
                 className={className}
                 id={className}
                 type={type}
-                placeorder={placeorder}
+                placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                onBlur={onblur}
             />
         </div>
     );
