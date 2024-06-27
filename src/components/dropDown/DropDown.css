@@ -1,0 +1,23 @@
+
+/* DropDown.css */
+.dropdown {
+     
+      padding-top: 10px;
+   
+      >.select{
+            height: 40px;
+            width: 90%;
+            border: 1.8px solid #ffff;
+            border-radius: 8px;
+            outline: none;
+           #dropdown-options{
+          
+            width: 50%;
+          }
+      }
+      
+    }
+    
+
+ 
+    
