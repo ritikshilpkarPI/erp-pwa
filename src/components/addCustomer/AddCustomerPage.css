@@ -1,0 +1,112 @@
+.add-customer-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-input-container,
+.text-area-container {
+  width: 327px;
+  height: 85px;
+  height: max-content;
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  > .login-user-id-input,
+  .login-user-telephone-input,
+  .login-user-email-input {
+    width: 327px;
+    height: 56px;
+    border-radius: 12px;
+    border: none;
+    font-size: 12px;
+    font-weight: 400;
+    color: #2a3256;
+    padding: 0px 12px;
+    background-color: whitesmoke;
+  }
+
+  > .login-user-id-input-area {
+    width: 327px;
+    height: 106px;
+    border-radius: 12px;
+    border: none;
+    color: #2a3256;
+    background-color: whitesmoke;
+    font-size: 12px;
+    padding: 5px 12px;
+    font-weight: 400;
+  }
+
+  > .login-user-id-input-label,
+  .login-user-password-input-label {
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.96px;
+  }
+}
+
+.login-submit-button-input {
+  width: 327px;
+  height: 57px;
+  border-radius: 6px;
+  font-family: Rubik;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18.96px;
+  background: #1a72dd;
+  border: none;
+  color: #fff;
+  position: absolute;
+  bottom: 22px;
+}
+.login-submit-button-input-def {
+  width: 327px;
+  height: 57px;
+  border-radius: 6px;
+  font-family: Rubik;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18.96px;
+  background: #d1e3f8;
+  border: none;
+  color: #fff;
+  position: absolute;
+  bottom: 22px;
+}
+
+.navigation-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 15px 50px;
+
+  > .dummy-div {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.add-customer-navbar {
+  width: 100%;
+  height: 70px;
+  box-shadow: 2px 2px 8px whitesmoke;
+  color: #1a72dd;
+}
+
+.navigation-header-add-customer {
+  font-weight: 800;
+  font-size: 22px;
+}
+
+
+
+
+input[type="email"].invalid {
+  border-color: red;
+}

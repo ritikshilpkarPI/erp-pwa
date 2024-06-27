@@ -1,6 +1,6 @@
 .login-page-container {
-    height: 100svh;
-    text-align: center;
+  height: 100svh;
+  text-align: center;
 
     .navigation-header-login {
         font-family: Rubik;
@@ -11,40 +11,37 @@
 
 
     }
-
     .back-button-image-full {
         height: 100%;
         width: 100%;
         object-fit: cover;
     }
 
-    >.login-form-container {
+  > .login-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    > .login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+
+      > .text-input-container {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 30px;
+        align-items: start;
+        gap: 10px;
 
-        >.login-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-
-
-            >.text-input-container {
-                display: flex;
-                flex-direction: column;
-                align-items: start;
-                gap: 10px;
-
-                >.login-user-id-input-label,
-                .login-user-password-input-label {
-                    font-family: Rubik;
-                    font-size: 18px;
-                    font-weight: 400;
-                    line-height: 18.96px;
-
-                }
+        > .login-user-id-input-label,
+        .login-user-password-input-label {
+          font-family: Rubik;
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 18.96px;
+        }
 
                 >.login-user-id-input {
                     width: 327px;
@@ -105,52 +102,50 @@
 
             }
 
-            >.login-submit-button-input {
-                width: 327px;
-                height: 56px;
-                border-radius: 16px;
-                font-family: Rubik;
-                font-size: 18px;
-                font-weight: 500;
-                line-height: 18.96px;
-                background: #1A72DD;
-                border: none;
-                color: #fff;
-            }
-        }
-
-        >.login-page-information-container {
-            width: 327px;
-            height: 93px;
-            border-radius: 16px;
-            background: #1A72DD1A;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-
-            >.login-page-information {
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-
-                >span:nth-child(1) {
-                    font-family: Rubik;
-                    font-size: 16px;
-                    font-weight: 400;
-                    line-height: 18.96px;
-
-                }
-
-                >span:nth-child(2) {
-                    font-family: Rubik;
-                    font-size: 16px;
-                    font-weight: 700;
-                    line-height: 18.96px;
-
-                }
-            }
-        }
+      > .login-submit-button-input {
+        width: 327px;
+        height: 56px;
+        border-radius: 16px;
+        font-family: Rubik;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 18.96px;
+        background: #1a72dd;
+        border: none;
+        color: #fff;
+      }
     }
+
+    > .login-page-information-container {
+      width: 327px;
+      height: 93px;
+      border-radius: 16px;
+      background: #1a72dd1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+
+      > .login-page-information {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+
+        > span:nth-child(1) {
+          font-family: Rubik;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 18.96px;
+        }
+
+        > span:nth-child(2) {
+          font-family: Rubik;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 18.96px;
+        }
+      }
+    }
+  }
 }
