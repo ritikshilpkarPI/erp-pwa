@@ -18,11 +18,12 @@
 
   > .login-user-id-input,
   .login-user-telephone-input,
-  .login-user-email-input {
+  .login-user-email-input,.login-user-credit-limit-input {
     width: 327px;
     height: 56px;
     border-radius: 12px;
     border: none;
+    outline: none;
     font-size: 12px;
     font-weight: 400;
     color: #2a3256;
@@ -35,6 +36,7 @@
     height: 106px;
     border-radius: 12px;
     border: none;
+    outline: none;
     color: #2a3256;
     background-color: whitesmoke;
     font-size: 12px;
@@ -43,7 +45,8 @@
   }
 
   > .login-user-id-input-label,
-  .login-user-password-input-label {
+  .login-user-password-input-label,
+  .login-user-credit-limit-input-label {
     font-family: sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -62,8 +65,8 @@
   background: #1a72dd;
   border: none;
   color: #fff;
-  position: absolute;
-  bottom: 22px;
+  /* position: absolute; */
+  /* bottom: 22px; */
 }
 .login-submit-button-input-def {
   width: 327px;
