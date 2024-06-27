@@ -25,7 +25,7 @@ const SignupPage = () => {
 
   const signupHandler = async () => {
     try {
-      const responst = await fetch("http://localhost:8000/api/v1/signup", {
+      const responst = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,9 +41,7 @@ const SignupPage = () => {
       if (result.token) {
         navigate("/login");
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   return (
