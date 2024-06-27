@@ -8,7 +8,7 @@ import CreateMenuPage from "../components/createMenuPage/CreateMenuPage";
 import { TransactionHistory } from "../components/transactionHistory/TransactionHistory";
 import SideMenu from "../components/sideMenu/SideMenu";
 
-import { useAppContext } from "../appState/appStateContext";
+
 
 const protectedRouteMap = Object.freeze({
   "/about": <About />,
@@ -21,10 +21,10 @@ const protectedRouteMap = Object.freeze({
 
 export const ProtectedRoute = () => {
   const isLoggedIn = true;
-  const { globalState } = useAppContext();
+ 
   return (
     <>
-      {/* {globalState.isOpen && <SideMenu />} */}
+     
       <SideMenu/>
       <Routes>
         {Object.entries(protectedRouteMap).map(([route, component]) => {

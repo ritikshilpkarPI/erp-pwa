@@ -6,7 +6,9 @@ import NavigationHeader from "../navigationHeader/NavigationHeader";
 const MainNav = () => {
   return (
     <div className="main-nav-bar">
+
      <NavigationHeader/>
+     <MainHeader/>
       <MainHeaderMenu/>
     </div>
   );
