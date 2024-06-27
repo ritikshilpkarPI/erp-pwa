@@ -88,7 +88,7 @@ const SignupPage = () => {
             title="Submit"
             onClick={() => {
               signupHandler();
-              // navigate("/cart")
+              
             }}
           />
         </form>
