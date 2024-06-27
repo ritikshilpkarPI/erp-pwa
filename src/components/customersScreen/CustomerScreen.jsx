@@ -17,6 +17,7 @@ const CustomerScreen = () => {
                 dispatch({ type: 'SET_CUSTOMER_LIST', payload: res });
             })
             .catch((error) => console.error('Error fetching customer data:', error));
+            // eslint-disable-next-line
     }, [dispatch]);
     
 
