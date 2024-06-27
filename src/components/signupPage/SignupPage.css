@@ -1,0 +1,128 @@
+.signup-page-container{
+    height: 100svh;
+    text-align: center;
+
+    .navigation-header-signup {
+        font-family: Rubik;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 37.92px;
+        color: #1A72DD;
+
+
+    }
+    .back-button-image-full {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+    >.signup-form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+
+        >.signup-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+
+
+            >.text-input-container {
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                gap: 10px;
+
+                >.signup-user-email-input-label,
+                .signup-user-phone-number-input-label,
+                .signup-user-password-input-label {
+                    font-family: Rubik;
+                    font-size: 18px;
+                    font-weight: 400;
+                    line-height: 18.96px;
+
+                }
+
+                >.signup-user-email-input,
+                .signup-user-phone-number-input
+                 {
+                    width: 327px;
+                    height: 56px;
+                    border-radius: 16px;
+                    background-color: rgba(0, 0, 0, 0.05);
+                    border: none;
+                    padding: 0 15px;
+                    font-family: Rubik;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 14.22px;
+                    outline: none;
+
+
+                }
+                >.signup-user-password-input-container{
+                    width: 327px;
+                    height: 56px;
+                    border-radius: 16px;
+                    background-color: rgba(0, 0, 0, 0.05);
+                    padding: 0 15px;
+                    gap: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    
+                    >.signup-user-password-input{
+                        font-family: Rubik;
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 14.22px;
+                        border: none;
+                        outline: none;
+                        width: inherit;
+                        height: 100%;
+                        background: transparent;
+                    }
+                    >.signup-user-password-input-toggle-button{
+                        background-color: transparent;
+                        border: none;
+                        outline: none;
+                        height: 56px;
+                        width: 56px;
+
+                    }
+                }
+
+            }
+
+            >.signup-submit-button-input {
+                width: 327px;
+                height: 56px;
+                border-radius: 16px;
+                font-family: Rubik;
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 18.96px;
+                background: #1A72DD;
+                border: none;
+                color: #fff;
+            }
+        }
+
+        >.login-page-information-container {
+            width: 327px;
+            height: 93px;
+            border-radius: 16px;
+            background: #1A72DD1A;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+
+            
+        }
+    }
+}
