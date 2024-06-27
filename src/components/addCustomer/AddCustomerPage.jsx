@@ -48,7 +48,6 @@ const AddCustomerPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         dispatch({ type: 'ADD_CUSTOMER', payload: data });
         navigate("/customer"); 
       } else {
