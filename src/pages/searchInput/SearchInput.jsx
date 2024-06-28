@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const SearchInput = ({ isOpen, className }) => {
+const SearchInput = ({ isOpen, className ,onChange}) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -15,6 +15,7 @@ const SearchInput = ({ isOpen, className }) => {
       className={className}
       placeholder='Search items..'
       ref={inputRef} // Assign ref to the input element
+      onChange={onChange}
     />
   );
 };

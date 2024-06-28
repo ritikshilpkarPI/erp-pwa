@@ -1,4 +1,4 @@
-import { decodeJwtToken } from "../utils/getUserFromToken"
+import { decodeJwtToken } from "../utils/getUserFromToken";
 
 export const appGlobalState: any = {
   items: [],
@@ -7,8 +7,9 @@ export const appGlobalState: any = {
   customers: [],
   setCustomer: {},
   isOpen: false,
-  loggedInUser: decodeJwtToken(localStorage.getItem('token')) ?? null,
-  isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem('token'))),
+  loggedInUser: decodeJwtToken(localStorage.getItem("token")) ?? null,
+  isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem("token"))),
+  isLoading: false,
 };
 // import this in every component to access global state
 export const appStateReducer = (state: any, action: any) => {
@@ -33,6 +34,11 @@ export const appStateReducer = (state: any, action: any) => {
       return {
         ...state,
         items: action.payload,
+      };
+    case "SET_LOADING":
+      return {
+        ...state,
+        isLoading: !state.isLoading,
       };
     
     case "LOGOUT":

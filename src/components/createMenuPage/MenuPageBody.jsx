@@ -6,29 +6,18 @@ import LoadingCircle from "../loadinCircule/LoadingCircle";
 
 const MenuPageBody = () => {
   const [itemList, setItemList] = useState([]);
-  const { dispatch, globalState } = useAppContext(AppStateContext);
-  const [loading, setLoading] = useState(true);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/items`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      dispatch({type: "SET_ITEMS", payload: data});
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setLoading(false); // Handle the loading state even in case of an error
-    }
-  };
+  const { globalState, dispatch } = useAppContext(AppStateContext);
+  const [loading, setLoading] = useState(false);
+  console.log(loading);
 
   useEffect(() => {
-    fetchData();
     setItemList(globalState.items);
   }, [globalState.items]);
-  
+
+  useEffect(() => {
+    setLoading(globalState.isLoading);
+  }, [globalState.isLoading]);
+
   const addItem = (index) => {
     
     const item = itemList[index];
