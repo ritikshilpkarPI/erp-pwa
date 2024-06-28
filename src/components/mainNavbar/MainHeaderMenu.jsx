@@ -8,7 +8,7 @@ import CloseIcon from "../../icons/CloseIcon";
 import { AppStateContext, useAppContext } from "../../appState/appStateContext";
 
 const MainHeaderMenu = () => {
-  const { dispatch } = useAppContext(AppStateContext);
+  const { dispatch, globalState } = useAppContext(AppStateContext);
   const [openSearchBox, setOpenSearchBox] = useState(false);
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,12 +61,16 @@ const MainHeaderMenu = () => {
     [dispatch]
   );
 
-  useEffect(() => {
-    fetchCategories();
+  useEffect(() => {    
+      fetchCategories();
   }, [fetchCategories]);
 
   useEffect(() => {
-    fetchItems();
+
+    if (globalState?.items?.length === 0) {
+      
+      fetchItems();
+    }
   }, [fetchItems]);
 
   const handleOptionChange = (e) => {
