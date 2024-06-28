@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./CreateMenuPage.css";
 import CreateListTile from "./CreateListTile";
-import {AppStateContext, useAppContext } from "../../appState/appStateContext";
+import { AppStateContext, useAppContext } from "../../appState/appStateContext";
 
 const MenuPageBody = () => {
-  const [itemList, setItemList] = useState([]);
-  const {dispatch}= useAppContext(AppStateContext);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/items`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setItemList(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const { globalState, dispatch } = useAppContext(AppStateContext);
+  const [itemList, setItemList] = useState(globalState.items);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    setItemList(globalState.items);
+  }, [globalState.items]);
 
   const addItem = (index) => {
     const item = itemList[index];

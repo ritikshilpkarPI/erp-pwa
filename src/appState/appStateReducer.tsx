@@ -3,6 +3,7 @@ export const appGlobalState: any = {
   bills: {},
   cartItems: [],
   isOpen: false,
+ 
 };
 // import this in every component to access global state
 
@@ -21,9 +22,14 @@ export const appStateReducer = (state: any, action: any) => {
       const newItems = [...state.items];
       newItems.push(action.payload);
       return { ...state, items: newItems };
-
     case "REMOVE_ITEM_FROM_BILL":
       return { ...state };
+
+    case "SET_ITEMS":
+      return {
+        ...state,
+        items: action.payload,
+      };
     default:
       return state;
   }

@@ -55,18 +55,21 @@ body {
   outline: none;
 }
 .main-header-menu-select {
-  padding: 12px;
+  padding: 12.5px;
   width: 70%;
   border: none;
   background-color: white;
-  border: none;
   border-top: 0.5px solid #d1d1d1;
   border-right: 0.5px solid #d1d1d1;
   text-align: center;
   outline: none;
-  
-  
+  appearance: none; /* Hides the default arrow */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="none" stroke="black" stroke-width="2" d="M5 7l5 5 5-5"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 18px center; /* Adjust the padding for the arrow */
+  background-size: 18px; /* Adjust the size of the arrow */
 }
+
 
 .search-icon-outer {
   height: 80%;
