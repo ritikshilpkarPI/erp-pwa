@@ -4,7 +4,6 @@ import CreateListTile from "./CreateListTile";
 import { AppStateContext, useAppContext } from "../../appState/appStateContext";
 import LoadingCircle from "../loadinCircule/LoadingCircle";
 
-
 const MenuPageBody = () => {
   const [itemList, setItemList] = useState([]);
   const { dispatch, globalState } = useAppContext(AppStateContext);
@@ -26,12 +25,13 @@ const MenuPageBody = () => {
   };
 
   useEffect(() => {
+    fetchData();
     setItemList(globalState.items);
   }, [globalState.items]);
-
+  
   const addItem = (index) => {
+    
     const item = itemList[index];
-    fetchData()
     dispatch({ type: "ADD_ITEM_TO_CART", payload: item });
   };
 
