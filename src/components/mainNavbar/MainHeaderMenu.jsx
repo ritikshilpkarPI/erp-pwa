@@ -17,7 +17,7 @@ const MainHeaderMenu = () => {
     setOpenSearchBox(!openSearchBox);
   };
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/categories`
@@ -27,10 +27,13 @@ const MainHeaderMenu = () => {
       }
       const data = await response.json();
       setOptions(data);
+
+      dispatch({ type: "SET_LOADING" });
     } catch (error) {
       console.error("Error fetching categories:", error);
+      dispatch({ type: "SET_LOADING" });
     }
-  };
+  }, [dispatch]);
 
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
@@ -60,6 +63,9 @@ const MainHeaderMenu = () => {
 
   useEffect(() => {
     fetchCategories();
+  }, [fetchCategories]);
+
+  useEffect(() => {
     fetchItems();
   }, [fetchItems]);
 
@@ -75,11 +81,11 @@ const MainHeaderMenu = () => {
       timeout = setTimeout(() => func.apply(context, args), wait);
     };
   }
-  
+
   const handleSearchInputChange = debounce((e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    console.log(query)
+    console.log(query);
     fetchItems(null, query);
   }, 500);
 

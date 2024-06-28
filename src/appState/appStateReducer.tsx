@@ -1,9 +1,13 @@
+import { decodeJwtToken } from "../utils/getUserFromToken";
+
 export const appGlobalState: any = {
   items: [],
   bills: {},
   cartItems: [],
   isOpen: false,
- 
+  loggedInUser: decodeJwtToken(localStorage.getItem("token")) ?? null,
+  isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem("token"))),
+  isLoading: false,
 };
 // import this in every component to access global state
 
@@ -30,6 +34,12 @@ export const appStateReducer = (state: any, action: any) => {
         ...state,
         items: action.payload,
       };
+    case "SET_LOADING":
+      return {
+        ...state,
+        isLoading: !state.isLoading,
+      };
+
     default:
       return state;
   }
