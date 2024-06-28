@@ -7,7 +7,7 @@ import LoadingCircle from "../loadinCircule/LoadingCircle";
 
 const MenuPageBody = () => {
   const [itemList, setItemList] = useState([]);
-  const { dispatch } = useAppContext(AppStateContext);
+  const { dispatch, globalState } = useAppContext(AppStateContext);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
@@ -31,6 +31,7 @@ const MenuPageBody = () => {
 
   const addItem = (index) => {
     const item = itemList[index];
+    fetchData()
     dispatch({ type: "ADD_ITEM_TO_CART", payload: item });
   };
 
