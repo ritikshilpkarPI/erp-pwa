@@ -25,7 +25,7 @@ const CustomerScreen = () => {
         navigate(-1);
     };
 
-    const SelectedCustomerFuns = (customerId) => {
+    const selectedCustomerFuns = (customerId) => {
         const selectedCustomer = globalState.customers.find(customer => customer._id === customerId);
         dispatch({ type: 'SET_CUSTOMER', payload: selectedCustomer });
     };
@@ -54,7 +54,7 @@ const CustomerScreen = () => {
                     <div
                         key={customer._id}
                         className="customer-content-div"
-                        onClick={() => SelectedCustomerFuns(customer._id)}
+                        onClick={() => selectedCustomerFuns(customer._id)}
                     >
                         <label
                             className="customer-content-heading"
