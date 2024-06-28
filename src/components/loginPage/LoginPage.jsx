@@ -26,7 +26,7 @@ const LoginPage = () => {
   };
   const logInHandler = async () => {
     try {
-    
+
       if (!emailOrPhone || !password) {
         enqueueSnackbar("Please fill all the fields", { variant: "error" });
         return;
@@ -35,7 +35,7 @@ const LoginPage = () => {
       setLoading(true);
 
       const responst = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/signin`,
+        `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}/signin`,
         {
           method: "POST",
           headers: {

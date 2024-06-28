@@ -14,7 +14,7 @@ const unProtectedRouteMap = Object.freeze({
   "/signup": <Signup/>,
   "/contact": <Contact />,
   "/placeorder": <PlaceOrder />,
-  "/customer":<Customers />,
+  "/customers":<Customers />,
   "/addProduct": <AddProductForm/>
 })
 

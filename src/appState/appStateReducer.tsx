@@ -2,10 +2,12 @@ export const appGlobalState: any = {
   items: [],
   bills: {},
   cartItems: [],
+  customers: [],
+  setCustomer: {},
   isOpen: false,
+  
 };
 // import this in every component to access global state
-
 export const appStateReducer = (state: any, action: any) => {
   switch (action.type) {
     case "TOGGLE_DRAWER":
@@ -24,6 +26,20 @@ export const appStateReducer = (state: any, action: any) => {
 
     case "REMOVE_ITEM_FROM_BILL":
       return { ...state };
+
+    case "SET_CUSTOMERS_LIST":
+      const newCustomers = action?.payload ?? []
+      return { ...state, customers: newCustomers };
+
+    case "SET_CUSTOMER":
+      const newCustomer = action.payload ?? {}
+      console.log(newCustomer)
+      
+      return { ...state, setCustomer: newCustomer };
+
+
+
+
     default:
       return state;
   }
