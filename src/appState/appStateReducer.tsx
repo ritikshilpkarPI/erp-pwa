@@ -55,7 +55,9 @@ export const appStateReducer = (state: any, action: any) => {
       
       return { ...state, setCustomer: newCustomer };
 
-
+      case "SET_USER":
+        const loggedInUser = decodeJwtToken(localStorage.getItem("token")) ?? null;
+        return { ...state, loggedInUser, isLoggedIn: Boolean(loggedInUser) };
 
 
     default:
