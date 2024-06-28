@@ -14,9 +14,9 @@ const CreateBottomNav = () => {
   const [totalPrize, setTotalPrize] = useState(0);
 
   useEffect(() => {
-    if (globalState && globalState.cartItems) {
-      setElementLength(globalState.cartItems.length);
-      const total = globalState.cartItems.reduce(
+    if (globalState && globalState?.cartItems) {
+      setElementLength(globalState?.cartItems?.length);
+      const total = globalState?.cartItems?.reduce(
         (sum, item) => sum + (item.price_per_unit || 0),
         0
       );
@@ -26,7 +26,7 @@ const CreateBottomNav = () => {
 
   return (
     <div className="bottom-bar-outter">
-      <TotalBar element={elementLength} totalprize={totalPrize.toFixed()} />
+      <TotalBar element={elementLength} totalprize={totalPrize?.toFixed()} />
       <div className="create-bottom-nav">
         <SelectMenu onTap={() => setClickBtn("btn1")} click={clickBtn} />
         <SelectStar onTap={() => setClickBtn("btn2")} click={clickBtn} />
