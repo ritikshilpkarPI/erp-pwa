@@ -1,8 +1,12 @@
+import { decodeJwtToken } from "../utils/getUserFromToken"
+
 export const appGlobalState: any = {
   items: [],
   bills: {},
   cartItems: [],
   isOpen: false,
+  loggedInUser: decodeJwtToken(localStorage.getItem('token')) ?? null,
+  isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem('token'))),
 };
 // import this in every component to access global state
 
