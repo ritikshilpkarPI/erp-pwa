@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./SideMenu.css";
 import SideBarLogo from "../../icons/SideBarLogo";
 import ButtonInput from "../buttonInput/ButtonInput";
-import DropDown from "../dropDown/DropDown";
+// import DropDown from "../dropDown/DropDown";
 import SideMenuItems from "./SideMenuItems";
 import EllipseIcon from "../../icons/EllipseIcon";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +11,13 @@ import { useAppContext } from "../../appState/appStateContext";
 const SideMenu = () => {
   const { globalState, dispatch } = useAppContext();
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const options = [
-    { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
-  ];
+
+  
+  // const options = [
+  //   { value: "option1", label: "Option 1" },
+  //   { value: "option2", label: "Option 2" },
+  //   { value: "option3", label: "Option 3" },
+  // ];
 
   const toggleOpen = () => {
     dispatch({ type: 'TOGGLE_DRAWER' });
@@ -41,11 +43,18 @@ const SideMenu = () => {
               <div className="app-name">{"AppName"}</div>
             </div>
             <div className="sidemenu-header-button">
-              <ButtonInput className="sidemenu-header-btn" title="Lite" />
+              <ButtonInput className="sidemenu-header-btn" title="Log out" 
+              onClick={() => {
+                  dispatch({ type: 'LOGOUT' });
+                  navigate('/login');
+                }
+              } 
+              type="button"
+               />
             </div>
           </div>
-          <div className="user-name">{"Nitin"}</div>
-          <DropDown options={options} />
+          <div className="user-name"> {globalState?.loggedInUser?.name ?? "User"}</div>
+          {/* <DropDown options={options} /> */}
           <div className="line"></div>
           <div className="sidemenu-items">
             {SideMenuItems.map((item, index) => (

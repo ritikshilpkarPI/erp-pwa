@@ -10,7 +10,7 @@ const CreateListTile = ({title,subtitle,price,onClick}) => {
         <div className="tile-content">
           <h3 className='tile-content-title'>{title} </h3>
           <h3 className='tile-content-subtitle'>({subtitle})</h3>
-          <h3 className='tile-content-prize'>₹ {price.toFixed(2)} </h3>
+          <h3 className='tile-content-prize'>₹ {price ? price.toFixed(2) : 'N/A'}</h3>
         </div>
         </div>
         <div className="tile-traling">

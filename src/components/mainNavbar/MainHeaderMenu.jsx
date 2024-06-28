@@ -1,74 +1,111 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./MainNav.css";
 import SearchIcon from "../../icons/SearchIcon";
 import BarCodeIcon from "../../icons/BarCodeIcon";
 import ListIcon from "../../icons/ListIcon";
 import SearchInput from "../../pages/searchInput/SearchInput";
 import CloseIcon from "../../icons/CloseIcon";
+import { AppStateContext, useAppContext } from "../../appState/appStateContext";
 
 const MainHeaderMenu = () => {
-  const [openSearchBox, setOpenSeacrhBox] = useState(false);
+  const { dispatch } = useAppContext(AppStateContext);
+  const [openSearchBox, setOpenSearchBox] = useState(false);
   const [options, setOptions] = useState([]);
-  const [ setSelectedOption] = useState(null);
-  const [ setSelectedOptionData] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = () => {
-    setOpenSeacrhBox(!openSearchBox);
+    setOpenSearchBox(!openSearchBox);
   };
 
-  const fetchData = async () => {
+  const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/v1/categories");
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/categories`
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
       setOptions(data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching categories:", error);
     }
   };
+
+  const fetchItems = useCallback(
+    async (categoryId = null, query = "") => {
+      try {
+        const url = `${process.env.REACT_APP_SIGNUP_URL}/items`;
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            category_id: categoryId,
+            search_query: query,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        dispatch({ type: "SET_ITEMS", payload: data });
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchCategories();
+    fetchItems();
+  }, [fetchItems]);
 
-  const handleOptionChange = async (id) => {
-    setSelectedOption(id);
-    try {
-      const response = await fetch(`http://localhost:8000/api/v1/items/${id}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setSelectedOptionData(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const handleOptionChange = (e) => {
+    const categoryId = e.target.value;
+    fetchItems(categoryId, searchQuery);
   };
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      const context = this;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+  }
+  
+  const handleSearchInputChange = debounce((e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    console.log(query)
+    fetchItems(null, query);
+  }, 500);
 
   return (
     <div className="main-header-menu">
       {openSearchBox ? (
-        <SearchInput className="menu-header-search" isOpen={openSearchBox} />
+        <SearchInput
+          className="menu-header-search"
+          isOpen={openSearchBox}
+          onChange={handleSearchInputChange}
+        />
       ) : (
         <select
           className="main-header-menu-select"
-          onChange={(e) => handleOptionChange(e.target.value)}
+          onChange={handleOptionChange}
         >
           <option value="">All products</option>
-          {options.map((option) => (
-            <option key={option.id} value={option.id}>
+          {options.map((option, index) => (
+            <option key={option._id || index} value={option._id}>
               {option.category_name}
             </option>
           ))}
         </select>
       )}
-
-      <div className="search-icon-outer">
-        <div onClick={handleSearch}>
-          {openSearchBox ? <CloseIcon /> : <SearchIcon />}
-        </div>
+      <div className="search-icon-outer" onClick={handleSearch}>
+        {openSearchBox ? <CloseIcon /> : <SearchIcon />}
       </div>
       <div className="search-icon-outer">
         <BarCodeIcon />
@@ -76,13 +113,6 @@ const MainHeaderMenu = () => {
       <div className="search-icon-outer">
         <ListIcon />
       </div>
-
-      {/* {selectedOptionData && (
-        <div className="selected-option-data">
-          <h2>Selected Option Data</h2>
-          <pre>{JSON.stringify(selectedOptionData, null, 2)}</pre>
-        </div>
-      )} */}
     </div>
   );
 };

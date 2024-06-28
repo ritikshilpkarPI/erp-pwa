@@ -14,19 +14,28 @@ body {
   width: 100%;
   height: 100svh;
   background-color: #F4F5FA;
-  overflow: hidden;
+  /* overflow: auto; */
 }
 
-.menu-page-body{
-   width: 100%;
-   height: calc(100% - 17rem);
-   padding: 16px 16px;
-   display: flex;
-   flex-direction: column;
-   justify-content: start;
-   align-items: center;
-   gap: 12px;
+.menu-page-body {
+  width: 100%;
+  height: calc(100% - 17rem);
+  padding: 16px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 12px;
+  overflow: auto; 
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
 }
+
+.menu-page-body::-webkit-scrollbar {
+  display: none;
+}
+
+
 
 
 .list-tile-outter{
@@ -35,20 +44,23 @@ body {
   justify-content: start;
   width: 16rem;
   height: 100%;
+
   
 }
 
-.create-list-tile{
+.create-list-tile {
   width: 327px;
   height: 86px;
   background-color: white;
   border-radius: 12px;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0px 14px 0px 0px;
+ 
 }
+
+
 .create-list-tile img{
   height: 100%;
   width: 6rem;
