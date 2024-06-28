@@ -16,7 +16,7 @@ const MenuPageBody = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setItemList(data);
+      dispatch({type: "SET_ITEMS", payload: data});
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
