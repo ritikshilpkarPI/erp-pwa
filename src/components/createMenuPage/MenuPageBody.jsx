@@ -11,11 +11,11 @@ const MenuPageBody = () => {
 
   useEffect(() => {
     setItemList(globalState.items);
+    setLoading(!Boolean(globalState.items));
+
   }, [globalState.items]);
 
-  useEffect(() => {
-    setLoading(globalState.isLoading);
-  }, [globalState.isLoading]);
+
 
   const addItem = (index) => {
     
