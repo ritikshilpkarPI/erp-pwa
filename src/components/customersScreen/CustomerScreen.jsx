@@ -2,33 +2,34 @@ import { RiArrowLeftSLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import './CustomerScreen.css';
 import SearchIcon from '../../icons/SearchIcon';
-import { useContext, useEffect, useState } from 'react';
-import { AppStateContext } from '../../appState/appStateContext'
+import { useContext, useEffect } from 'react';
+import { AppStateContext } from '../../appState/appStateContext';
 
 const CustomerScreen = () => {
     const { globalState, dispatch } = useContext(AppStateContext);
-    const [selectedCustomer, setSelectedCustomer] = useState('');
-    const API = `${process.env.REACT_APP_SIGNUP_URL}/customers`;
+    const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}/customers`;
+
 
     useEffect(() => {
         fetch(API)
             .then((res) => res.json())
             .then((res) => {
-                dispatch({ type: 'SET_CUSTOMER_LIST', payload: res });
+                dispatch({ type: 'SET_CUSTOMERS_LIST', payload: res });
             })
             .catch((error) => console.error('Error fetching customer data:', error));
-            // eslint-disable-next-line
-    }, [dispatch]);
-    
+    }, [dispatch, API]);
 
     const navigate = useNavigate();
+
     const handleBackClick = () => {
         navigate(-1);
     };
 
-    const handleOptionChange = (event) => {
-        setSelectedCustomer(event.target.value);
+    const selectedCustomerFuns = (customerId) => {
+        const selectedCustomer = globalState.customers.find(customer => customer._id === customerId);
+        dispatch({ type: 'SET_CUSTOMER', payload: selectedCustomer });
     };
+
 
     return (
         <div className="customer-screen-container">
@@ -49,15 +50,24 @@ const CustomerScreen = () => {
                 </div>
             </div>
             <div className="customer-content">
-                {globalState?.customer?.map((customer, index) => (
-                    <div key={index} className="customer-content-div">
-                        <h1 className="customer-content-heading">{customer.name}</h1>
+                {globalState?.customers?.map((customer) => (
+                    <div
+                        key={customer._id}
+                        className="customer-content-div"
+                        onClick={() => selectedCustomerFuns(customer._id)}
+                    >
+                        <label
+                            className="customer-content-heading"
+                            htmlFor={customer._id}
+                        >
+                            {customer.name}
+                        </label>
                         <input
                             type="radio"
                             name="customer"
+                            id={customer._id}
                             value={customer._id}
-                            checked={selectedCustomer === customer._id}
-                            onChange={handleOptionChange}
+                            checked={globalState.setCustomer?._id === customer._id}
                         />
                     </div>
                 ))}
