@@ -28,6 +28,10 @@ export const appStateReducer = (state: any, action: any) => {
 
     case "REMOVE_ITEM_FROM_BILL":
       return { ...state };
+    
+    case "LOGOUT":
+        localStorage.removeItem('token');
+        return { ...state, loggedInUser: null, isLoggedIn: false, isOpen: false, cartItems: [] };
     default:
       return state;
   }

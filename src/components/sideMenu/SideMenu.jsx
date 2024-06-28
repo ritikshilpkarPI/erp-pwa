@@ -43,7 +43,14 @@ const SideMenu = () => {
               <div className="app-name">{"AppName"}</div>
             </div>
             <div className="sidemenu-header-button">
-              <ButtonInput className="sidemenu-header-btn" title="Lite" />
+              <ButtonInput className="sidemenu-header-btn" title="Log out" 
+              onClick={() => {
+                  dispatch({ type: 'LOGOUT' });
+                  navigate('/login');
+                }
+              } 
+              type="button"
+               />
             </div>
           </div>
           <div className="user-name"> {globalState?.loggedInUser?.name ?? "User"}</div>
