@@ -63,6 +63,7 @@ const MainHeaderMenu = () => {
 
   useEffect(() => {    
       fetchCategories();
+      // eslint-disable-next-line 
   }, [fetchCategories]);
 
   useEffect(() => {
@@ -71,6 +72,7 @@ const MainHeaderMenu = () => {
       
       fetchItems();
     }
+    // eslint-disable-next-line 
   }, [fetchItems]);
 
   const handleOptionChange = (e) => {
