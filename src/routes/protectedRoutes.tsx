@@ -16,16 +16,15 @@ const protectedRouteMap = Object.freeze({
   "/Splash": <Splash />,
   "/cart": <CreateMenuPage />,
   "/history": <TransactionHistory />,
-  "/addcustomer":<AddCustomers/>
-})
-
+  "/addcustomer": <AddCustomers />,
+});
 
 export const ProtectedRoute = () => {
   const isLoggedIn = true;
- 
+
   return (
     <>
-      <SideMenu/>
+      <SideMenu />
       <Routes>
         {Object.entries(protectedRouteMap).map(([route, component]) => {
           return (

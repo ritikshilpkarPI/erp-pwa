@@ -58,6 +58,7 @@ const LoginPage = () => {
       }
 
       if (result.token) {
+      typeof window !== 'undefined' &&  window.localStorage.setItem("token", result.token);
         navigate("/cart");
       }
     } catch (error) {

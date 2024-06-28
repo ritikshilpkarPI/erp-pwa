@@ -2,10 +2,28 @@ import React, { useEffect, useState } from "react";
 import "./CreateMenuPage.css";
 import CreateListTile from "./CreateListTile";
 import { AppStateContext, useAppContext } from "../../appState/appStateContext";
+import LoadingCircle from "../loadinCircule/LoadingCircle";
+
 
 const MenuPageBody = () => {
-  const { globalState, dispatch } = useAppContext(AppStateContext);
-  const [itemList, setItemList] = useState(globalState.items);
+  const [itemList, setItemList] = useState([]);
+  const { dispatch } = useAppContext(AppStateContext);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/items`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setItemList(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false); // Handle the loading state even in case of an error
+    }
+  };
 
   useEffect(() => {
     setItemList(globalState.items);
@@ -13,13 +31,15 @@ const MenuPageBody = () => {
 
   const addItem = (index) => {
     const item = itemList[index];
-    dispatch({ type: 'ADD_ITEM_TO_CART', payload: item });
-  }
+    dispatch({ type: "ADD_ITEM_TO_CART", payload: item });
+  };
 
   return (
     <div className="menu-page-body">
-      {itemList.map((item, index) => {
-        return (
+      {loading ? (
+        <LoadingCircle />
+      ) : (
+        itemList.map((item, index) => (
           <CreateListTile
             key={index}
             title={item.name}
@@ -27,8 +47,8 @@ const MenuPageBody = () => {
             price={item.price_per_unit}
             onClick={() => addItem(index)}
           />
-        );
-      })}
+        ))
+      )}
     </div>
   );
 };
