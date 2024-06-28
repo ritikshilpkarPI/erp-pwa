@@ -28,8 +28,9 @@ const MenuPageBody = () => {
     fetchData();
     setItemList(globalState.items);
   }, [globalState.items]);
-
+  
   const addItem = (index) => {
+    
     const item = itemList[index];
     dispatch({ type: "ADD_ITEM_TO_CART", payload: item });
   };
