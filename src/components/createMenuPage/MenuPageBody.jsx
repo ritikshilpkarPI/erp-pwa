@@ -8,7 +8,6 @@ const MenuPageBody = () => {
   const [itemList, setItemList] = useState([]);
   const { globalState, dispatch } = useAppContext(AppStateContext);
   const [loading, setLoading] = useState(false);
-  console.log(loading);
 
   useEffect(() => {
     setItemList(globalState.items);
@@ -29,7 +28,7 @@ const MenuPageBody = () => {
       {loading ? (
         <LoadingCircle />
       ) : (
-        itemList.map((item, index) => (
+        Boolean(itemList?.length) && itemList?.map((item, index) => (
           <CreateListTile
             key={index}
             title={item.name}
