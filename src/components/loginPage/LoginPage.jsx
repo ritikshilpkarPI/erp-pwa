@@ -35,7 +35,7 @@ const LoginPage = () => {
       setLoading(true);
 
       const responst = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/signin`,
+        `${process.env.REACT_APP_SIGNUP_URL}/login`,
         {
           method: "POST",
           headers: {
