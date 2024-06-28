@@ -4,13 +4,14 @@ export const appGlobalState: any = {
   items: [],
   bills: {},
   cartItems: [],
+  customers: [],
+  setCustomer: {},
   isOpen: false,
   loggedInUser: decodeJwtToken(localStorage.getItem("token")) ?? null,
   isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem("token"))),
   isLoading: false,
 };
 // import this in every component to access global state
-
 export const appStateReducer = (state: any, action: any) => {
   switch (action.type) {
     case "TOGGLE_DRAWER":
@@ -39,6 +40,23 @@ export const appStateReducer = (state: any, action: any) => {
         ...state,
         isLoading: !state.isLoading,
       };
+    
+    case "LOGOUT":
+        localStorage.removeItem('token');
+        return { ...state, loggedInUser: null, isLoggedIn: false, isOpen: false, cartItems: [] };
+
+    case "SET_CUSTOMERS_LIST":
+      const newCustomers = action?.payload ?? []
+      return { ...state, customers: newCustomers };
+
+    case "SET_CUSTOMER":
+      const newCustomer = action.payload ?? {}
+      console.log(newCustomer)
+      
+      return { ...state, setCustomer: newCustomer };
+
+
+
 
     default:
       return state;

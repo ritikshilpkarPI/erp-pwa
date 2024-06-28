@@ -19,6 +19,7 @@ const MenuPageBody = () => {
   }, [globalState.isLoading]);
 
   const addItem = (index) => {
+    
     const item = itemList[index];
     dispatch({ type: "ADD_ITEM_TO_CART", payload: item });
   };
