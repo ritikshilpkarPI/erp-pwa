@@ -3,10 +3,12 @@ import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
+import { useNavigate } from "react-router-dom";
 
 const CashBoard = ({ totalPrice }) => {
   const [InputCost, setInputCost] = useState();
   const submitHandler = (e) => e.preventDefault();
+  const navigate = useNavigate();
   return (
     <div className="cash-board">
       <div className="exact-amount">
@@ -35,7 +37,7 @@ const CashBoard = ({ totalPrice }) => {
           className="login-submit-button-input"
           title="Complete Payment"
           onClick={() => {
-            console.log("helo");
+            navigate('/transactionSuccessfull')
           }}
         />
       </form>
