@@ -17,7 +17,7 @@ const PlaceOrderScreen = () => {
         navigate('/customers');
     };
 
-    // Calculate the total price using useMemo for optimization
+   
     const totalPrice = useMemo(() => {
         return globalState.cartItems.reduce((total, item) => total + (item.price_per_unit * item.count), 0).toFixed(2);
     }, [globalState.cartItems]);
@@ -66,7 +66,7 @@ const PlaceOrderScreen = () => {
                     <h1>Subtotal</h1>
                     <h1>₹{totalPrice}</h1>
                 </div>
-                <div className='placeorder-bottom-button' onClick={()=>navigate('/payment')}>Place an order</div>
+                <div className='placeorder-bottom-button' onClick={()=> navigate('/payment')}>Place an order</div>
             </div>
         </div>
     );
