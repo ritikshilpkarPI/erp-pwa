@@ -21,8 +21,9 @@ export const appStateReducer = (state: any, action: any) => {
       };
 
     case "ADD_ITEM_TO_CART":
-      const newCartItems = [...state.cartItems, action.payload];
+      const newCartItems = [...action.payload];
       return { ...state, cartItems: newCartItems };
+
     case "ADD_ITEM_TO_BILL":
       const newItems = [...state.items];
       newItems.push(action.payload);
@@ -40,10 +41,10 @@ export const appStateReducer = (state: any, action: any) => {
         ...state,
         isLoading: !state.isLoading,
       };
-    
+
     case "LOGOUT":
-        localStorage.removeItem('token');
-        return { ...state, loggedInUser: null, isLoggedIn: false, isOpen: false, cartItems: [] };
+      localStorage.removeItem('token');
+      return { ...state, loggedInUser: null, isLoggedIn: false, isOpen: false, cartItems: [] };
 
     case "SET_CUSTOMERS_LIST":
       const newCustomers = action?.payload ?? []
@@ -52,7 +53,7 @@ export const appStateReducer = (state: any, action: any) => {
     case "SET_CUSTOMER":
       const newCustomer = action.payload ?? {}
       console.log(newCustomer)
-      
+
       return { ...state, setCustomer: newCustomer };
 
 

@@ -13,6 +13,8 @@ const MainHeaderMenu = () => {
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}`;
+  
   const handleSearch = () => {
     setOpenSearchBox(!openSearchBox);
   };
@@ -20,7 +22,7 @@ const MainHeaderMenu = () => {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/categories`
+        `${API}/categories`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -38,7 +40,7 @@ const MainHeaderMenu = () => {
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
       try {
-        const url = `${process.env.REACT_APP_SIGNUP_URL}/items`;
+        const url = `${API}/items`;
         const response = await fetch(url, {
           method: "POST",
           headers: {
