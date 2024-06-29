@@ -66,7 +66,7 @@ const PlaceOrderScreen = () => {
                     <h1>Subtotal</h1>
                     <h1>₹{totalPrice}</h1>
                 </div>
-                <div className='placeorder-bottom-button'>Place an order</div>
+                <div className='placeorder-bottom-button' onClick={()=>navigate('/payment')}>Place an order</div>
             </div>
         </div>
     );
