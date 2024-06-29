@@ -11,6 +11,8 @@ import AddCustomers from "../pages/AddCustomers";
 
 import PaymentPage from "../components/paymentPage/PaymentPage";
 import { AddProductForm } from "../pages/AddProduct";
+import { TransactionSuccessful } from "../pages/TransactionSuccessful";
+
 
 const protectedRouteMap = Object.freeze({
   "/about": <About />,
@@ -22,6 +24,7 @@ const protectedRouteMap = Object.freeze({
   "/addcustomer": <AddCustomers />,
   "/payment": <PaymentPage />,
   "/addproduct": <AddProductForm />,
+  "/transactionSuccessfull": <TransactionSuccessful />,
 });
 
 export const ProtectedRoute = () => {
