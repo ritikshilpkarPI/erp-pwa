@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./MainNav.css";
 import SearchIcon from "../../icons/SearchIcon";
 import BarCodeIcon from "../../icons/BarCodeIcon";
@@ -8,11 +8,13 @@ import CloseIcon from "../../icons/CloseIcon";
 import { AppStateContext, useAppContext } from "../../appState/appStateContext";
 
 const MainHeaderMenu = () => {
-  const { dispatch } = useAppContext(AppStateContext);
+  const { dispatch, globalState } = useAppContext(AppStateContext);
   const [openSearchBox, setOpenSearchBox] = useState(false);
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}`;
+  
   const handleSearch = () => {
     setOpenSearchBox(!openSearchBox);
   };
@@ -20,7 +22,7 @@ const MainHeaderMenu = () => {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/categories`
+        `${API}/categories`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -33,12 +35,12 @@ const MainHeaderMenu = () => {
       console.error("Error fetching categories:", error);
       dispatch({ type: "SET_LOADING" });
     }
-  }, [dispatch]);
+  }, [API, dispatch]);
 
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
       try {
-        const url = `${process.env.REACT_APP_SIGNUP_URL}/items`;
+        const url = `${API}/items`;
         const response = await fetch(url, {
           method: "POST",
           headers: {
@@ -58,21 +60,25 @@ const MainHeaderMenu = () => {
         console.error("Error fetching items:", error);
       }
     },
-    [dispatch]
+    [API, dispatch]
   );
 
-  useEffect(() => {
-    fetchCategories();
+  useEffect(() => {    
+      fetchCategories();
+      
   }, [fetchCategories]);
 
   useEffect(() => {
-    fetchItems();
-  }, [fetchItems]);
+    if (globalState?.items?.length === 0) {
+      fetchItems();
+    }
+  }, [fetchItems, globalState.items]);
 
   const handleOptionChange = (e) => {
     const categoryId = e.target.value;
     fetchItems(categoryId, searchQuery);
   };
+
   function debounce(func, wait) {
     let timeout;
     return function (...args) {

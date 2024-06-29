@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./LoginPage.css";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import ButtonInput from "../buttonInput/ButtonInput";
@@ -7,11 +7,14 @@ import backButtonImage from "../../image/BackButton.svg";
 
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
+import { AppStateContext } from "../../appState/appStateContext";
 
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { dispatch } = useContext(AppStateContext);
+
 
   const htmlErrow = ">";
 
@@ -58,6 +61,7 @@ const LoginPage = () => {
       }
 
       if (result.token) {
+        dispatch({ type: "SET_USER", payload: result.user })
       typeof window !== 'undefined' &&  window.localStorage.setItem("token", result.token);
         navigate("/cart");
       }

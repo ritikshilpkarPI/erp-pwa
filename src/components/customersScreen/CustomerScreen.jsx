@@ -72,9 +72,9 @@ const CustomerScreen = () => {
                     </div>
                 ))}
             </div>
-            <div className="customer-bottom" onClick={() => navigate('/addcustomer')}>
+            { Boolean(globalState?.customers) && <div className="customer-bottom" onClick={() => navigate('/addcustomer')}>
                 <div className="customer-bottom-button">Add a new client</div>
-            </div>
+            </div>}
         </div>
     );
 };

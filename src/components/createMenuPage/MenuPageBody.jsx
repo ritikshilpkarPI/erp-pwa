@@ -1,26 +1,52 @@
 import React, { useEffect, useState } from "react";
 import "./CreateMenuPage.css";
 import CreateListTile from "./CreateListTile";
-import { AppStateContext, useAppContext } from "../../appState/appStateContext";
+import { useAppContext } from "../../appState/appStateContext";
 import LoadingCircle from "../loadinCircule/LoadingCircle";
 
 const MenuPageBody = () => {
+  const { globalState, dispatch } = useAppContext();
+  const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}/items`;
+
+  const [loading, setLoading] = useState(true);
   const [itemList, setItemList] = useState([]);
-  const { globalState, dispatch } = useAppContext(AppStateContext);
-  const [loading, setLoading] = useState(false);
+  const [cartList, setCartList] = useState([]);
 
   useEffect(() => {
-    setItemList(globalState.items);
-  }, [globalState.items]);
+    fetch(API, {method: "POST"})
+      .then((res) => res.json())
+      .then((res) => {
+        dispatch({ type: 'SET_ITEMS', payload: res });
+        setItemList(res);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching items:', error);
+        setLoading(false);
+      });
+  }, [API, dispatch]);
 
-  useEffect(() => {
-    setLoading(globalState.isLoading);
-  }, [globalState.isLoading]);
+  const addItem = (itemID) => {
+    let carItemsListCopy = [...cartList]
+    const selectedItem = itemList.find(item => item._id === itemID);
 
-  const addItem = (index) => {
+    if (selectedItem) {
+      const existingCartItem = cartList.find(cartItem => cartItem._id === itemID);
     
-    const item = itemList[index];
-    dispatch({ type: "ADD_ITEM_TO_CART", payload: item });
+      if (existingCartItem) {
+
+        carItemsListCopy = cartList.map(cartItem =>
+          cartItem._id === itemID ? { ...cartItem, count: cartItem.count + 1 } : cartItem
+        );
+        setCartList(carItemsListCopy);
+      } else {
+        carItemsListCopy = [...cartList, { ...selectedItem, count: 1 }]
+        setCartList(carItemsListCopy);
+      }
+    }
+
+    dispatch({ type: 'ADD_ITEM_TO_CART', payload: carItemsListCopy });
+
   };
 
   return (
@@ -28,13 +54,13 @@ const MenuPageBody = () => {
       {loading ? (
         <LoadingCircle />
       ) : (
-        Boolean(itemList?.length) && itemList?.map((item, index) => (
+        globalState.items.map((item, index) => (
           <CreateListTile
             key={index}
             title={item.name}
             subtitle={item.sold_by}
             price={item.price_per_unit}
-            onClick={() => addItem(index)}
+            onClick={() => addItem(item._id)}
           />
         ))
       )}

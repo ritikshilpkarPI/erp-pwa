@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import './PlaceOrderScreen.css';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import DeleteIcon from '../../icons/DeleteIcon';
@@ -10,12 +10,17 @@ const PlaceOrderScreen = () => {
     const navigate = useNavigate();
 
     const handleClickBack = () => {
-        navigate(-1); 
+        navigate(-1);
     };
 
     const handleClickCustomer = () => {
-        navigate('/customers'); 
+        navigate('/customers');
     };
+
+    // Calculate the total price using useMemo for optimization
+    const totalPrice = useMemo(() => {
+        return globalState.cartItems.reduce((total, item) => total + (item.price_per_unit * item.count), 0).toFixed(2);
+    }, [globalState.cartItems]);
 
     return (
         <div className="placeorder-screen-container">
@@ -34,15 +39,14 @@ const PlaceOrderScreen = () => {
                 <button>Eat-in</button>
             </div>
             <div className='placeorder-content'>
-                <div className='placeorder-content-div'>
-                    <button>5</button>
-                    <div className='placeorder-menu'>Black Paper Wagyu</div>
-                    <div className='placeorder-price'>₹420.99</div>
-                </div>
-                <div className='placeorder-content-div'>
-                    <button>1</button>
-                    <div className='placeorder-menu'>Wagyu Satay</div>
-                    <div className='placeorder-price'>₹227.99</div>
+                <div className='placeorder-list-content'>
+                    {globalState?.cartItems?.map((cartItem, index) => (
+                        <div className='placeorder-content-div' key={index}>
+                            <button>{cartItem.count}</button>
+                            <div className='placeorder-menu'>{cartItem.name}</div>
+                            <div className='placeorder-price'>₹{cartItem.price_per_unit}</div>
+                        </div>
+                    ))}
                 </div>
                 <div className='placeorder-diskon'>
                     <h1>Discount</h1>
@@ -50,7 +54,7 @@ const PlaceOrderScreen = () => {
                 </div>
                 <div className='placeorder-total'>
                     <h1>Subtotal</h1>
-                    <h1>₹648.98</h1>
+                    <h1>₹{totalPrice}</h1>
                 </div>
                 <div className='placeorder-delete'>
                     <DeleteIcon />
@@ -60,7 +64,7 @@ const PlaceOrderScreen = () => {
             <div className='placeorder-bottom'>
                 <div className='placeorder-total'>
                     <h1>Subtotal</h1>
-                    <h1>₹648.98</h1>
+                    <h1>₹{totalPrice}</h1>
                 </div>
                 <div className='placeorder-bottom-button'>Place an order</div>
             </div>
