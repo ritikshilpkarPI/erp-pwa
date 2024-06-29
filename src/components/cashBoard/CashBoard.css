@@ -45,11 +45,11 @@
 .cash-page-form{
     margin-top: 10px;
     background-color: white;
-    
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .login-submit-button-input{
-   position: relative;
+   position: absolute;
    bottom: 20px;
-   margin-top: 180px;
 }
