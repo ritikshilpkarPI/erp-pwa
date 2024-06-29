@@ -10,7 +10,7 @@ const MenuPageBody = () => {
 
   const [loading, setLoading] = useState(true);
   const [itemList, setItemList] = useState([]);
-  const [cartList, setCartList] = useState([]);
+  const [cartList, setCartList] = useState(globalState?.cartItems);
 
   useEffect(() => {
     fetch(API, {method: "POST"})
