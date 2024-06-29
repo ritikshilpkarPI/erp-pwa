@@ -8,6 +8,7 @@ import CreateMenuPage from "../components/createMenuPage/CreateMenuPage";
 import { TransactionHistory } from "../components/transactionHistory/TransactionHistory";
 import SideMenu from "../components/sideMenu/SideMenu";
 import AddCustomers from "../pages/AddCustomers";
+
 import PaymentPage from "../components/paymentPage/PaymentPage";
 
 const protectedRouteMap = Object.freeze({
@@ -18,6 +19,7 @@ const protectedRouteMap = Object.freeze({
   "/cart": <CreateMenuPage />,
   "/history": <TransactionHistory />,
   "/addcustomer": <AddCustomers />,
+  
   "/payment":<PaymentPage/>
 });
 
