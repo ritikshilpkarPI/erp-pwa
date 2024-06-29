@@ -1,0 +1,28 @@
+.cheque-board{
+    font-size: 1rem;
+    background-color: white;
+    padding: 10px 30px;
+}
+
+.cheque-page-input1,.cheque-page-input2,.cheque-page-input3,.cheque-page-input4{
+    height: 56px;
+    padding: 21px 24px;
+    font-size: 12px;
+    color: #2A3256;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    border: none;
+}
+.cheque-page-input1-label,.cheque-page-input2-laber,.cheque-page-input3-laber,.cheque-page-input4-laber{
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.cheque-page-input4{
+    width: 325px;
+    
+}
+
+.chequbtn{
+    margin-top: 30px;
+}
