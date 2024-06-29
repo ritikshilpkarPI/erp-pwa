@@ -49,7 +49,7 @@ const AddCustomerPage = () => {
       if (response.ok) {
         const data = await response.json();
         dispatch({ type: 'ADD_CUSTOMER', payload: data });
-        navigate("/customer"); 
+        navigate("/customers"); 
       } else {
         console.error('Failed to submit form:', response.statusText);
       }

@@ -114,6 +114,8 @@
 
 
   >.customer-bottom {
+    background-color: #1a72dd;
+    color: white;
 
     >.customer-bottom-button {
 
@@ -121,8 +123,6 @@
       height: 57px;
       gap: 0px;
       border-radius: 5px 0px 0px 0px;
-      opacity: 0px;
-
 
       color: white;
       display: flex;

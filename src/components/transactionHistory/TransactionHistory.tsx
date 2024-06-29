@@ -1,5 +1,7 @@
 import React from "react";
 import "./TransactionHistory.css"
+import backButtonImage from "../../image/BackButton.svg";
+import { useNavigate } from "react-router-dom";
 
 const TransactionCard = ({ amount, time, transactionId }: any) => (
   <article className="transaction-card">
@@ -31,12 +33,16 @@ export function TransactionHistory() {
       { amount: "INR 620.99", time: "08.00 AM", transactionId: "TRX0101211113" },
     ]},
   ];
+  const navigate = useNavigate();
 
   return (
     <>
       <main className="transaction-history">
         <header className="header">
-          <h1 className="title">Transaction History</h1>
+        <div className='navigation-button-container-history' onClick={()=> { navigate(-1) }}>
+            <img className={'navigation-button-container-history-btn'} src={backButtonImage} alt="backButtonImage" />
+          <h1 className="title navigation-button-container-history-btn-title">Transaction History</h1>
+        </div>
           <div className="filter-section">
             <div className="filter-label">
               <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/1e1014186ee482b9f7f7ef6a523f6f756981b0dc6bd24b1364ee7b877e96ba36?apiKey=d03ff6b018f84c75b88104249d2053b6&" className="filter-icon" alt="" />

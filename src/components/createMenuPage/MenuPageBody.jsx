@@ -32,11 +32,7 @@ const MenuPageBody = () => {
 
     if (selectedItem) {
       const existingCartItem = cartList.find(cartItem => cartItem._id === itemID);
-      // const cartListObj = {
-      //   asda89128bdnfsjnd: { itemname, category, quantity: 1},
-      //   sdasqw0909enefwoi: { itemname, category, quantity: 1}
-      // }
-      // cartListObj[itemID] ? cartListObj[itemID].quantity++ : cartListObj[itemID] = { ...selectedItem. quantity: 1}
+    
       if (existingCartItem) {
 
         carItemsListCopy = cartList.map(cartItem =>
