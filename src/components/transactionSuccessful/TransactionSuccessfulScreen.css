@@ -1,0 +1,71 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.TransactionSuccessfull-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 100vh;
+  width: 100vw;
+
+  > .TransactionSuccessfull-header {
+    padding: 10px 20px;
+  }
+  > .TransactionSuccessfull-content {
+    padding: 20px;
+    > .TransactionSuccessfull-heading {
+      color: #1a72dd;
+      font-size: 27px;
+      padding-bottom: 10px;
+    }
+  }
+  > .TransactionSuccessfull-content-button {
+    height: 100px;
+    background-color: #1a72dd;
+    margin: 0 16px;
+    padding: 15px 20px;
+     border-radius: 10px;
+    > .TransactionSuccessfull-content {
+        border-bottom: 1px solid white;
+      > .TransactionSuccessfull-heading {
+        color: white;
+        font-size: 18px;
+        padding: 7px 13px;
+      }
+    }
+    > .TransactionSuccessfull-content2 {
+      > .TransactionSuccessfull-heading {
+        color: white;
+        font-size: 18px;
+        padding: 7px 13px;
+      }
+    }
+  }
+  >.TransactionSuccessfull-footer{
+    padding: 30px 20px;
+    > .TransactionSuccessfull-button-email{
+        width: 300px;
+        padding: 20px 20px ;
+        border: 1px solid rgba(189, 189, 189, 1);
+        color: rgba(189, 189, 189, 1);
+         border-radius: 10px;
+         font-size: 15px;
+         background-color: white;
+    }
+    >.TransactionSuccessfull-button-send-receipt{
+        width: 300px;
+        padding: 20px 20px ;
+        font-weight: bold;
+        font-size: 16px;
+        color: #1a72dd;
+        margin-top: 10px;
+        border-radius: 10px;
+        background-color: rgba(26, 114, 221, 0.1);
+        border: none;
+    }
+  }
+}
