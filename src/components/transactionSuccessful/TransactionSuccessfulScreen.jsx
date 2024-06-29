@@ -6,22 +6,20 @@ const TransactionSuccessfulScreen = () => {
     const onClick = () => {
         navigate('/cart')
     }
+    const amount = "170.0";
     return (
-      <>
+      <div className="TransactionSuccessfull">
         <div className="TransactionSuccessfull-main-container">
           <div className="TransactionSuccessfull-header">
-            <img
-              src={TransactionIcon}
-              alt=""
-              height={"250px"}
-              width={"250px"}
-            />
+            <img src={TransactionIcon} alt="" className="transaction-icon" />
           </div>
           <div className="TransactionSuccessfull-content">
             <h2 className="TransactionSuccessfull-heading">
               Transaction successful!
             </h2>
-            <p>NOTE: Don't forget to smile at the customers.</p>
+            <p className="TransactionSuccessfull-note">
+              NOTE: Don't forget to smile at the customers.
+            </p>
           </div>
           <div className="TransactionSuccessfull-content-button">
             <div className="TransactionSuccessfull-content">
@@ -31,18 +29,28 @@ const TransactionSuccessfulScreen = () => {
             </div>
             <div className="TransactionSuccessfull-content2">
               <h1 className="TransactionSuccessfull-heading">
-                Change: GNF 170.00
+                Change: GNF {amount}
               </h1>
             </div>
           </div>
           <div className="TransactionSuccessfull-footer">
-            <button className="TransactionSuccessfull-button-email">Email</button>
-            <button className="TransactionSuccessfull-button-send-receipt" onClick={onClick}>
+            <button className="TransactionSuccessfull-button-email">
+              Email
+            </button>
+            <button className="TransactionSuccessfull-button-send-receipt">
               SEND RECEIPT
             </button>
           </div>
         </div>
-      </>
+        <div className="TransactionSuccessfull-button-container">
+          <button className="transaction-print-receipt-button">
+            PRINT RECEIPT
+          </button>
+          <button className="transaction-next-order-button" onClick={onClick}>
+            NEXT ORDER
+          </button>
+        </div>
+      </div>
     );
 }
 export default TransactionSuccessfulScreen

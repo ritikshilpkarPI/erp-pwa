@@ -3,62 +3,93 @@
   padding: 0;
   box-sizing: border-box;
 }
-.TransactionSuccessfull-main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-
+.TransactionSuccessfull {
   height: 100vh;
   width: 100vw;
+  background-color: #1a72dd;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: scroll;
 
-  > .TransactionSuccessfull-header {
-    padding: 10px 20px;
-  }
-  > .TransactionSuccessfull-content {
-    padding: 20px;
-    > .TransactionSuccessfull-heading {
-      color: #1a72dd;
-      font-size: 27px;
-      padding-bottom: 10px;
+  > .TransactionSuccessfull-main-container {
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    border-radius: 10px;
+    gap: 10px;
+    > .TransactionSuccessfull-header {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      > .transaction-icon {
+        width: 150px;
+        height: 150px;
+      }
     }
-  }
-  > .TransactionSuccessfull-content-button {
-    height: 100px;
-    background-color: #1a72dd;
-    margin: 0 16px;
-    padding: 15px 20px;
-     border-radius: 10px;
     > .TransactionSuccessfull-content {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      > .TransactionSuccessfull-heading {
+        color: #1a72dd;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      > .TransactionSuccessfull-note {
+        font-size: 13px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    > .TransactionSuccessfull-content-button {
+      height: 70px;
+      background-color: #1a72dd;
+      padding: 8px 30px;
+      border-radius: 10px;
+      > .TransactionSuccessfull-content {
         border-bottom: 1px solid white;
-      > .TransactionSuccessfull-heading {
-        color: white;
-        font-size: 18px;
-        padding: 7px 13px;
+        > .TransactionSuccessfull-heading {
+          color: white;
+          font-size: 14px;
+          padding: 5px 13px;
+        }
+      }
+      > .TransactionSuccessfull-content2 {
+        > .TransactionSuccessfull-heading {
+          color: white;
+          font-size: 14px;
+          padding: 5px 13px;
+        }
       }
     }
-    > .TransactionSuccessfull-content2 {
-      > .TransactionSuccessfull-heading {
-        color: white;
-        font-size: 18px;
-        padding: 7px 13px;
-      }
-    }
-  }
-  >.TransactionSuccessfull-footer{
-    padding: 30px 20px;
-    > .TransactionSuccessfull-button-email{
-        width: 300px;
-        padding: 20px 20px ;
+    > .TransactionSuccessfull-footer {
+      padding: 10px;
+      > .TransactionSuccessfull-button-email {
+        width: 230px;
+        padding: 15px 15px;
         border: 1px solid rgba(189, 189, 189, 1);
         color: rgba(189, 189, 189, 1);
-         border-radius: 10px;
-         font-size: 15px;
-         background-color: white;
-    }
-    >.TransactionSuccessfull-button-send-receipt{
-        width: 300px;
-        padding: 20px 20px ;
+        border-radius: 10px;
+        font-size: 15px;
+        background-color: white;
+        cursor: pointer;
+      }
+      > .TransactionSuccessfull-button-send-receipt {
+        width: 230px;
+        padding: 20px 20px;
         font-weight: bold;
         font-size: 16px;
         color: #1a72dd;
@@ -66,6 +97,42 @@
         border-radius: 10px;
         background-color: rgba(26, 114, 221, 0.1);
         border: none;
+        cursor: pointer;
+      }
+    }
+  }
+  > .TransactionSuccessfull-button-container {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    > .transaction-print-receipt-button {
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      border: 1px solid white;
+      color: white;
+      background-color: #1a72dd;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    > .transaction-next-order-button {
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      color: #1a72dd;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
     }
   }
 }
