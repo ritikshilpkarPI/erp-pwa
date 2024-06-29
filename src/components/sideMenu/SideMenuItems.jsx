@@ -13,10 +13,10 @@ const SideMenuItems = [
     label: "Transaction History",
     route: "/history",
   },
-  { logo: <ReportImg />, label: "Rapport", route: "" },
-  { logo: <ShopImg />, label: "Manage the Store", route: "" },
+  { logo: <ShopImg />, label: "Add Product", route: "/addproduct" },
+  { logo: <ReportImg />, label: "Manage the Store", route: "" },
 
-  { logo: <UserImg />, label: "Compete", route: "" },
+  { logo: <UserImg />, label: "Customer List", route: "/customers" },
   { logo: <SupportImg />, label: "Support", route: "" },
 ];
 

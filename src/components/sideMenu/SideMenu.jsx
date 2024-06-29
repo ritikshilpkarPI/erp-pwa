@@ -56,8 +56,8 @@ const SideMenu = () => {
             </div>
           </div>
           <div className="user-name">
-            {" "}
-            {globalState?.loggedInUser?.name ?? "User"}
+            {" Hey 👋   "} {"   "}
+            <span className="user-name-text">{globalState?.loggedInUser?.name ?? "User"}</span>
           </div>
           {/* <DropDown options={options} /> */}
           <div className="line"></div>

@@ -59,7 +59,12 @@
     .sidemenu-header-button {
       .sidemenu-header-btn {
         width: 70px;
-        padding: 3px;
+        padding: 6px;
+        border-radius: 9px;
+        border: none;
+        font-size: 12px;
+        font-weight: 500;
+        color: #1369D1;
       }
     }
   }
@@ -195,4 +200,13 @@
       }
     }
   }
+}
+
+.user-name-text {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 26.07px;
+  text-align: left;
+  margin-left: 5px;
+  text-transform: capitalize;
 }
