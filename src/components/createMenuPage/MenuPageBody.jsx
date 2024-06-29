@@ -13,7 +13,7 @@ const MenuPageBody = () => {
   const [cartList, setCartList] = useState([]);
 
   useEffect(() => {
-    fetch(API)
+    fetch(API, {method: "POST"})
       .then((res) => res.json())
       .then((res) => {
         dispatch({ type: 'SET_ITEMS', payload: res });
