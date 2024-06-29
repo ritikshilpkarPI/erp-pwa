@@ -18,9 +18,7 @@ const protectedRouteMap = Object.freeze({
   "/Splash": <Splash />,
   "/cart": <CreateMenuPage />,
   "/history": <TransactionHistory />,
-  "/addcustomer": <AddCustomers />,
-  
-  "/payment":<PaymentPage/>
+  "/addcustomer": <AddCustomers />,"/payment":<PaymentPage/>
 });
 
 export const ProtectedRoute = () => {
