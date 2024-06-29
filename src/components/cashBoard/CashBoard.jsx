@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const CashBoard = ({ totalPrice }) => {
   const [InputCost, setInputCost] = useState();
-  const submitHandler = (e) => e.preventDefault();
   const navigate = useNavigate();
+  const submitHandler = (e) => e.preventDefault();
   return (
     <div className="cash-board">
       <div className="exact-amount">
@@ -28,7 +28,7 @@ const CashBoard = ({ totalPrice }) => {
         <TextInput
           className="cash-page-input1"
           type="number"
-          labelTitle={InputCost>totalPrice?"Amount Give":"Amount Due"}
+          labelTitle={InputCost > totalPrice ? "Amount Give" : "Amount Due"}
           placeholder="INR 0"
           value={InputCost - totalPrice}
         />
@@ -37,7 +37,12 @@ const CashBoard = ({ totalPrice }) => {
           className="login-submit-button-input"
           title="Complete Payment"
           onClick={() => {
-            navigate('/transactionSuccessfull')
+            navigate("/transactionSuccessfull", {
+              state: {
+                mode: "CASH",
+                prize: totalPrice,
+              },
+            });
           }}
         />
       </form>

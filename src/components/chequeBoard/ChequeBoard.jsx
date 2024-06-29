@@ -4,7 +4,7 @@ import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
 import { useNavigate } from "react-router-dom";
 
-const ChequeBoard = ({totalPrice}) => {
+const ChequeBoard = ({ totalPrice }) => {
   const [chequename, setChequeName] = useState("");
   const [chequeNumber, setChequeNumber] = useState("");
   const [chequeAmount, setChequeAmount] = useState("");
@@ -56,7 +56,12 @@ const ChequeBoard = ({totalPrice}) => {
           className="login-submit-button-input chequbtn"
           title="Complete Payment"
           onClick={() => {
-            navigate('/transactionSuccessfull')
+            navigate("/transactionSuccessfull", {
+              state: {
+                mode: "CHEQUE",
+                prize: totalPrice,
+              },
+            });
           }}
         />
       </form>
