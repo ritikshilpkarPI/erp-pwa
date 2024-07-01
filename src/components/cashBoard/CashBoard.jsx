@@ -15,12 +15,14 @@ const CashBoard = ({ totalPrice, onClick }) => {
     e.preventDefault();
     onClick();
     dispatch({ type: 'ADD_ITEM_TO_CART', payload: [] });
-    navigate("/transactionSuccessfull", {
-      state: {
-        mode: "CASH",
-        prize: totalPrice,
-      },
-    });
+    if(inputCost>0){
+      navigate("/transactionSuccessfull", {
+        state: {
+          mode: "CASH",
+          prize: totalPrice,
+        },
+      });
+    }
   };
 
   return (
@@ -36,7 +38,7 @@ const CashBoard = ({ totalPrice, onClick }) => {
           placeholder="INR 0"
           value={inputCost}
           onChange={(e) => {
-            setInputCost(parseInt(e.target.value, 10));
+            setInputCost(parseInt(e.target.value, 10) || 0);
           }}
         />
         <TextInput
@@ -51,6 +53,7 @@ const CashBoard = ({ totalPrice, onClick }) => {
           type="submit"
           className="login-submit-button-input"
           title="Complete Payment"
+          disabled={inputCost === 0 || inputCost === ""}
         />
       </form>
     </div>
