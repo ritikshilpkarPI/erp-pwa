@@ -45,7 +45,7 @@ body {
 
 .create-list-tile {
   width: 95%;
-  margin: auto;
+  margin:  0 auto;
   height: 86px;
   background-color: rgb(246, 243, 243);
   border-radius: 12px;
@@ -95,9 +95,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  padding: 6px;
+  padding: 8px;
   width: max-content;
-  height: 30px;
+  height: 35px;
   max-width: 100%;
   > .count {
     color: #fff;
@@ -105,6 +105,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  >.tile-minus-btn{
+    width: 24px;
+    margin-left: 5px;
+    background-color: #f4f5fa;
   }
 }
 
