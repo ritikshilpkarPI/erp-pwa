@@ -6,7 +6,7 @@ import LoadingCircle from "../loadinCircule/LoadingCircle";
 
 const MenuPageBody = () => {
   const { globalState, dispatch } = useAppContext();
-  const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}/items`;
+  const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/items`;
 
   const [loading, setLoading] = useState(true);
   const [itemList, setItemList] = useState([]);
