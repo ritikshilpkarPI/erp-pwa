@@ -57,7 +57,12 @@ const ChequeBoard = ({totalPrice ,onClick}) => {
           className="login-submit-button-input chequbtn"
           title="Complete Payment"
           onClick={() => {
-            navigate('/transactionSuccessfull')
+            navigate("/transactionSuccessfull", {
+              state: {
+                mode: "CHEQUE",
+                prize: totalPrice,
+              },
+            });
           }}
         />
       </form>

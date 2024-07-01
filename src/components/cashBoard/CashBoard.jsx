@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
@@ -6,9 +7,11 @@ import ButtonInput from "../buttonInput/ButtonInput";
 
 const CashBoard = ({ totalPrice, onClick }) => {
   const [inputCost, setInputCost] = useState(0);
+  const navigate = useNavigate();
+
   const submitHandler = (e) => {
     e.preventDefault();
-    onClick(); 
+    onClick();
   };
 
   return (
@@ -40,6 +43,12 @@ const CashBoard = ({ totalPrice, onClick }) => {
           className="login-submit-button-input"
           title="Complete Payment"
           onClick={() => {
+            navigate("/transactionSuccessfull", {
+              state: {
+                mode: "CASH",
+                prize: totalPrice,
+              },
+            });
           }}
         />
       </form>
