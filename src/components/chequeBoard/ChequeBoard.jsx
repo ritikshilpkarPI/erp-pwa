@@ -4,7 +4,7 @@ import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
 import { useNavigate } from "react-router-dom";
 
-const ChequeBoard = ({ totalPrice }) => {
+const ChequeBoard = ({totalPrice ,onClick}) => {
   const [chequename, setChequeName] = useState("");
   const [chequeNumber, setChequeNumber] = useState("");
   const [chequeAmount, setChequeAmount] = useState("");
@@ -12,6 +12,7 @@ const ChequeBoard = ({ totalPrice }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    onClick()
   };
 
   const navigate = useNavigate();

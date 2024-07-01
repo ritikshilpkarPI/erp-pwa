@@ -52,8 +52,6 @@ export const appStateReducer = (state: any, action: any) => {
 
     case "SET_CUSTOMER":
       const newCustomer = action.payload ?? {}
-      console.log(newCustomer)
-
       return { ...state, setCustomer: newCustomer };
 
       case "SET_USER":

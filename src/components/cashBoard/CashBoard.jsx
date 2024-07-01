@@ -1,14 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
-import { useNavigate } from "react-router-dom";
 
-const CashBoard = ({ totalPrice }) => {
-  const [InputCost, setInputCost] = useState();
+const CashBoard = ({ totalPrice, onClick }) => {
+  const [inputCost, setInputCost] = useState(0);
   const navigate = useNavigate();
-  const submitHandler = (e) => e.preventDefault();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    onClick();
+  };
+
   return (
     <div className="cash-board">
       <div className="exact-amount">
@@ -20,7 +25,7 @@ const CashBoard = ({ totalPrice }) => {
           type="number"
           labelTitle="Input costs"
           placeholder="INR 0"
-          value={InputCost}
+          value={inputCost}
           onChange={(e) => {
             setInputCost(parseInt(e.target.value, 10));
           }}
@@ -28,9 +33,10 @@ const CashBoard = ({ totalPrice }) => {
         <TextInput
           className="cash-page-input1"
           type="number"
-          labelTitle={InputCost > totalPrice ? "Amount Give" : "Amount Due"}
+          labelTitle={inputCost > totalPrice ? "Amount Given" : "Amount Due"}
           placeholder="INR 0"
-          value={InputCost - totalPrice}
+          value={inputCost - totalPrice}
+          readOnly
         />
         <ButtonInput
           type="submit"

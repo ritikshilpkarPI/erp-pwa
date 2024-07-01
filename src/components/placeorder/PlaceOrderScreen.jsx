@@ -17,7 +17,7 @@ const PlaceOrderScreen = () => {
         navigate('/payment');
     };
 
-    // Calculate the total price using useMemo for optimization
+   
     const totalPrice = useMemo(() => {
         return globalState.cartItems.reduce((total, item) => total + (item.price_per_unit * item.count), 0).toFixed(2);
     }, [globalState.cartItems]);
