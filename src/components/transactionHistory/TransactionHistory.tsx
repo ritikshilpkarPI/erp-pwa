@@ -51,7 +51,7 @@ export function TransactionHistory() {
   const formatTransactionHistory = (data: any[]) => {
     // Group transactions by date
     const groupedTransactions = data.reduce((acc: any, transaction: any) => {
-      const date = new Date(transaction.date_of_sale).toLocaleDateString("en-US", {
+      const date = new Date(transaction.date_of_sale)?.toLocaleDateString("en-US", {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
       });
       const time = new Date(transaction.date_of_sale).toLocaleTimeString("en-US", {
@@ -65,11 +65,11 @@ export function TransactionHistory() {
         };
       }
 
-      acc[date].totalAmount += transaction.totalAmount;
+      acc[date].totalAmount += transaction?.totalAmount;
       acc[date].items.push({
-        amount: `INR ${transaction.totalAmount.toFixed(2)}`,
+        amount: `INR ${transaction?.totalAmount?.toFixed(2)}`,
         time,
-        transactionId: transaction._id
+        transactionId: transaction?._id
       });
 
       return acc;
@@ -77,7 +77,7 @@ export function TransactionHistory() {
 
     return Object.entries(groupedTransactions).map(([date, { totalAmount, items }]: any) => ({
       date,
-      totalAmount: `INR ${totalAmount.toFixed(2)}`,
+      totalAmount: `INR ${totalAmount?.toFixed(2)}`,
       items
     }));
   };
@@ -110,16 +110,16 @@ export function TransactionHistory() {
             />
           </div>
         </header>
-        {formattedTransactionHistory.length > 0 ? (
-          formattedTransactionHistory.map((transactionGroup, index) => (
+        {formattedTransactionHistory?.length > 0 ? (
+          formattedTransactionHistory?.map((transactionGroup, index) => (
             <React.Fragment key={index}>
-              <DateSummary date={transactionGroup.date} totalAmount={transactionGroup.totalAmount} />
-              {transactionGroup.items.map((transactionItem: any, itemIndex: number) => (
+              <DateSummary date={transactionGroup?.date} totalAmount={transactionGroup?.totalAmount} />
+              {transactionGroup?.items?.map((transactionItem: any, itemIndex: number) => (
                 <TransactionCard
                   key={itemIndex}
-                  amount={transactionItem.amount}
-                  time={transactionItem.time}
-                  transactionId={transactionItem.transactionId}
+                  amount={transactionItem?.amount}
+                  time={transactionItem?.time}
+                  transactionId={transactionItem?.transactionId}
                 />
               ))}
             </React.Fragment>
