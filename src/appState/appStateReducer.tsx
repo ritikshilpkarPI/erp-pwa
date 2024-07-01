@@ -6,10 +6,13 @@ export const appGlobalState: any = {
   cartItems: [],
   customers: [],
   setCustomer: {},
+  transactionHistory: [],
   isOpen: false,
   loggedInUser: decodeJwtToken(localStorage.getItem("token")) ?? null,
   isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem("token"))),
   isLoading: false,
+  totalCartPrice: 0
+
 };
 // import this in every component to access global state
 export const appStateReducer = (state: any, action: any) => {
@@ -23,6 +26,10 @@ export const appStateReducer = (state: any, action: any) => {
     case "ADD_ITEM_TO_CART":
       const newCartItems = [...action.payload];
       return { ...state, cartItems: newCartItems };
+
+    case "SET_TRANSACTION_HISTORY":
+      const newTransactionHistory = action?.payload ?? []
+      return { ...state, transactionHistory: newTransactionHistory };
 
     case "ADD_ITEM_TO_BILL":
       const newItems = [...state.items];
@@ -64,6 +71,9 @@ export const appStateReducer = (state: any, action: any) => {
       const loggedInUser =
         decodeJwtToken(localStorage.getItem("token")) ?? null;
       return { ...state, loggedInUser, isLoggedIn: Boolean(loggedInUser) };
+
+    case "SET_TOTAL_CART_PRICE":
+      return { ...state, totalCartPrice: action.payload }
 
     default:
       return state;

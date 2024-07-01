@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../appState/appStateContext";
 
 const TotalBar = ({ element }) => {
-  const { globalState } = useAppContext();
+  const { globalState, dispatch } = useAppContext();
   const navigate = useNavigate();
 
   const onclick = () => {
+
+    dispatch("SET_TOTAL_CART_PRICE", totalPrice)
     navigate('/placeorder');
   };
 
