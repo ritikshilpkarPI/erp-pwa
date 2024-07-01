@@ -54,7 +54,7 @@ const MenuPageBody = () => {
       {loading ? (
         <LoadingCircle />
       ) : (
-        globalState.items.map((item, index) => (
+        globalState?.items?.map((item, index) => (
           <CreateListTile
             key={index}
             title={item.name}
