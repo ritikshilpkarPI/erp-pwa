@@ -3,14 +3,25 @@ import "./CreateMenuPage.css";
 import CreateListTile from "./CreateListTile";
 import { useAppContext } from "../../appState/appStateContext";
 import LoadingCircle from "../loadinCircule/LoadingCircle";
+import { Player } from "@lottiefiles/react-lottie-player";
+import noDataAnimation from "../../animation/noDataAnimation.json";
 
 const MenuPageBody = () => {
   const { globalState, dispatch } = useAppContext();
   const [cartList, setCartList] = useState(globalState.cartItems);
+  const [showNoDataAnimation, setShowNoDataAnimation] = useState(false);
 
   useEffect(() => {
     setCartList(globalState.cartItems);
-  }, [globalState.cartItems]);
+
+    const delayTimeout = setTimeout(() => {
+      if (globalState.items.length === 0) {
+        setShowNoDataAnimation(true);
+      }
+    }, 2 * 60);
+
+    return () => clearTimeout(delayTimeout);
+  }, [globalState.cartItems, globalState.items.length]);
 
   const addItem = (itemID) => {
     const selectedItem = globalState.items.find((item) => item._id === itemID);
@@ -51,7 +62,7 @@ const MenuPageBody = () => {
     <div className="menu-page-body">
       {globalState.isLoading ? (
         <LoadingCircle />
-      ) : (
+      ) : globalState.items.length > 0 ? (
         globalState.items.map((item) => (
           <CreateListTile
             key={item._id}
@@ -64,7 +75,25 @@ const MenuPageBody = () => {
             onDecrement={() => decrementItem(item._id)}
           />
         ))
-      )}
+      ) : showNoDataAnimation ? (
+        <div className="no-data-animation">
+          <Player
+            autoplay
+            loop
+            src={noDataAnimation}
+            style={{
+              height: '300px',
+              width: '300px',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+             
+              
+              transform: 'translate(-50%, -50%)'  
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

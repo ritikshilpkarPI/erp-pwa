@@ -1,20 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
-import { AppStateContext } from "../../appState/appStateContext";
+
 
 const CashBoard = ({ totalPrice, onClick }) => {
-  const { dispatch } = useContext(AppStateContext);
-  const [inputCost, setInputCost] = useState(0);
+ 
+  const [inputCost, setInputCost] = useState();
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
     onClick();
-    dispatch({ type: 'ADD_ITEM_TO_CART', payload: [] });
     if(inputCost>0){
       navigate("/transactionSuccessfull", {
         state: {
@@ -38,7 +37,7 @@ const CashBoard = ({ totalPrice, onClick }) => {
           placeholder="INR 0"
           value={inputCost}
           onChange={(e) => {
-            setInputCost(parseInt(e.target.value, 10) || 0);
+            setInputCost(parseInt(e.target.value, 10) || "");
           }}
         />
         <TextInput
