@@ -8,8 +8,9 @@ import ChequeBoard from "../chequeBoard/ChequeBoard";
 import { AppStateContext } from "../../appState/appStateContext";
 
 const PaymentPage = () => {
-  const [activeTab, setActiveTab] = useState("tab2");
+  const [activeTab, setActiveTab] = useState("tab1");
   const { globalState } = useContext(AppStateContext);
+  const [isCheckAvailable, setIsCheckAvailable] = useState(false)
 
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ const PaymentPage = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+  
   const createSale = async () => {
     const cashPaymentId = '60d5f9e9a60b2f1b4c3c1c84'; 
     const chequePaymentId = '60d5f9e9a60b2f1b4c3c1c85'; 
@@ -55,12 +57,10 @@ const PaymentPage = () => {
       const result = await response.json();
       console.log("Sale created successfully:", result);
 
-     
     } catch (error) {
       console.error("Error creating sale:", error);
     }
   };
-  
 
   return (
     <div className="payment-page">
@@ -81,19 +81,13 @@ const PaymentPage = () => {
       </div>
       <div className="payment-page-tabs">
         <div
-          className={
-            activeTab === "tab1" ? "payment-cheque-tab" : "payment-cash-tab"
-          }
-          
+          className={activeTab === "tab1" ? "payment-cheque-tab" : "payment-cash-tab"}
           onClick={() => handleTabClick("tab1")}
         >
           <h4 className="payment-cash-heading">Cash</h4>
         </div>
         <div
-          className={
-            activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"
-          }
-          
+          className={activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"}
           onClick={() => handleTabClick("tab2")}
         >
           <h4 className="payment-cash-heading">Cheque</h4>
@@ -101,11 +95,9 @@ const PaymentPage = () => {
       </div>
 
       <div className="payment-page-body">
-        {activeTab === "tab1" && (
-          <CashBoard totalPrice={totalPrice} onClick={createSale} />
-        )}
+        {activeTab === "tab1" && <CashBoard totalPrice={totalPrice} onClick={createSale} />}
         {activeTab === "tab2" && (
-          <ChequeBoard totalPrice={totalPrice} onClick={createSale} />
+          isCheckAvailable ? <ChequeBoard totalPrice={totalPrice} onClick={createSale} /> : <div className="service-message">This service is not available for now</div>
         )}
       </div>
     </div>
