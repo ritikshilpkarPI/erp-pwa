@@ -49,12 +49,13 @@ export function TransactionHistory() {
   const transactionHistory = globalState?.transactionHistory || [];
 
   const formatTransactionHistory = (data: any[]) => {
-    // Group transactions by date
-    const groupedTransactions = data.reduce((acc: any, transaction: any) => {
-      const date = new Date(transaction.date_of_sale)?.toLocaleDateString("en-US", {
+    const sortedData = data.sort((a, b) => new Date(b?.date_of_sale).getTime() - new Date(a?.date_of_sale).getTime());
+
+    const groupedTransactions = sortedData?.reduce((acc: any, transaction: any) => {
+      const date = new Date(transaction?.date_of_sale).toLocaleDateString("en-US", {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
       });
-      const time = new Date(transaction.date_of_sale).toLocaleTimeString("en-US", {
+      const time = new Date(transaction?.date_of_sale)?.toLocaleTimeString("en-US", {
         hour: '2-digit', minute: '2-digit'
       });
 
@@ -66,6 +67,7 @@ export function TransactionHistory() {
       }
 
       acc[date].totalAmount += transaction?.totalAmount;
+      acc[date].totalAmount += transaction?.totalAmount;
       acc[date].items.push({
         amount: `INR ${transaction?.totalAmount?.toFixed(2)}`,
         time,
@@ -75,7 +77,7 @@ export function TransactionHistory() {
       return acc;
     }, {});
 
-    return Object.entries(groupedTransactions).map(([date, { totalAmount, items }]: any) => ({
+    return Object?.entries(groupedTransactions)?.map(([date, { totalAmount, items }]: any) => ({
       date,
       totalAmount: `INR ${totalAmount?.toFixed(2)}`,
       items
@@ -110,23 +112,26 @@ export function TransactionHistory() {
             />
           </div>
         </header>
-        {formattedTransactionHistory?.length > 0 ? (
-          formattedTransactionHistory?.map((transactionGroup, index) => (
-            <React.Fragment key={index}>
-              <DateSummary date={transactionGroup?.date} totalAmount={transactionGroup?.totalAmount} />
-              {transactionGroup?.items?.map((transactionItem: any, itemIndex: number) => (
-                <TransactionCard
-                  key={itemIndex}
-                  amount={transactionItem?.amount}
-                  time={transactionItem?.time}
-                  transactionId={transactionItem?.transactionId}
-                />
-              ))}
-            </React.Fragment>
-          ))
-        ) : (
-          <p>No transaction history available.</p>
-        )}
+        <div className="transaction-history-container">
+          {formattedTransactionHistory?.length > 0 ? (
+            formattedTransactionHistory?.map((transactionGroup: any, index: number) => (
+              <React.Fragment key={index}>
+                <DateSummary date={transactionGroup?.date} totalAmount={transactionGroup?.totalAmount} />
+                {transactionGroup?.items?.map((transactionItem: any, itemIndex: number) => (
+
+                  <TransactionCard
+                    key={itemIndex}
+                    amount={!transactionItem?.amount?.includes('undefined') ? transactionItem?.amount : 'INR NA'}
+                    time={transactionItem?.time}
+                    transactionId={transactionItem?.transactionId}
+                  />
+                ))}
+              </React.Fragment>
+            ))
+          ) : (
+            <p>No transaction history available.</p>
+          )}
+        </div>
       </main>
     </>
   );
