@@ -1,21 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./ChequeBoard.css";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
 import { useNavigate } from "react-router-dom";
+import { AppStateContext } from "../../appState/appStateContext";
 
-const ChequeBoard = ({totalPrice ,onClick}) => {
-  const [chequename, setChequeName] = useState("");
+const ChequeBoard = ({ totalPrice, onClick }) => {
+  const { dispatch } = useContext(AppStateContext);
+
+  const [chequeName, setChequeName] = useState("");
   const [chequeNumber, setChequeNumber] = useState("");
   const [chequeAmount, setChequeAmount] = useState("");
   const [chequeDate, setChequeDate] = useState("");
 
+  const navigate = useNavigate();
+
   const submitHandler = (e) => {
     e.preventDefault();
-    onClick()
-  };
+    onClick();
 
-  const navigate = useNavigate();
+    dispatch({ type: 'ADD_ITEM_TO_CART', payload: [] });
+
+    navigate("/transactionSuccessfull", {
+      state: {
+        mode: "CHEQUE",
+        prize: totalPrice,
+      },
+    });
+  };
 
   return (
     <div className="cheque-board">
@@ -24,15 +36,15 @@ const ChequeBoard = ({totalPrice ,onClick}) => {
           className="cheque-page-input1"
           type="text"
           labelTitle="Cheque Name"
-          placeholder="INR 0"
-          value={chequename}
+          placeholder="Enter cheque name"
+          value={chequeName}
           onChange={(e) => setChequeName(e.target.value)}
         />
         <TextInput
           className="cheque-page-input2"
           type="number"
           labelTitle="Cheque Number"
-          placeholder="INR 0"
+          placeholder="Enter cheque number"
           value={chequeNumber}
           onChange={(e) => setChequeNumber(e.target.value)}
         />
@@ -40,7 +52,7 @@ const ChequeBoard = ({totalPrice ,onClick}) => {
           className="cheque-page-input3"
           type="number"
           labelTitle="Cheque Amount"
-          placeholder="INR 0"
+          placeholder="Enter cheque amount"
           value={chequeAmount}
           onChange={(e) => setChequeAmount(e.target.value)}
         />
@@ -48,7 +60,7 @@ const ChequeBoard = ({totalPrice ,onClick}) => {
           className="cheque-page-input4"
           type="date"
           labelTitle="Cheque Date"
-          placeholder="32/84/3000"
+          placeholder="Enter cheque date"
           value={chequeDate}
           onChange={(e) => setChequeDate(e.target.value)}
         />
@@ -56,14 +68,6 @@ const ChequeBoard = ({totalPrice ,onClick}) => {
           type="submit"
           className="login-submit-button-input chequbtn"
           title="Complete Payment"
-          onClick={() => {
-            navigate("/transactionSuccessfull", {
-              state: {
-                mode: "CHEQUE",
-                prize: totalPrice,
-              },
-            });
-          }}
         />
       </form>
     </div>

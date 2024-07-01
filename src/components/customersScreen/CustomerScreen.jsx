@@ -7,7 +7,7 @@ import { AppStateContext } from '../../appState/appStateContext';
 
 const CustomerScreen = () => {
     const { globalState, dispatch } = useContext(AppStateContext);
-    const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}/customers`;
+    const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/customers`;
 
 
     useEffect(() => {
