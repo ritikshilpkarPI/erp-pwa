@@ -23,13 +23,12 @@ const MainHeaderMenu = () => {
       }, delay);
     };
   };
-  const API = process.env.REACT_APP_SIGNUP_URL
+
+  const API = process.env.REACT_APP_SIGNUP_URL;
+
   const fetchCategories = useCallback(async () => {
-  
     try {
-      const response = await fetch(
-        `${API}/categories`
-      );
+      const response = await fetch(`${API}/categories`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -37,13 +36,12 @@ const MainHeaderMenu = () => {
       setOptions(data);
     } catch (error) {
       console.error("Error fetching categories:", error);
-    } finally {
-      dispatch({ type: "SET_LOADING" });
-    }
-  }, [API,dispatch]);
+    } 
+  }, [API]);
 
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
+      dispatch({ type: "SET_LOADING", payload: true });
       try {
         const url = `${process.env.REACT_APP_SIGNUP_URL}/items?category_id=${
           categoryId || ""
@@ -57,6 +55,8 @@ const MainHeaderMenu = () => {
         dispatch({ type: "SET_ITEMS", payload: data });
       } catch (error) {
         console.error("Error fetching items:", error);
+      } finally {
+        dispatch({ type: "SET_LOADING", payload: false });
       }
     },
     [dispatch]
@@ -67,6 +67,7 @@ const MainHeaderMenu = () => {
   }, [fetchCategories]);
 
   useEffect(() => {
+   
     if (!globalState.items.length) {
       fetchItems();
     }
@@ -82,12 +83,14 @@ const MainHeaderMenu = () => {
     setSearchQuery(query);
     debounce(fetchItems, 400)(null, query);
   };
+
   const handleSearch = () => {
     setOpenSearchBox(!openSearchBox);
     if (openSearchBox) {
       fetchItems();
     }
   };
+
   return (
     <div className="main-header-menu">
       {openSearchBox ? (

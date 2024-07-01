@@ -37,9 +37,11 @@ export const appStateReducer = (state: any, action: any) => {
         items: action.payload,
       };
     case "SET_LOADING":
+      console.log({aa: action.payload});
+      
       return {
         ...state,
-        isLoading: !state.isLoading,
+        isLoading: action.payload,
       };
 
     case "LOGOUT":

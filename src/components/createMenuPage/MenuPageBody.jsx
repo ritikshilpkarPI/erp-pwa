@@ -6,52 +6,36 @@ import LoadingCircle from "../loadinCircule/LoadingCircle";
 
 const MenuPageBody = () => {
   const { globalState, dispatch } = useAppContext();
-  const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}/items`;
-
-  const [loading, setLoading] = useState(true);
-  const [itemList, setItemList] = useState([]);
-  const [cartList, setCartList] = useState(globalState?.cartItems);
+  const [cartList, setCartList] = useState(globalState.cartItems);
 
   useEffect(() => {
-    fetch(API, {method: "POST"})
-      .then((res) => res.json())
-      .then((res) => {
-        dispatch({ type: 'SET_ITEMS', payload: res });
-        setItemList(res);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching items:', error);
-        setLoading(false);
-      });
-  }, [API, dispatch]);
+    setCartList(globalState.cartItems);
+  }, [globalState.cartItems]);
 
   const addItem = (itemID) => {
-    let carItemsListCopy = [...cartList]
-    const selectedItem = itemList.find(item => item._id === itemID);
+    let carItemsListCopy = [...cartList];
+    const selectedItem = globalState.items.find((item) => item._id === itemID);
 
     if (selectedItem) {
-      const existingCartItem = cartList.find(cartItem => cartItem._id === itemID);
-    
-      if (existingCartItem) {
+      const existingCartItem = cartList.find((cartItem) => cartItem._id === itemID);
 
-        carItemsListCopy = cartList.map(cartItem =>
+      if (existingCartItem) {
+        carItemsListCopy = cartList.map((cartItem) =>
           cartItem._id === itemID ? { ...cartItem, count: cartItem.count + 1 } : cartItem
         );
         setCartList(carItemsListCopy);
       } else {
-        carItemsListCopy = [...cartList, { ...selectedItem, count: 1 }]
+        carItemsListCopy = [...cartList, { ...selectedItem, count: 1 }];
         setCartList(carItemsListCopy);
       }
     }
 
-    dispatch({ type: 'ADD_ITEM_TO_CART', payload: carItemsListCopy });
-
+    dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
   };
 
   return (
     <div className="menu-page-body">
-      {loading ? (
+      {globalState.isLoading ? (
         <LoadingCircle />
       ) : (
         globalState.items.map((item, index) => (
