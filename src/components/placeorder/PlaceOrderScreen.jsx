@@ -14,7 +14,12 @@ const PlaceOrderScreen = () => {
     };
 
     const handleClickCustomer = () => {
+        navigate('/customers');
+
+    };
+    const handleClickPayment = () => {
         navigate('/payment');
+
     };
 
    
@@ -66,7 +71,7 @@ const PlaceOrderScreen = () => {
                     <h1>Subtotal</h1>
                     <h1>₹{totalPrice}</h1>
                 </div>
-                <div className='placeorder-bottom-button' onClick={handleClickCustomer}>Place an order</div>
+                <div className='placeorder-bottom-button' onClick={handleClickPayment}>Place an order</div>
             </div>
         </div>
     );

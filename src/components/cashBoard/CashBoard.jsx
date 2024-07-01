@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
+import { AppStateContext } from "../../appState/appStateContext";
 
 const CashBoard = ({ totalPrice, onClick }) => {
+  const { dispatch } = useContext(AppStateContext);
   const [inputCost, setInputCost] = useState(0);
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
     onClick();
+    dispatch({ type: 'ADD_ITEM_TO_CART', payload: [] });
+    navigate("/transactionSuccessfull", {
+      state: {
+        mode: "CASH",
+        prize: totalPrice,
+      },
+    });
   };
 
   return (
@@ -35,21 +44,13 @@ const CashBoard = ({ totalPrice, onClick }) => {
           type="number"
           labelTitle={inputCost > totalPrice ? "Amount Given" : "Amount Due"}
           placeholder="INR 0"
-          value={inputCost - totalPrice}
+          value={(inputCost - totalPrice)?.toFixed(2)}
           readOnly
         />
         <ButtonInput
           type="submit"
           className="login-submit-button-input"
           title="Complete Payment"
-          onClick={() => {
-            navigate("/transactionSuccessfull", {
-              state: {
-                mode: "CASH",
-                prize: totalPrice,
-              },
-            });
-          }}
         />
       </form>
     </div>
