@@ -13,23 +13,37 @@ const MenuPageBody = () => {
   }, [globalState.cartItems]);
 
   const addItem = (itemID) => {
-    let carItemsListCopy = [...cartList];
     const selectedItem = globalState.items.find((item) => item._id === itemID);
-
     if (selectedItem) {
       const existingCartItem = cartList.find((cartItem) => cartItem._id === itemID);
-
+      let carItemsListCopy;
       if (existingCartItem) {
         carItemsListCopy = cartList.map((cartItem) =>
           cartItem._id === itemID ? { ...cartItem, count: cartItem.count + 1 } : cartItem
         );
-        setCartList(carItemsListCopy);
       } else {
         carItemsListCopy = [...cartList, { ...selectedItem, count: 1 }];
-        setCartList(carItemsListCopy);
       }
+      setCartList(carItemsListCopy);
+      dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
     }
+  };
 
+  const incrementItem = (itemID) => {
+    const carItemsListCopy = cartList.map((cartItem) =>
+      cartItem._id === itemID ? { ...cartItem, count: cartItem.count + 1 } : cartItem
+    );
+    setCartList(carItemsListCopy);
+    dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
+  };
+
+  const decrementItem = (itemID) => {
+    const carItemsListCopy = cartList
+      .map((cartItem) =>
+        cartItem._id === itemID ? { ...cartItem, count: cartItem.count - 1 } : cartItem
+      )
+      .filter((cartItem) => cartItem.count > 0);
+    setCartList(carItemsListCopy);
     dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
   };
 
@@ -38,13 +52,16 @@ const MenuPageBody = () => {
       {globalState.isLoading ? (
         <LoadingCircle />
       ) : (
-        globalState.items.map((item, index) => (
+        globalState.items.map((item) => (
           <CreateListTile
-            key={index}
+            key={item._id}
             title={item.name}
             subtitle={item.sold_by}
             price={item.price_per_unit}
-            onClick={() => addItem(item._id)}
+            count={cartList.find(cartItem => cartItem._id === item._id)?.count || 0}
+            onAdd={() => addItem(item._id)}
+            onIncrement={() => incrementItem(item._id)}
+            onDecrement={() => decrementItem(item._id)}
           />
         ))
       )}

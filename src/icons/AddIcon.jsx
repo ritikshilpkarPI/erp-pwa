@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddIcon = ({onClick}) => {
+const AddIcon = ({onClick,className}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +9,7 @@ const AddIcon = ({onClick}) => {
       fill="none"
       viewBox="0 0 17 17"
       onClick={onClick}
+      className={className}
     >
       <path
         stroke="#fff"

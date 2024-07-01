@@ -11,11 +11,10 @@ body {
   overflow: hidden;
 }
 
-.create-menu-page{
+.create-menu-page {
   width: 100%;
   height: 100svh;
-  background-color: #F4F5FA;
-  /* overflow: auto; */
+  background-color: #f4f5fa;
 }
 
 .menu-page-body {
@@ -27,49 +26,42 @@ body {
   justify-content: start;
   align-items: center;
   gap: 12px;
-  overflow: auto; 
-  -ms-overflow-style: none;  
-  scrollbar-width: none; 
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .menu-page-body::-webkit-scrollbar {
   display: none;
 }
 
-
-
-
-.list-tile-outter{
+.list-tile-outter {
   display: flex;
   align-items: center;
   justify-content: start;
   width: 16rem;
   height: 100%;
-
-  
 }
 
 .create-list-tile {
-  width: 327px;
+  width: 90%;
   height: 86px;
   background-color: white;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 14px 0px 0px;
- 
+  padding: 0px 8px 0px 0px;
 }
 
-
-.create-list-tile img{
+.create-list-tile img {
   height: 100%;
   width: 6rem;
   border-radius: 12px;
 }
 
-.tile-content{
-  width: 10rem;
+.tile-content {
+  width: 9rem;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -78,33 +70,39 @@ body {
   padding: 10px 12px;
 }
 
-.tile-content-title{
+.tile-content-title {
   color: black;
   font-size: 12px;
 }
 
-.tile-content-subtitle{
+.tile-content-subtitle {
   color: grey;
   font-size: 11px;
 }
 
-.tile-content-prize{
+.tile-content-prize {
   font-size: 14px;
-  color: #156CD5;
+  color: #156cd5;
 }
 
-.tile-traling{
-  width: 35px;
-  height: 35px;
-  background-color: #156CD5;
+.tile-traling {
+  /* margin-right: 45px; */
+  background-color: #156cd5;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 15px;
+  padding: 8px 12px;
+  width: min-content;
+  height: 40px;
+  max-width: 100%;
+  > .count {
+    color: #fff;
+  }
 }
 
-
-.create-bottom-nav{
+.create-bottom-nav {
   width: 375px;
   height: 65px;
   background-color: white;
@@ -115,7 +113,7 @@ body {
   padding: 0px 10px;
 }
 
-.bottom-bar-outter{
+.bottom-bar-outter {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -123,10 +121,10 @@ body {
   padding: 0px 10px;
 }
 
-.total-bar{
+.total-bar {
   width: 327px;
   height: 60px;
-  background-color: #156CD5;
+  background-color: #156cd5;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -134,14 +132,13 @@ body {
   border-radius: 8px;
 }
 
-.total-bar-left{
+.total-bar-left {
   display: flex;
   align-items: center;
   gap: 10px;
-
 }
 
-.total-bar-left-h4{
+.total-bar-left-h4 {
   font-size: 14px;
-color: white;
+  color: white;
 }
