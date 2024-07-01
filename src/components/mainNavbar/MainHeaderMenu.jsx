@@ -27,7 +27,7 @@ const MainHeaderMenu = () => {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/categories`
+        `${API}/categories`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -39,7 +39,7 @@ const MainHeaderMenu = () => {
     } finally {
       dispatch({ type: "SET_LOADING" });
     }
-  }, [dispatch]);
+  }, [API, dispatch]);
 
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
@@ -58,7 +58,7 @@ const MainHeaderMenu = () => {
         console.error("Error fetching items:", error);
       }
     },
-    [dispatch]
+    [API, dispatch]
   );
 
   useEffect(() => {

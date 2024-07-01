@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./AddProduct.css";
+import { useNavigate } from "react-router-dom";
 
 const InputField = ({ label, value, onChange, name }: any) => (
   <div className="input-container">
@@ -65,12 +66,14 @@ export const AddProduct = () => {
 
   const categoryOptions = ["Choose a category", "Category 1", "Category 2", "Category 3"];
 
+  const navigate = useNavigate();
+
   return (
     <div className="product-page">
       <header className="header">
         <div className="header-content">
           <div className="add-product">
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/415bbd33d4ef7c13cb8ce4d57ab932634d506a9087ec191dce9c4f20fab36a42?apiKey=d03ff6b018f84c75b88104249d2053b6&" alt="" className="add-icon" />
+            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/415bbd33d4ef7c13cb8ce4d57ab932634d506a9087ec191dce9c4f20fab36a42?apiKey=d03ff6b018f84c75b88104249d2053b6&" alt="" className="add-icon" onClick={()=> navigate(-1)} />
             <h1 className="add-title">Add a product</h1>
           </div>
         </div>

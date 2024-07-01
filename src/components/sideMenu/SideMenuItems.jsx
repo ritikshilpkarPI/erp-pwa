@@ -7,17 +7,17 @@ import UserImg from "../../icons/UserImg";
 import SupportImg from "../../icons/SupportImg"
 
 const SideMenuItems = [
-  { logo: <CashImage />, label: "Caissier", route: "/cash" },
+  { logo: <CashImage />, label: "Cashier", route: "" },
   {
     logo: <HistoryTransImg />,
-    label: "Historique Transaction",
+    label: "Transaction History",
     route: "/history",
   },
-  { logo: <ReportImg />, label: "Rapport", route: "/report" },
-  { logo: <ShopImg />, label: "Gerer le magasin", route: "/store" },
+  { logo: <ShopImg />, label: "Add Product", route: "/addproduct" },
+  { logo: <ReportImg />, label: "Manage the Store", route: "" },
 
-  { logo: <UserImg />, label: "Compete", route: "/compete" },
-  { logo: <SupportImg />, label: "Soutien", route: "/support" },
+  { logo: <UserImg />, label: "Customer List", route: "/customers" },
+  { logo: <SupportImg />, label: "Support", route: "" },
 ];
 
 export default SideMenuItems;
