@@ -26,7 +26,7 @@ const CreateBottomNav = () => {
 
   return (
     <div className="bottom-bar-outter">
-      <TotalBar element={elementLength} totalprize={totalPrize?.toFixed()} />
+      <TotalBar element={elementLength} totalprize={totalPrize.toFixed()} />
       <div className="create-bottom-nav">
         <SelectMenu onTap={() => setClickBtn("btn1")} click={clickBtn} />
         <SelectStar onTap={() => setClickBtn("btn2")} click={clickBtn} />

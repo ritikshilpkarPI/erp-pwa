@@ -1,25 +1,31 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import "./MainNav.css";
 import SearchIcon from "../../icons/SearchIcon";
 import BarCodeIcon from "../../icons/BarCodeIcon";
 import ListIcon from "../../icons/ListIcon";
 import SearchInput from "../../pages/searchInput/SearchInput";
 import CloseIcon from "../../icons/CloseIcon";
-import { AppStateContext, useAppContext } from "../../appState/appStateContext";
+import { useAppContext } from "../../appState/appStateContext";
 
 const MainHeaderMenu = () => {
-  const { dispatch, globalState } = useAppContext(AppStateContext);
+  const { dispatch, globalState } = useAppContext();
   const [openSearchBox, setOpenSearchBox] = useState(false);
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:8000/api/v1'}`;
-  
-  const handleSearch = () => {
-    setOpenSearchBox(!openSearchBox);
-  };
+  const debounceRef = useRef(null);
 
+  const debounce = (func, delay) => {
+    return (...args) => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+  const API = process.env.REACT_APP_SIGNUP_URL
   const fetchCategories = useCallback(async () => {
+  
     try {
       const response = await fetch(
         `${API}/categories`
@@ -29,28 +35,21 @@ const MainHeaderMenu = () => {
       }
       const data = await response.json();
       setOptions(data);
-
-      dispatch({ type: "SET_LOADING" });
     } catch (error) {
       console.error("Error fetching categories:", error);
+    } finally {
       dispatch({ type: "SET_LOADING" });
     }
-  }, [API, dispatch]);
+  }, [API,dispatch]);
 
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
       try {
-        const url = `${API}/items`;
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            category_id: categoryId,
-            search_query: query,
-          }),
-        });
+        const url = `${process.env.REACT_APP_SIGNUP_URL}/items?category_id=${
+          categoryId || ""
+        }&search_query=${query}`;
+        const response = await fetch(url);
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -60,41 +59,35 @@ const MainHeaderMenu = () => {
         console.error("Error fetching items:", error);
       }
     },
-    [API, dispatch]
+    [dispatch]
   );
 
-  useEffect(() => {    
-      fetchCategories();
-      
+  useEffect(() => {
+    fetchCategories();
   }, [fetchCategories]);
 
   useEffect(() => {
-    if (globalState?.items?.length === 0) {
+    if (!globalState.items.length) {
       fetchItems();
     }
-  }, [fetchItems, globalState.items]);
+  }, [fetchItems, globalState.items.length]);
 
   const handleOptionChange = (e) => {
     const categoryId = e.target.value;
     fetchItems(categoryId, searchQuery);
   };
 
-  function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-      const context = this;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(context, args), wait);
-    };
-  }
-
-  const handleSearchInputChange = debounce((e) => {
+  const handleSearchInputChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    console.log(query);
-    fetchItems(null, query);
-  }, 500);
-
+    debounce(fetchItems, 400)(null, query);
+  };
+  const handleSearch = () => {
+    setOpenSearchBox(!openSearchBox);
+    if (openSearchBox) {
+      fetchItems();
+    }
+  };
   return (
     <div className="main-header-menu">
       {openSearchBox ? (
