@@ -30,34 +30,38 @@ const PaymentPage = () => {
   const createSale = async () => {
     const saleData = {
       customer_id: globalState?.setCustomer?._id,
-      item_id: globalState?.cartItems?.map(item => item._id),
+      item_id: globalState?.cartItems?.map((item) => item._id),
       employee_id: globalState?.loggedInUser?._id,
       date_of_sale: new Date().toISOString(),
-      payment_id: activeTab === "tab1" ? "cash_payment_id" : "cheque_payment_id"
+      payment_id:
+        activeTab === "tab1" ? "cash_payment_id" : "cheque_payment_id",
     };
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/sales`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(saleData)
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/sales`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(saleData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
-      console.log('Sale created successfully:', result);
+      console.log("Sale created successfully:", result);
 
       if (result) {
-        dispatch({ type: 'ADD_ITEM_TO_CART', payload: [] });
-        navigate('/transactionSuccessfull');
+        dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
+        navigate("/transactionSuccessfull");
       }
     } catch (error) {
-      console.error('Error creating sale:', error);
+      console.error("Error creating sale:", error);
     }
   };
 
@@ -80,13 +84,17 @@ const PaymentPage = () => {
       </div>
       <div className="payment-page-tabs">
         <div
-          className={activeTab === "tab1" ? "payment-cash-tab" : "payment-cheque-tab"}
+          className={
+            activeTab === "tab1" ? "payment-cheque-tab" : "payment-cash-tab"
+          }
           onClick={() => handleTabClick("tab1")}
         >
           <h4 className="payment-cash-heading">Cash</h4>
         </div>
         <div
-          className={activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"}
+          className={
+            activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"
+          }
           onClick={() => handleTabClick("tab2")}
         >
           <h4 className="payment-cash-heading">Cheque</h4>
@@ -96,7 +104,9 @@ const PaymentPage = () => {
         {activeTab === "tab1" && (
           <CashBoard totalPrice={totalPrice} onClick={createSale} />
         )}
-        {activeTab === "tab2" && <ChequeBoard onClick={createSale} />}
+        {activeTab === "tab2" && (
+          <ChequeBoard totalPrice={totalPrice} onClick={createSale} />
+        )}
       </div>
     </div>
   );
