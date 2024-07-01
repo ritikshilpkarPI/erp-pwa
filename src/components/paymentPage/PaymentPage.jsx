@@ -9,7 +9,7 @@ import { AppStateContext } from "../../appState/appStateContext";
 
 const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState("tab1");
-  const { globalState } = useContext(AppStateContext);
+  const { globalState, dispatch } = useContext(AppStateContext);
   const [isCheckAvailable] = useState(false)
 
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const PaymentPage = () => {
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
       totalAmount: totalPrice
     };
-    console.log(saleData);
+    
 
     try {
       const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/sales`, {
@@ -56,7 +56,10 @@ const PaymentPage = () => {
       }
 
       const result = await response.json();
-      console.log("Sale created successfully:", result);
+      
+      if (result) {
+        dispatch({type: 'ADD_ITEM_TO_CART', payload: []});
+      }
 
     } catch (error) {
       console.error("Error creating sale:", error);
