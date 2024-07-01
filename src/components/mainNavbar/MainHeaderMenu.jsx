@@ -23,13 +23,10 @@ const MainHeaderMenu = () => {
       }, delay);
     };
   };
-  const API = process.env.REACT_APP_SIGNUP_URL
+  const API = process.env.REACT_APP_SIGNUP_URL;
   const fetchCategories = useCallback(async () => {
-  
     try {
-      const response = await fetch(
-        `${API}/categories`
-      );
+      const response = await fetch(`${API}/categories`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -40,7 +37,7 @@ const MainHeaderMenu = () => {
     } finally {
       dispatch({ type: "SET_LOADING" });
     }
-  }, [API,dispatch]);
+  }, [API, dispatch]);
 
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
@@ -48,7 +45,7 @@ const MainHeaderMenu = () => {
         const url = `${process.env.REACT_APP_SIGNUP_URL}/items?category_id=${
           categoryId || ""
         }&search_query=${query}`;
-        const response = await fetch(url);
+        const response = await fetch(url, { method: "GET" });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
