@@ -67,10 +67,11 @@ export function TransactionHistory() {
       }
 
       acc[date].totalAmount += transaction?.totalAmount;
+      acc[date].totalAmount += transaction?.totalAmount;
       acc[date].items.push({
         amount: `INR ${transaction?.totalAmount?.toFixed(2)}`,
         time,
-        transactionId: transaction._id
+        transactionId: transaction?._id
       });
 
       return acc;
