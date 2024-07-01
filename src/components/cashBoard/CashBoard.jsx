@@ -35,7 +35,7 @@ const CashBoard = ({ totalPrice, onClick }) => {
           type="number"
           labelTitle={inputCost > totalPrice ? "Amount Given" : "Amount Due"}
           placeholder="INR 0"
-          value={inputCost - totalPrice}
+          value={(inputCost - totalPrice).toFixed(2)}
           readOnly
         />
         <ButtonInput
