@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
-import { AppStateContext } from "../../appState/appStateContext";
+
 
 const CashBoard = ({ totalPrice, onClick }) => {
-  const { dispatch } = useContext(AppStateContext);
+ 
   const [inputCost, setInputCost] = useState();
   const navigate = useNavigate();
 

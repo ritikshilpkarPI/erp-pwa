@@ -10,7 +10,7 @@ import { AppStateContext } from "../../appState/appStateContext";
 const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const { globalState } = useContext(AppStateContext);
-  const [isCheckAvailable, setIsCheckAvailable] = useState(false)
+  const [isCheckAvailable] = useState(false)
 
   const navigate = useNavigate();
 
@@ -29,15 +29,16 @@ const PaymentPage = () => {
   };
   
   const createSale = async () => {
-    const cashPaymentId = '60d5f9e9a60b2f1b4c3c1c84'; 
-    const chequePaymentId = '60d5f9e9a60b2f1b4c3c1c85'; 
+    const cashPaymentId = '60d5f9e9a60b2f1b4c3c1c84';
+    const chequePaymentId = '60d5f9e9a60b2f1b4c3c1c85';
 
     const saleData = {
       customer_id: globalState?.setCustomer?._id,
       item_id: globalState?.cartItems?.map((item) => item._id),
       employee_id: globalState?.loggedInUser?._id,
       date_of_sale: new Date().toISOString(),
-      payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId
+      payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
+      totalAmount: totalPrice
     };
     console.log(saleData);
 
@@ -61,6 +62,7 @@ const PaymentPage = () => {
       console.error("Error creating sale:", error);
     }
   };
+  
 
   return (
     <div className="payment-page">
@@ -81,13 +83,19 @@ const PaymentPage = () => {
       </div>
       <div className="payment-page-tabs">
         <div
-          className={activeTab === "tab1" ? "payment-cheque-tab" : "payment-cash-tab"}
+          className={
+            activeTab === "tab1" ? "payment-cheque-tab" : "payment-cash-tab"
+          }
+          
           onClick={() => handleTabClick("tab1")}
         >
           <h4 className="payment-cash-heading">Cash</h4>
         </div>
         <div
-          className={activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"}
+          className={
+            activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"
+          }
+          
           onClick={() => handleTabClick("tab2")}
         >
           <h4 className="payment-cash-heading">Cheque</h4>
