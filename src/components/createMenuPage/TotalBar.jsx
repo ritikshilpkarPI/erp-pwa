@@ -5,21 +5,27 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../appState/appStateContext";
 
 const TotalBar = ({ element }) => {
-  const { globalState, dispatch } = useAppContext();
+  const { globalState } = useAppContext();
   const navigate = useNavigate();
+  const elementLength = globalState?.cartItems?.length;
 
   const onclick = () => {
-
-    dispatch("SET_TOTAL_CART_PRICE", totalPrice)
-    navigate('/placeorder');
+    if (elementLength > 0) {
+      navigate('/placeorder');
+    }
   };
 
   const totalPrice = useMemo(() => {
     return globalState.cartItems.reduce((total, item) => total + (item.price_per_unit * item.count), 0).toFixed(2);
   }, [globalState.cartItems]);
 
+  const totalBarStyle = {
+    backgroundColor: elementLength > 0 ? '#156cd5 ' : '#cccccccc', 
+ 
+  };
+
   return (
-    <div className="total-bar" onClick={onclick}>
+    <div className="total-bar" onClick={onclick} style={totalBarStyle}>
       <div className="total-bar-left">
         <CartIcon />
         <h4 className="total-bar-left-h4">
@@ -27,7 +33,7 @@ const TotalBar = ({ element }) => {
         </h4>
       </div>
       <div className="total-bar-right">
-        <h4 className="total-bar-left-h4">Total : INR {totalPrice}</h4>
+        <h4 className="total-bar-left-h4">Total: INR {totalPrice}</h4>
       </div>
     </div>
   );

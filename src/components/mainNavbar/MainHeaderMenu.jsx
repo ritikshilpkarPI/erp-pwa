@@ -61,7 +61,7 @@ const MainHeaderMenu = () => {
         dispatch({ type: "SET_LOADING", payload: false });
       }
     },
-    [dispatch]
+    [dispatch]  
   );
 
   useEffect(() => {
