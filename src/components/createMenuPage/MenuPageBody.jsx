@@ -6,61 +6,62 @@ import LoadingCircle from "../loadinCircule/LoadingCircle";
 
 const MenuPageBody = () => {
   const { globalState, dispatch } = useAppContext();
-  const API = `${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/items`;
-
-  const [loading, setLoading] = useState(true);
-  const [itemList, setItemList] = useState([]);
-  const [cartList, setCartList] = useState(globalState?.cartItems);
+  const [cartList, setCartList] = useState(globalState.cartItems);
 
   useEffect(() => {
-    fetch(API, {method: "POST"})
-      .then((res) => res.json())
-      .then((res) => {
-        dispatch({ type: 'SET_ITEMS', payload: res });
-        setItemList(res);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching items:', error);
-        setLoading(false);
-      });
-  }, [API, dispatch]);
+    setCartList(globalState.cartItems);
+  }, [globalState.cartItems]);
 
   const addItem = (itemID) => {
-    let carItemsListCopy = [...cartList]
-    const selectedItem = itemList.find(item => item._id === itemID);
-
+    const selectedItem = globalState.items.find((item) => item._id === itemID);
     if (selectedItem) {
-      const existingCartItem = cartList.find(cartItem => cartItem._id === itemID);
-    
+      const existingCartItem = cartList.find((cartItem) => cartItem._id === itemID);
+      let carItemsListCopy;
       if (existingCartItem) {
-
-        carItemsListCopy = cartList.map(cartItem =>
+        carItemsListCopy = cartList.map((cartItem) =>
           cartItem._id === itemID ? { ...cartItem, count: cartItem.count + 1 } : cartItem
         );
-        setCartList(carItemsListCopy);
       } else {
-        carItemsListCopy = [...cartList, { ...selectedItem, count: 1 }]
-        setCartList(carItemsListCopy);
+        carItemsListCopy = [...cartList, { ...selectedItem, count: 1 }];
       }
+      setCartList(carItemsListCopy);
+      dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
     }
+  };
 
-    dispatch({ type: 'ADD_ITEM_TO_CART', payload: carItemsListCopy });
+  const incrementItem = (itemID) => {
+    const carItemsListCopy = cartList.map((cartItem) =>
+      cartItem._id === itemID ? { ...cartItem, count: cartItem.count + 1 } : cartItem
+    );
+    setCartList(carItemsListCopy);
+    dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
+  };
 
+  const decrementItem = (itemID) => {
+    const carItemsListCopy = cartList
+      .map((cartItem) =>
+        cartItem._id === itemID ? { ...cartItem, count: cartItem.count - 1 } : cartItem
+      )
+      .filter((cartItem) => cartItem.count > 0);
+    setCartList(carItemsListCopy);
+    dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
   };
 
   return (
     <div className="menu-page-body">
-      {loading ? (
+      {globalState.isLoading ? (
         <LoadingCircle />
       ) : (
-        globalState?.items?.map((item, index) => (
+        globalState.items.map((item) => (
           <CreateListTile
-            key={index}
+            key={item._id}
             title={item.name}
             subtitle={item.sold_by}
             price={item.price_per_unit}
-            onClick={() => addItem(item._id)}
+            count={cartList.find(cartItem => cartItem._id === item._id)?.count || 0}
+            onAdd={() => addItem(item._id)}
+            onIncrement={() => incrementItem(item._id)}
+            onDecrement={() => decrementItem(item._id)}
           />
         ))
       )}

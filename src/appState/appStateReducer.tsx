@@ -39,25 +39,31 @@ export const appStateReducer = (state: any, action: any) => {
     case "SET_LOADING":
       return {
         ...state,
-        isLoading: !state.isLoading,
+        isLoading: action.payload,
       };
 
     case "LOGOUT":
-      localStorage.removeItem('token');
-      return { ...state, loggedInUser: null, isLoggedIn: false, isOpen: false, cartItems: [] };
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        loggedInUser: null,
+        isLoggedIn: false,
+        isOpen: false,
+        cartItems: [],
+      };
 
     case "SET_CUSTOMERS_LIST":
-      const newCustomers = action?.payload ?? []
+      const newCustomers = action?.payload ?? [];
       return { ...state, customers: newCustomers };
 
     case "SET_CUSTOMER":
-      const newCustomer = action.payload ?? {}
+      const newCustomer = action.payload ?? {};
       return { ...state, setCustomer: newCustomer };
 
-      case "SET_USER":
-        const loggedInUser = decodeJwtToken(localStorage.getItem("token")) ?? null;
-        return { ...state, loggedInUser, isLoggedIn: Boolean(loggedInUser) };
-
+    case "SET_USER":
+      const loggedInUser =
+        decodeJwtToken(localStorage.getItem("token")) ?? null;
+      return { ...state, loggedInUser, isLoggedIn: Boolean(loggedInUser) };
 
     default:
       return state;
