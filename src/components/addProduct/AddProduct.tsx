@@ -37,7 +37,6 @@ export const AddProduct = () => {
     fetch(`${process.env.REACT_APP_SIGNUP_URL}/categories`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setCategories(data);
       })
       .catch((error) => console.log(error));
