@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 import CashBoard from "../cashBoard/CashBoard";
 import ChequeBoard from "../chequeBoard/ChequeBoard";
 import { AppStateContext } from "../../appState/appStateContext";
+import { enqueueSnackbar } from "notistack";
 
 const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const { globalState, dispatch } = useContext(AppStateContext);
   const [isCheckAvailable] = useState(false)
+  const [loading, setLoading] = useState()
 
   const navigate = useNavigate();
 
@@ -40,10 +42,10 @@ const PaymentPage = () => {
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
       totalAmount: totalPrice
     };
-    
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/sales`, {
+      setLoading(true);
+      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/sale`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -52,17 +54,22 @@ const PaymentPage = () => {
       });
 
       if (!response.ok) {
+        setLoading(false);
+        enqueueSnackbar("Something went wrong", { variant: "error" });
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
-      
+
       if (result) {
-        dispatch({type: 'ADD_ITEM_TO_CART', payload: []});
+        dispatch({ type: 'ADD_ITEM_TO_CART', payload: [] });
+        setLoading(false);
+        return true; // Return success status
       }
 
     } catch (error) {
       console.error("Error creating sale:", error);
+      return false; // Return failure status
     }
   };
   
@@ -106,9 +113,9 @@ const PaymentPage = () => {
       </div>
 
       <div className="payment-page-body">
-        {activeTab === "tab1" && <CashBoard totalPrice={totalPrice} onClick={createSale} />}
+        {activeTab === "tab1" && <CashBoard totalPrice={totalPrice} onClick={createSale} isLoading={loading} />}
         {activeTab === "tab2" && (
-          isCheckAvailable ? <ChequeBoard totalPrice={totalPrice} onClick={createSale} /> : <div className="service-message">This service is not available for now</div>
+          isCheckAvailable ? <ChequeBoard totalPrice={totalPrice} onClick={createSale} isLoading={loading} /> : <div className="service-message">This service is not available for now</div>
         )}
       </div>
     </div>
