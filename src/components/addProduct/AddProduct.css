@@ -187,6 +187,7 @@
   border: none;
   color: #2a3256;
   font: 400 12px Rubik, sans-serif;
+  outline: none;
 }
 
 .barcode-icon {
@@ -194,7 +195,7 @@
   height: 24px;
 }
 
-.add-product-button {
+.add-product-button,.add-product-button1 {
   background-color: #1a72dd;
   color: #fff;
   font: 500 16px Rubik, sans-serif;
@@ -205,6 +206,11 @@
   margin-top: 27px;
   margin-bottom: 14px;
 }
+
+.add-product-button1{
+  background-color: #d1e3f8;
+}
+
 
 .delete-product-button {
   display: flex;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+  import React, { useState } from "react";
 import "./AddCustomerPage.css";
 import TextInput from "../textInput/TextInput";
 import TextArea from "../textArea/TextArea";
