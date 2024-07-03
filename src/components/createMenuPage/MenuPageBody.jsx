@@ -73,6 +73,7 @@ const MenuPageBody = () => {
             onAdd={() => addItem(item._id)}
             onIncrement={() => incrementItem(item._id)}
             onDecrement={() => decrementItem(item._id)}
+            image={item?.img_url}
           />
         ))
       ) : showNoDataAnimation ? (
@@ -92,6 +93,9 @@ const MenuPageBody = () => {
               transform: 'translate(-50%, -50%)'  
             }}
           />
+          <p>
+            No data 
+          </p>
         </div>
       ) : null}
     </div>
