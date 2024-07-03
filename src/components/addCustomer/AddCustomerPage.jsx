@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+  import React, { useState } from "react";
 import "./AddCustomerPage.css";
 import TextInput from "../textInput/TextInput";
 import TextArea from "../textArea/TextArea";
@@ -104,7 +104,7 @@ const AddCustomerPage = () => {
           onBlur={handleBlur} 
           onChange={(e) => setEmail(e.target.value)}
         />
-         <TextInput
+        <TextInput
           className={`login-user-credit-limit-input`}
           type="Credit limit"
           labelTitle="Credit limit"

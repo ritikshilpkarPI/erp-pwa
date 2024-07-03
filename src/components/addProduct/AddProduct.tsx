@@ -22,8 +22,11 @@ export const AddProduct = () => {
   const [prizeByDozen, setPrizeByDozen] = useState<string>("");
   const [prizeByCarton, setPrizeByCarton] = useState<string>("");
   const [storeKeepingUnit, setStoreKeepingUnit] = useState<string>("");
+  const [barcode, setbarcode] = useState<string>("");
   const [categories, setCategories] = useState([]);
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const [selectedValue, setSelectedValue] = useState<string>("");
+  const [randomNumber, setRandomNumber] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
     categories: "Choose a category",
     capitalPrice: "GNF 3410.99",
@@ -32,6 +35,19 @@ export const AddProduct = () => {
     photo: null,
     photoPreview: null,
   });
+
+  const generateRandomNumber = () => {
+    let number = "";
+    for (let i = 0; i < 10; i++) {
+      number += Math.floor(Math.random() * 10);
+    }
+    setRandomNumber(number);
+  };
+
+  const handleSelectedValue = (e: any) => {
+    const value = e.target.value;
+    setSelectedValue(value);
+  };
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SIGNUP_URL}/categories`)
@@ -42,9 +58,32 @@ export const AddProduct = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const addProductHandler = async () => {
+    try {
+      const responst = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/items`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: productName,
+            prize: Number(productSelling),
+            sold_by: selectedOption,
+            img_url: formData.photoPreview,
+            category: selectedValue,
+            price_per_unit: Number(prizeByUnit),
+            price_per_dozen: Number(prizeByDozen),
+            price_per_carton: Number(prizeByCarton),
+            sku: Number(storeKeepingUnit),
+            barcode: randomNumber,
+          }),
+        }
+      );
+      const res = await responst.json();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handlePhotoChange = (e: any) => {
@@ -141,10 +180,19 @@ export const AddProduct = () => {
 
         <div className="add-product-categories">
           <label htmlFor="add">categories</label>
-          <select id="add" className="add-product-select">
+          <select
+            id="add"
+            value={selectedValue}
+            onChange={handleSelectedValue}
+            className="add-product-select"
+          >
             {categories.map((e, i) => {
               return (
-                <option key={i} value={e}>
+                <option
+                  key={i}
+                  value={e["category_name"]}
+                  onChange={handleSelectedValue}
+                >
                   {e["category_name"]}
                 </option>
               );
@@ -189,20 +237,41 @@ export const AddProduct = () => {
         <div className="barcode-input">
           <input
             type="text"
-            value={formData.barcode}
+            value={barcode || randomNumber}
             className="barcode-field"
-            onChange={handleInputChange}
+            onChange={(e) => setbarcode(e.target.value)}
             name="barcode"
-            readOnly
           />
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/f49ceca8a5b8e0204a40b092222334f26b4eb227e997bea917064965e02deaf3?apiKey=d03ff6b018f84c75b88104249d2053b6&"
             alt="Scan barcode"
             className="barcode-icon"
+            onClick={() => generateRandomNumber()}
           />
         </div>
-        <button className="add-product-button">Add a new product</button>
-        <button className="delete-product-button">
+        <button
+          className={
+            (productName &&
+              productSelling &&
+              categories &&
+              barcode &&
+              selectedOption) ||
+            (productName &&
+              productSelling &&
+              categories &&
+              randomNumber &&
+              selectedOption)
+              ? "add-product-button"
+              : "add-product-button1"
+          }
+          onClick={addProductHandler}
+        >
+          Add a new product
+        </button>
+        <button
+          className="delete-product-button"
+          onClick={() => navigate("/cart")}
+        >
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/302717b4ee4ab7d3462fc8605ada0ceaae8d5d7fbbd06287efa863058454024d?apiKey=d03ff6b018f84c75b88104249d2053b6&"
             alt=""
