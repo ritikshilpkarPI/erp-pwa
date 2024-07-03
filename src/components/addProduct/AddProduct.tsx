@@ -59,9 +59,10 @@ export const AddProduct = () => {
   }, []);
 
   const addProductHandler = async () => {
+    
     try {
       const responst = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/items`,
+        `${process.env.REACT_APP_SIGNUP_URL}/item/additem`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
