@@ -45,7 +45,7 @@ const PaymentPage = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/sale`, {
+      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/sales`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
