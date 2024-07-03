@@ -7,22 +7,19 @@ const ButtonInput = (props) => {
     title,
     onClick,
     type,
-    disable,
     isLoading = false,
     disabled,
   } = props;
 
   return (
-    <>
-      <button
-        disabled={disable}
-        type={type}
-        className={`${className} ${disabled ? "button-disabled" : ""}`}
-        onClick={onClick}
-      >
-        {!isLoading ? title : <div className="spinner"></div>}
-      </button>
-    </>
+    <button
+      disabled={disabled}
+      type={type}
+      className={`${className} ${disabled ? "button-disabled" : ""}`}
+      onClick={onClick}
+    >
+      {!isLoading ? title : <div className="spinner"></div>}
+    </button>
   );
 };
 
