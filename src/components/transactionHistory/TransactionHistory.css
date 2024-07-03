@@ -79,6 +79,33 @@
 .filter-label {
   display: flex;
   gap: 8px;
+
+}
+
+.filter-by-date {
+  border: none;
+  outline: none;
+  height: 34px;
+  font-family: Rubik;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.96px;
+
+}
+
+.clear-button {
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: Rubik, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #0d62ca;
+
 }
 
 .filter-icon {

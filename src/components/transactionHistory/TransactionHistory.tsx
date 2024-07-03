@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./TransactionHistory.css";
 import backButtonImage from "../../image/BackButton.svg";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +36,7 @@ export function TransactionHistory() {
   const navigate = useNavigate();
   const { globalState, dispatch } = useContext(AppStateContext);
   const API = `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/sales`;
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     fetch(API)
@@ -67,7 +68,6 @@ export function TransactionHistory() {
       }
 
       acc[date].totalAmount += transaction?.totalAmount;
-      acc[date].totalAmount += transaction?.totalAmount;
       acc[date].items.push({
         amount: `INR ${transaction?.totalAmount?.toFixed(2)}`,
         time,
@@ -84,7 +84,17 @@ export function TransactionHistory() {
     }));
   };
 
-  const formattedTransactionHistory = formatTransactionHistory(transactionHistory);
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(e.target.value);
+  };
+
+  const filteredTransactionHistory = selectedDate
+    ? transactionHistory.filter((transaction: any) =>
+        new Date(transaction.date_of_sale).toLocaleDateString("en-CA") === selectedDate
+      )
+    : transactionHistory;
+
+  const formattedTransactionHistory = formatTransactionHistory(filteredTransactionHistory);
 
   return (
     <>
@@ -96,20 +106,16 @@ export function TransactionHistory() {
           </div>
           <div className="filter-section">
             <div className="filter-label">
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/1e1014186ee482b9f7f7ef6a523f6f756981b0dc6bd24b1364ee7b877e96ba36?apiKey=d03ff6b018f84c75b88104249d2053b6&"
-                className="filter-icon"
-                alt="Filter Icon"
+              <input
+                className="filter-by-date"
+                type="date"
+                value={selectedDate}
+                onChange={handleDateChange}
               />
-              <div className="filter-text">Date and Time of Filter</div>
             </div>
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/202f00e4a88f1f8cb63723f2ab74511e60aaa75360a6b04f24fbef81723b5813?apiKey=d03ff6b018f84c75b88104249d2053b6&"
-              className="filter-arrow"
-              alt="Filter Arrow"
-            />
+            {selectedDate && (
+              <button className="clear-button" onClick={() => setSelectedDate("")}>Clear all filter</button>
+            )}
           </div>
         </header>
         <div className="transaction-history-container">
@@ -118,7 +124,6 @@ export function TransactionHistory() {
               <React.Fragment key={index}>
                 <DateSummary date={transactionGroup?.date} totalAmount={transactionGroup?.totalAmount} />
                 {transactionGroup?.items?.map((transactionItem: any, itemIndex: number) => (
-
                   <TransactionCard
                     key={itemIndex}
                     amount={!transactionItem?.amount?.includes('undefined') ? transactionItem?.amount : 'INR NA'}
