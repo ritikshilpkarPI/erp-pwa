@@ -46,7 +46,7 @@
 
 .navigation-header-container {
   box-shadow: 1px 1px 12px rgb(187, 186, 186);
-  position: absolute;
+  position: sticky;
   top: 0px;
   background-color: white;
 }

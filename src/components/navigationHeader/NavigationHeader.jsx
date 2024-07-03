@@ -11,7 +11,7 @@ const NavigationHeader = (props) => {
 
 
     return (
-        <div className='navigation-header-container'>
+        <div className='navigation-header-container addproduct'>
 
             <NavigationButton
                 onClick={onClick}
