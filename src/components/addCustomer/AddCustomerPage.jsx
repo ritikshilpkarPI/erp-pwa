@@ -104,7 +104,7 @@ const AddCustomerPage = () => {
           onBlur={handleBlur} 
           onChange={(e) => setEmail(e.target.value)}
         />
-         <TextInput
+        <TextInput
           className={`login-user-credit-limit-input`}
           type="Credit limit"
           labelTitle="Credit limit"
