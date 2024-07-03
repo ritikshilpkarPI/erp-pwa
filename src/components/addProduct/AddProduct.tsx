@@ -59,7 +59,6 @@ export const AddProduct = () => {
   }, []);
 
   const addProductHandler = async () => {
-    
     try {
       const responst = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/item/additem`,
@@ -82,6 +81,10 @@ export const AddProduct = () => {
       );
       const res = await responst.json();
       console.log(res);
+      if (!res) {
+        return;
+      }
+      navigate("/cart");
     } catch (error) {
       console.log(error);
     }
