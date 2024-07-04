@@ -1,9 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SelectMenu = ({ onTap, click }) => {
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    navigate("/customers");
+  };
+
   return click === "btn1" ? (
     <svg
-      onClick={onTap}
+      onClick={() => {
+        onTap();
+        handleNavigation();
+      }}
       xmlns="http://www.w3.org/2000/svg"
       width="28"
       height="28"
@@ -87,7 +97,10 @@ const SelectMenu = ({ onTap, click }) => {
     </svg>
   ) : (
     <svg
-      onClick={onTap}
+      onClick={() => {
+        onTap();
+        handleNavigation();
+      }}
       xmlns="http://www.w3.org/2000/svg"
       width="28"
       height="28"
