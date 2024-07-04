@@ -50,7 +50,7 @@ const EmailVerification = () => {
       }
     }
   };
- const API = "http://localhost:5467/api/v1"
+ const API = process.env.REACT_APP_SIGNUP_URL
   const sendOtp = async () => {
     try {
       const response = await fetch(`${API}/generate-otp` ,{
@@ -62,15 +62,13 @@ const EmailVerification = () => {
       });
   
       const data = await response.json();
-       console.log(data)
-      if (data) {
+      if (data.message === 'OTP sent') {
         navigate("/otpverification");
       } else {
         throw new Error('OTP sending failed');
       }
     } catch (error) {
       setIsValid(false);
-      console.log(error)
       setValidationMessage('Error sending OTP. Please try again.');
     }
   };
