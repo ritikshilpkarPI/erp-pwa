@@ -10,7 +10,7 @@ export const appGlobalState: any = {
   isOpen: false,
   loggedInUser: decodeJwtToken(localStorage.getItem("token")) ?? null,
   isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem("token"))),
-  isLoading: false
+  isLoading: false,
 };
 // import this in every component to access global state
 export const appStateReducer = (state: any, action: any) => {
@@ -37,10 +37,14 @@ export const appStateReducer = (state: any, action: any) => {
       return { ...state };
 
     case "SET_ITEMS":
+    
       return {
         ...state,
-        items: action.payload,
+        items: action.payload 
+     
       };
+      case "CLEAR_ITEMS":
+        return { ...state, items: [] }
     case "SET_LOADING":
       return {
         ...state,

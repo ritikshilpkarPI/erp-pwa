@@ -7,9 +7,6 @@ const NavigationHeader = (props) => {
 
     const { title, titleClassName, NavigationHeaderImage, NavigationHeaderImageClassName, onClick} = props
 
-    
-
-
     return (
         <div className='navigation-header-container'>
 

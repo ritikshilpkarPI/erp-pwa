@@ -18,7 +18,7 @@ const MenuPageBody = () => {
       if (globalState.items.length === 0) {
         setShowNoDataAnimation(true);
       }
-    }, 2 * 60);
+    }, 2 * 30);
 
     return () => clearTimeout(delayTimeout);
   }, [globalState.cartItems, globalState.items.length]);
