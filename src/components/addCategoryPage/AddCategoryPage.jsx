@@ -82,8 +82,8 @@ const AddCategoryPage = () => {
         <ButtonInput
           disabled={!isFormFilled || isLoading}
           type="submit"
-          title={isLoading ? "Submitting..." : "Submit"}
-          className={!isFormFilled ? "category-submit-button-input" : "category-submit-button-input-def"}
+          title="Submit"
+          className={isFormFilled ? "category-submit-button-input" : "category-submit-button-input-def"}
           isLoading={isLoading}
         />
       </form>

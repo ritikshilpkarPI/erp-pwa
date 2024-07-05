@@ -8,7 +8,7 @@ import CloseIcon from "../../icons/CloseIcon";
 import { useAppContext } from "../../appState/appStateContext";
 
 const MainHeaderMenu = () => {
-  const { dispatch, globalState } = useAppContext();
+  const { dispatch } = useAppContext();
   const [openSearchBox, setOpenSearchBox] = useState(false);
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,32 +36,42 @@ const MainHeaderMenu = () => {
       setOptions(data);
     } catch (error) {
       console.error("Error fetching categories:", error);
-    } finally {
-      dispatch({ type: "SET_LOADING" });
     }
-  }, [API,dispatch]);
+  }, [API]);
 
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
       dispatch({ type: "SET_LOADING", payload: true });
+
       try {
-        const url = `${process.env.REACT_APP_SIGNUP_URL}/items?category_id=${
+        const url = `${API}/items?category_id=${
           categoryId || ""
         }&search_query=${query}`;
         const response = await fetch(url, { method: "GET" });
 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          if (response.status === 404) {
+            const data = await response.json();
+            if (data.message === "No items found") {
+              dispatch({ type: "CLEAR_ITEMS" });
+              dispatch({ type: "SET_MESSAGE", payload: "No items found" });
+            }
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        } else {
+          const data = await response.json();
+          dispatch({ type: "SET_ITEMS", payload: data });
+          dispatch({ type: "SET_MESSAGE", payload: "" });
         }
-        const data = await response.json();
-        dispatch({ type: "SET_ITEMS", payload: data });
       } catch (error) {
         console.error("Error fetching items:", error);
+        dispatch({ type: "SET_MESSAGE", payload: "Error fetching items" });
       } finally {
         dispatch({ type: "SET_LOADING", payload: false });
       }
     },
-    [dispatch]  
+    [API, dispatch]
   );
 
   useEffect(() => {
@@ -69,11 +79,8 @@ const MainHeaderMenu = () => {
   }, [fetchCategories]);
 
   useEffect(() => {
-   
-    if (!globalState.items.length) {
-      fetchItems();
-    }
-  }, [fetchItems, globalState.items.length]);
+    fetchItems();
+  }, [fetchItems]);
 
   const handleOptionChange = (e) => {
     const categoryId = e.target.value;
@@ -100,6 +107,7 @@ const MainHeaderMenu = () => {
           className="menu-header-search"
           isOpen={openSearchBox}
           onChange={handleSearchInputChange}
+          value={searchQuery}
         />
       ) : (
         <select

@@ -6,8 +6,10 @@ import TextInput from "../textInput/TextInput";
 import backButtonImage from "../../image/BackButton.svg";
 
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { AppStateContext } from "../../appState/appStateContext";
+
 
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
@@ -112,6 +114,7 @@ const LoginPage = () => {
             isLoading={loading}
           />
         </form>
+        <Link to="/forgotpassword" className="forgot-password" >Forgot Password?</Link>
         <div className="login-page-information-container">
           <p className="login-page-information">
             <span>

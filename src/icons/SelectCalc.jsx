@@ -1,9 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SelectCalc = ({ onTap, click }) => {
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    navigate("/history");
+  };
+
   return click === "btn3" ? (
     <svg
-      onClick={onTap}
+      onClick={() => {
+        onTap();
+        handleNavigation();
+      }}
       xmlns="http://www.w3.org/2000/svg"
       width="28"
       height="28"
@@ -60,7 +70,10 @@ const SelectCalc = ({ onTap, click }) => {
     </svg>
   ) : (
     <svg
-      onClick={onTap}
+      onClick={() => {
+        onTap();
+        handleNavigation();
+      }}
       xmlns="http://www.w3.org/2000/svg"
       width="28"
       height="28"

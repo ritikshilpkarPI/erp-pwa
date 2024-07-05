@@ -7,16 +7,23 @@ import AddCategory from "../pages/AddCategory";
 import PlaceOrder from "../pages/PlaceOrder";
 import Customers from "../pages/Customers";
 import { AddProductForm } from "../pages/AddProduct";
+import EmailVerification from "../components/emailVerification/EmailVerification";
+import OtpVerification from "../components/otpVerification/OtpVerification";
+import ChangePassword from "../components/changePassword/ChangePassword";
 
 const unProtectedRouteMap = Object.freeze({
   "/": <Splash />,
   "/login": <Login />,
-  "/signup": <Signup/>,
+  "/signup": <Signup />,
   "/contact": <Contact />,
   "/placeorder": <PlaceOrder />,
-  "/customers":<Customers />,
-  "/addProduct": <AddProductForm/>,
- "/addCategory": <AddCategory/>
+  "/customers": <Customers />,
+  "/addProduct": <AddProductForm />,
+  "/forgotpassword": <EmailVerification />,
+  "/otpverification": <OtpVerification />,
+  "/emailverification": <EmailVerification />,
+  "/changepassword": <ChangePassword />,
+  "/addCategory": <AddCategory />
 })
 
 
