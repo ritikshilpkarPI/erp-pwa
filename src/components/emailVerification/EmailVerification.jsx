@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import NavigationHeader from '../navigationHeader/NavigationHeader';
-import TextInput from '../textInput/TextInput';
-import ButtonInput from '../buttonInput/ButtonInput';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import NavigationHeader from "../navigationHeader/NavigationHeader";
+import TextInput from "../textInput/TextInput";
+import ButtonInput from "../buttonInput/ButtonInput";
 import backbtnsvg from "../../image/BackButton.svg";
 import "./EmailVerification.css";
 
 const EmailVerification = () => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [isValid, setIsValid] = useState(true);
-  const [validationMessage, setValidationMessage] = useState('');
+  const [validationMessage, setValidationMessage] = useState("");
   const navigate = useNavigate();
 
   const backFunc = () => {
@@ -20,8 +20,8 @@ const EmailVerification = () => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInput(value);
-    setIsValid(true);  
-    setValidationMessage(''); 
+    setIsValid(true);
+    setValidationMessage("");
   };
 
   const validateInput = (input) => {
@@ -31,45 +31,50 @@ const EmailVerification = () => {
     if (!isNaN(input)) {
       if (phoneRegex.test(input)) {
         setIsValid(true);
-        setValidationMessage('');
+        setValidationMessage("");
         return true;
       } else {
         setIsValid(false);
-        setValidationMessage('Please enter a valid 10-digit phone number');
+        setValidationMessage("Please enter a valid 10-digit phone number");
         return false;
       }
     } else {
       if (emailRegex.test(input)) {
         setIsValid(true);
-        setValidationMessage('');
+        setValidationMessage("");
         return true;
       } else {
         setIsValid(false);
-        setValidationMessage('Please enter a valid email address');
+        setValidationMessage("Please enter a valid email address");
         return false;
       }
     }
   };
- const API = process.env.REACT_APP_SIGNUP_URL
+
   const sendOtp = async () => {
     try {
-      const response = await fetch(`${API}/generate-otp` ,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ input })
-      });
-  
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/generate-otp`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ input }),
+        }
+      );
+
       const data = await response.json();
-      if (data.message === 'OTP sent') {
-        navigate("/otpverification");
+      if (response.ok && data.message === "OTP sent successfully") {
+        navigate("/otpverification", { state: { email: data.email } });
       } else {
-        throw new Error('OTP sending failed');
+        throw new Error(data.message || "OTP sending failed");
       }
     } catch (error) {
       setIsValid(false);
-      setValidationMessage('Error sending OTP. Please try again.');
+      setValidationMessage(
+        error.message || "Error sending OTP. Please try again."
+      );
     }
   };
 
@@ -79,11 +84,11 @@ const EmailVerification = () => {
     }
   };
 
-  const inputType = !isNaN(input) ? 'tel' : 'email';
-  const disabled = input === '';
+  const inputType = !isNaN(input) ? "tel" : "email";
+  const disabled = input === "";
 
   return (
-    <div className='email-verification'>
+    <div className="email-verification">
       <NavigationHeader
         title="Verification"
         titleClassName="navigation-header-email"
@@ -93,8 +98,9 @@ const EmailVerification = () => {
       />
       <div className="email-verification-main">
         <div className="email-title">Verify your Email or Mobile</div>
-        <div className='email-description'>
-          We have sent you a <strong>One Time Password</strong> on this email address.
+        <div className="email-description">
+          We have sent you a <strong>One Time Password</strong> on this email
+          address.
         </div>
         <div className="email-input">
           <TextInput
@@ -109,14 +115,16 @@ const EmailVerification = () => {
         {!isValid && (
           <div className="validation-message">{validationMessage}</div>
         )}
-        <div className='email-verification-login'>
+        <div className="email-verification-login">
           Already have an account? <Link to={"/login"}>Login</Link>
         </div>
       </div>
-     
+
       <div className="email-verification-bottom-nav">
         <ButtonInput
-          className={`email-verification-bottom-btn ${disabled ? "button-disabled" : ""}`}
+          className={`email-verification-bottom-btn ${
+            disabled ? "button-disabled" : ""
+          }`}
           title="Get OTP"
           disable={disabled}
           onClick={handleButtonClick}

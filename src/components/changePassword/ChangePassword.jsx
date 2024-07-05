@@ -4,7 +4,7 @@ import NavigationHeader from "../navigationHeader/NavigationHeader";
 import TextInput from "../textInput/TextInput";
 import { useState } from "react";
 import ButtonInput from "../buttonInput/ButtonInput";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -12,6 +12,8 @@ const ChangePassword = () => {
   const [validationMessage, setValidationMessage] = useState("");
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const { tempToken, email } = location.state;
   const validatePassword = () => {
     if (newPassword !== confirmPassword) {
       setValidationMessage("Passwords do not match");
@@ -25,11 +27,32 @@ const ChangePassword = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validatePassword()) {
-      setValidationMessage("Password changed successfully");
-      navigate("/cart");
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_SIGNUP_URL}/change-password`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tempToken, newPassword }),
+          }
+        );
+
+        const data = await response.json();
+        if (response.ok && data.message === "Password changed successfully") {
+          navigate("/cart");
+        } else {
+          throw new Error(data.message || "Password change failed");
+        }
+      } catch (error) {
+        setValidationMessage(
+          error.message || "Error changing password. Please try again."
+        );
+      }
     }
   };
 
@@ -50,6 +73,10 @@ const ChangePassword = () => {
       />
       <div className="change-password-form-container">
         <form className="change-password-form" onSubmit={handleSubmit}>
+          <div className="change-password-email-container">
+            Enter your new password for :{" "}
+            <span style={{ fontWeight: "600" }}>{email}</span>.
+          </div>
           <TextInput
             className="change-password-input"
             type="password"

@@ -1,23 +1,55 @@
 import "./OtpVerification.css";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backbtnsvg from "../../image/BackButton.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import ButtonInput from "../buttonInput/ButtonInput";
 
 const OtpVerification = () => {
   const length = 4;
   const [otpInput, setOtpInput] = useState(new Array(length).fill(""));
-  const [timeLeft, setTimeLeft] = useState(120); 
+  const [timeLeft, setTimeLeft] = useState(300);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const location = useLocation();
+
+  const { email } = location.state;
 
   const navigate = useNavigate();
+  const inputRefs = useRef([]);
 
   const backFunc = () => {
     navigate("/emailverification");
   };
 
-  const otpSubmit = (otp) => {
-    console.log(otp);
+  const otpSubmit = async (otp) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/verify-otp`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ otp }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok && data.message === "OTP verified") {
+        setSuccessMessage(data.message);
+        navigate("/changepassword", {
+          state: { tempToken: data.tempToken, email: data.email },
+        });
+      } else {
+        throw new Error(data.message || "OTP verification failed");
+      }
+    } catch (error) {
+      setErrorMessage(
+        error.message || "Error verifying OTP. Please try again."
+      );
+    }
   };
 
   const handleInputChange = (e, index) => {
@@ -48,8 +80,6 @@ const OtpVerification = () => {
     }
   };
 
-  const inputRefs = useRef([]);
-
   useEffect(() => {
     if (inputRefs.current[0]) {
       inputRefs.current[0].focus();
@@ -66,8 +96,10 @@ const OtpVerification = () => {
   }, [timeLeft]);
 
   const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
-    const secs = (seconds % 60).toString().padStart(2, '0');
+    const minutes = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const secs = (seconds % 60).toString().padStart(2, "0");
     return `${minutes}:${secs}`;
   };
 
@@ -85,7 +117,7 @@ const OtpVerification = () => {
       <div className="otp-verification-main">
         <div className="otp-title">OTP Verification</div>
         <div className="otp-description">
-          Enter the code from the Email we sent to dummy@gmail.com
+          Enter the code from the Email we sent to {email}
         </div>
         <div className="timer-element">
           {timeLeft > 0 ? formatTime(timeLeft) : "Time expired"}
@@ -104,17 +136,22 @@ const OtpVerification = () => {
             />
           ))}
         </div>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {successMessage && (
+          <div className="success-message">{successMessage}</div>
+        )}
         <div className="otp-footer">
-          Don't receive the OTP? <span>Resend</span> 
+          Didn't receive the OTP? <span>Resend</span>
         </div>
-        
       </div>
       <div className="otp-verification-bottom-nav">
         <ButtonInput
-          className={`otp-verification-bottom-btn ${allFieldsFilled ? "" : "button-disabled"}`}
+          className={`otp-verification-bottom-btn ${
+            allFieldsFilled ? "" : "button-disabled"
+          }`}
           title="Submit"
           disable={!allFieldsFilled}
-          onClick={() => navigate("/changepassword")}
+          onClick={() => otpSubmit(otpInput.join(""))}
         />
       </div>
     </div>

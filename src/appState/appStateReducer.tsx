@@ -26,7 +26,7 @@ export const appStateReducer = (state: any, action: any) => {
       return { ...state, cartItems: newCartItems };
 
     case "SET_TRANSACTION_HISTORY":
-      const newTransactionHistory = action?.payload ?? []
+      const newTransactionHistory = action?.payload ?? [];
       return { ...state, transactionHistory: newTransactionHistory };
 
     case "ADD_ITEM_TO_BILL":
@@ -37,14 +37,12 @@ export const appStateReducer = (state: any, action: any) => {
       return { ...state };
 
     case "SET_ITEMS":
-    
       return {
         ...state,
-        items: action.payload 
-     
+        items: action.payload,
       };
-      case "CLEAR_ITEMS":
-        return { ...state, items: [] }
+    case "CLEAR_ITEMS":
+      return { ...state, items: [] };
     case "SET_LOADING":
       return {
         ...state,
@@ -73,7 +71,6 @@ export const appStateReducer = (state: any, action: any) => {
       const loggedInUser =
         decodeJwtToken(localStorage.getItem("token")) ?? null;
       return { ...state, loggedInUser, isLoggedIn: Boolean(loggedInUser) };
-
 
     default:
       return state;
