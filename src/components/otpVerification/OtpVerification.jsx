@@ -11,11 +11,10 @@ const OtpVerification = () => {
   const [timeLeft, setTimeLeft] = useState(300);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [resendDisabled, setResendDisabled] = useState(false);
 
   const location = useLocation();
-
   const { email } = location.state;
-
   const navigate = useNavigate();
   const inputRefs = useRef([]);
 
@@ -38,7 +37,7 @@ const OtpVerification = () => {
 
       const data = await response.json();
       if (response.ok && data.message === "OTP verified") {
-        setSuccessMessage(data.message);
+        setSuccessMessage("OTP verified successfully");
         navigate("/changepassword", {
           state: { tempToken: data.tempToken, email: data.email },
         });
@@ -103,6 +102,39 @@ const OtpVerification = () => {
     return `${minutes}:${secs}`;
   };
 
+  const resendOtp = async () => {
+    inputRefs.current[0].focus();
+    setResendDisabled(true);
+    setErrorMessage("")
+    setSuccessMessage("")
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/resend-otp`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ input: email }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok && data.message === "OTP sent successfully") {
+        setSuccessMessage("OTP resent successfully");
+        setTimeLeft(300); 
+      } else {
+        throw new Error(data.message || "OTP resending failed");
+      }
+    } catch (error) {
+      setErrorMessage(
+        error.message || "Error resending OTP. Please try again."
+      );
+    } finally {
+      setTimeout(() => setResendDisabled(false), 60000); // disable resend for 1 minute
+    }
+  };
+
   const allFieldsFilled = otpInput.every((input) => input.trim() !== "");
 
   return (
@@ -117,7 +149,7 @@ const OtpVerification = () => {
       <div className="otp-verification-main">
         <div className="otp-title">OTP Verification</div>
         <div className="otp-description">
-          Enter the code from the Email we sent to {email}
+          Enter the code from the Email we sent to <span style={{fontWeight:600}}>{email}</span>
         </div>
         <div className="timer-element">
           {timeLeft > 0 ? formatTime(timeLeft) : "Time expired"}
@@ -136,12 +168,21 @@ const OtpVerification = () => {
             />
           ))}
         </div>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+       <div className="message">
+       {errorMessage && <div className="error-message">{errorMessage}</div>}
         {successMessage && (
           <div className="success-message">{successMessage}</div>
         )}
+       </div>
         <div className="otp-footer">
-          Didn't receive the OTP? <span>Resend</span>
+          Didn't receive the OTP?{" "}
+          <span
+            onClick={resendOtp}
+            className={resendDisabled ? "disabled" : ""}
+            style={{color:"blue"}}
+          >
+            Resend
+          </span>
         </div>
       </div>
       <div className="otp-verification-bottom-nav">
