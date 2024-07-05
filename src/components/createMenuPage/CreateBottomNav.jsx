@@ -8,7 +8,7 @@ import { useAppContext } from "../../appState/appStateContext";
 
 const CreateBottomNav = () => {
   const { globalState } = useAppContext();
-  const [clickBtn, setClickBtn] = useState(null);
+  const [clickBtn, setClickBtn] = useState("btn2"); // Set default to "btn2" for SelectStar
 
   const [elementLength, setElementLength] = useState(0);
   const [totalPrize, setTotalPrize] = useState(0);
