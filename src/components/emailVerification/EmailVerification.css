@@ -1,9 +1,11 @@
 .email-verification {
   .navigation-header-email{
-    color: #1a72dd;
-    font-size: 24px;
-    }
-  .email-verification-main {
+    font-family: Rubik;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 37.92px;
+    color: #1A72DD;}
+      .email-verification-main {
     padding: 75px 27px;
 
     .email-title {
@@ -57,9 +59,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 24px;
-    position: fixed;
-    bottom: 300px;
     width: 100%;
 
     .email-verification-bottom-btn {

@@ -84,7 +84,7 @@ const EmailVerification = () => {
     }
   };
 
-  const inputType = !isNaN(input) ? "tel" : "email";
+ 
   const disabled = input === "";
 
   return (
@@ -105,9 +105,9 @@ const EmailVerification = () => {
         <div className="email-input">
           <TextInput
             className="email-verfication-input"
-            type={inputType}
+            type= "email"
             labelTitle=""
-            placeholder="Enter your email or mobile number"
+            placeholder="Enter your email "
             value={input}
             onChange={handleInputChange}
           />

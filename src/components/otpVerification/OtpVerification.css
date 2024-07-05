@@ -1,6 +1,10 @@
 .otp-verification {
   .navigation-header-otp-title {
-    color: #1a72dd;
+      font-family: Rubik;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 37.92px;
+      color: #1A72DD;
   }
   .otp-verification-main {
     padding: 135px 27px 0;
@@ -44,7 +48,7 @@
     }
     .otp-footer {
       text-align: center;
-      margin-top: 10px;
+      margin-top: 20px;
     }
   }
   .otp-verification-bottom-nav {
@@ -53,8 +57,6 @@
     align-items: center;
     justify-content: center;
     margin-top: 14px;
-    position: fixed;
-    bottom: 300px;
     width: 100%;
     .otp-verification-bottom-btn {
       width: 80%;
@@ -76,13 +78,18 @@
 
     .error-message {
       color: red;
+    
     }
     .success-message {
       color: #1a72dd;
+     
     }
   }
 }
 .button-disabled {
   background-color: #cccccc !important;
   cursor: not-allowed;
+}
+@media max {
+      
 }
