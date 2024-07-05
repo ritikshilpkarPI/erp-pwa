@@ -3,7 +3,7 @@ import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import Splash from "../pages/Splash";
 import Signup from "../pages/Signup";
-
+import AddCategory from "../pages/AddCategory";
 import PlaceOrder from "../pages/PlaceOrder";
 import Customers from "../pages/Customers";
 import { AddProductForm } from "../pages/AddProduct";
@@ -15,7 +15,8 @@ const unProtectedRouteMap = Object.freeze({
   "/contact": <Contact />,
   "/placeorder": <PlaceOrder />,
   "/customers":<Customers />,
-  "/addProduct": <AddProductForm/>
+  "/addProduct": <AddProductForm/>,
+ "/addCategory": <AddCategory/>
 })
 
 
