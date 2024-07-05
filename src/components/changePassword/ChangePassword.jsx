@@ -44,7 +44,7 @@ const ChangePassword = () => {
 
         const data = await response.json();
         if (response.ok && data.message === "Password changed successfully") {
-          navigate("/cart");
+          navigate("/login");
         } else {
           throw new Error(data.message || "Password change failed");
         }
