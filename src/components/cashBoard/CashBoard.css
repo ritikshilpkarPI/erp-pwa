@@ -30,11 +30,14 @@
     color: red;
 }
 
-.cash-page-input,.cash-page-input1{
-    padding: 8px 10px;
-    font-size: 22px;
-    border-radius: 8px;
-    border: none;
+
+.cash-page-input,
+.cash-page-input1 {
+  padding: 8px 10px;
+  font-size: 22px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  width: 100%;
 }
 
 .cash-page-input::placeholder,.cash-page-input1::placeholder{
