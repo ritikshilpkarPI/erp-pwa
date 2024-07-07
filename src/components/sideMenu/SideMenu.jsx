@@ -41,7 +41,7 @@ const SideMenu = () => {
               <div className="logo">
                 <SideBarLogo />
               </div>
-              <div className="app-name">{"AppName"}</div>
+              <div className="app-name">{"Invoicify"}</div>
             </div>
             <div className="sidemenu-header-button">
               
