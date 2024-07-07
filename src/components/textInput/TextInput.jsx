@@ -4,7 +4,7 @@ import EyeOffIcon from '../../image/EyeOffIcon.svg'
 
 
 const TextInput = (props) => {
-    const { className, type, placeholder, labelTitle, value, onChange } = props;
+    const { className, type, placeholder, labelTitle, value, onChange, accept } = props;
     const [inputType, setInputType] = useState(type);
 
     const togglePasswordVisibility = () => {
@@ -22,6 +22,7 @@ const TextInput = (props) => {
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
+                    accept={accept}
                 />
             ) : (
                 <div className={`${className}-container`}>
