@@ -69,7 +69,7 @@ export function TransactionHistory() {
 
       acc[date].totalAmount += transaction?.totalAmount;
       acc[date].items.push({
-        amount: `INR ${transaction?.totalAmount?.toFixed(2)}`,
+        amount: `LKR ${transaction?.totalAmount?.toFixed(2)}`,
         time,
         transactionId: transaction?._id
       });
@@ -79,7 +79,7 @@ export function TransactionHistory() {
 
     return Object?.entries(groupedTransactions)?.map(([date, { totalAmount, items }]: any) => ({
       date,
-      totalAmount: `INR ${totalAmount?.toFixed(2)}`,
+      totalAmount: `LKR ${totalAmount?.toFixed(2)}`,
       items
     }));
   };
@@ -126,7 +126,7 @@ export function TransactionHistory() {
                 {transactionGroup?.items?.map((transactionItem: any, itemIndex: number) => (
                   <TransactionCard
                     key={itemIndex}
-                    amount={!transactionItem?.amount?.includes('undefined') ? transactionItem?.amount : 'INR NA'}
+                    amount={!transactionItem?.amount?.includes('undefined') ? transactionItem?.amount : 'LKR NA'}
                     time={transactionItem?.time}
                     transactionId={transactionItem?.transactionId}
                   />

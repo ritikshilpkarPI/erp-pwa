@@ -35,7 +35,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading }) => {
           className="cash-page-input"
           type="number"
           labelTitle="Input costs"
-          placeholder="INR 0"
+          placeholder="LKR 0"
           value={inputCost}
           onChange={(e) => {
             setInputCost(parseInt(e.target.value, 10) || "");
@@ -45,7 +45,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading }) => {
           className="cash-page-input1"
           type="number"
           labelTitle={inputCost > totalPrice ? "Amount Given" : "Amount Due"}
-          placeholder="INR 0"
+          placeholder="LKR 0"
           value={(inputCost - totalPrice)?.toFixed(2)}
           readOnly
         />

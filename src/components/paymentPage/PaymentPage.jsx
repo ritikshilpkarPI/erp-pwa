@@ -88,7 +88,7 @@ const PaymentPage = () => {
           <h4 className="payment-page-total-heading">Total invoice</h4>
         </div>
         <div className="payment-page-total-right">
-          <h4 className="payment-page-price-heading">INR : {totalPrice}</h4>
+          <h4 className="payment-page-price-heading">LKR : {totalPrice}</h4>
         </div>
       </div>
       <div className="payment-page-tabs">

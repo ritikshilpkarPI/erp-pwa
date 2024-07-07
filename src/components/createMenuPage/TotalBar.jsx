@@ -33,7 +33,7 @@ const TotalBar = ({ element }) => {
         </h4>
       </div>
       <div className="total-bar-right">
-        <h4 className="total-bar-left-h4">Total: INR {totalPrice}</h4>
+        <h4 className="total-bar-left-h4">Total: LKR {totalPrice}</h4>
       </div>
     </div>
   );
