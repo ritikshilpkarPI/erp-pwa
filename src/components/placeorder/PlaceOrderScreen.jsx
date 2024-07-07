@@ -48,7 +48,7 @@ const PlaceOrderScreen = () => {
                         <div className='placeorder-content-div' key={index}>
                             <button>{cartItem.count}</button>
                             <div className='placeorder-menu'>{cartItem.name}</div>
-                            <div className='placeorder-price'>₹{cartItem.price_per_unit}</div>
+                            <div className='placeorder-price'>රු{cartItem.price_per_unit}</div>
                         </div>
                     ))}
                 </div>
@@ -58,7 +58,7 @@ const PlaceOrderScreen = () => {
                 </div>
                 <div className='placeorder-total'>
                     <h1>Subtotal</h1>
-                    <h1>₹{totalPrice}</h1>
+                    <h1>රු{totalPrice}</h1>
                 </div>
                 {/* <div className='placeorder-delete'>
                     <DeleteIcon />
@@ -68,7 +68,7 @@ const PlaceOrderScreen = () => {
             <div className='placeorder-bottom'>
                 <div className='placeorder-total'>
                     <h1>Subtotal</h1>
-                    <h1>₹{totalPrice}</h1>
+                    <h1>රු{totalPrice}</h1>
                 </div>
                 <div className='placeorder-bottom-button' onClick={handleClickPayment}>Place an order</div>
             </div>

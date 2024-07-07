@@ -31,7 +31,7 @@ const CreateListTile = ({
         <div className="tile-content">
           <h3 className="tile-content-title">{title} </h3>
           <h3 className="tile-content-subtitle">({subtitle})</h3>
-          <h3 className="tile-content-prize">₹ {price ? price : "N/A"}</h3>
+          <h3 className="tile-content-prize">රු {price ? price : "N/A"}</h3>
         </div>
       </div>
       <div className="tile-traling">
