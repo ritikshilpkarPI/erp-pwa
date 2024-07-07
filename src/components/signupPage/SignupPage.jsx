@@ -6,7 +6,7 @@ import backButtonImage from "../../image/BackButton.svg";
 import ButtonInput from "../buttonInput/ButtonInput";
 import TextInput from "../textInput/TextInput";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 
 const SignupPage = () => {
@@ -103,6 +103,16 @@ const SignupPage = () => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
+          <div>
+            <p>
+              <span>
+                Already have an account?
+              </span>
+              <Link to="/login" className="signup-login-link">
+                 Login
+              </Link>
+            </p>
+          </div>
           <ButtonInput
             type="submit"
             className="signup-submit-button-input"

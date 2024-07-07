@@ -150,3 +150,13 @@
     }
   }
 }
+.signup-link {
+  font-family: Rubik;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 18.96px;
+  color: #1a72dd;
+  text-decoration: none;
+  margin-top: 10px;
+  margin-left: 10px;
+}

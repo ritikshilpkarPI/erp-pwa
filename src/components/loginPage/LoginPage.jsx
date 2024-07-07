@@ -115,6 +115,12 @@ const LoginPage = () => {
           />
         </form>
         <Link to="/forgotpassword" className="forgot-password" >Forgot Password?</Link>
+        <div>
+          <span>
+            Don't have an account? 
+          </span>
+          <Link to="/signup" className="signup-link">Sign up</Link>
+        </div>
         <div className="login-page-information-container">
           <p className="login-page-information">
             <span>

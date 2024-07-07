@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import './PlaceOrderScreen.css';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
-import DeleteIcon from '../../icons/DeleteIcon';
+// import DeleteIcon from '../../icons/DeleteIcon';
 import { useNavigate } from 'react-router-dom';
 import { AppStateContext } from '../../appState/appStateContext';
 
@@ -60,10 +60,10 @@ const PlaceOrderScreen = () => {
                     <h1>Subtotal</h1>
                     <h1>₹{totalPrice}</h1>
                 </div>
-                <div className='placeorder-delete'>
+                {/* <div className='placeorder-delete'>
                     <DeleteIcon />
                     <p>Delete the order</p>
-                </div>
+                </div> */}
             </div>
             <div className='placeorder-bottom'>
                 <div className='placeorder-total'>
