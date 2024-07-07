@@ -26,11 +26,15 @@ const MenuPageBody = () => {
   const addItem = (itemID) => {
     const selectedItem = globalState.items.find((item) => item._id === itemID);
     if (selectedItem) {
-      const existingCartItem = cartList.find((cartItem) => cartItem._id === itemID);
+      const existingCartItem = cartList.find(
+        (cartItem) => cartItem._id === itemID
+      );
       let carItemsListCopy;
       if (existingCartItem) {
         carItemsListCopy = cartList.map((cartItem) =>
-          cartItem._id === itemID ? { ...cartItem, count: cartItem.count + 1 } : cartItem
+          cartItem._id === itemID
+            ? { ...cartItem, count: cartItem.count + 1 }
+            : cartItem
         );
       } else {
         carItemsListCopy = [...cartList, { ...selectedItem, count: 1 }];
@@ -42,7 +46,9 @@ const MenuPageBody = () => {
 
   const incrementItem = (itemID) => {
     const carItemsListCopy = cartList.map((cartItem) =>
-      cartItem._id === itemID ? { ...cartItem, count: cartItem.count + 1 } : cartItem
+      cartItem._id === itemID
+        ? { ...cartItem, count: cartItem.count + 1 }
+        : cartItem
     );
     setCartList(carItemsListCopy);
     dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
@@ -51,7 +57,9 @@ const MenuPageBody = () => {
   const decrementItem = (itemID) => {
     const carItemsListCopy = cartList
       .map((cartItem) =>
-        cartItem._id === itemID ? { ...cartItem, count: cartItem.count - 1 } : cartItem
+        cartItem._id === itemID
+          ? { ...cartItem, count: cartItem.count - 1 }
+          : cartItem
       )
       .filter((cartItem) => cartItem.count > 0);
     setCartList(carItemsListCopy);
@@ -63,19 +71,25 @@ const MenuPageBody = () => {
       {globalState.isLoading ? (
         <LoadingCircle />
       ) : globalState.items.length > 0 ? (
-        globalState.items.map((item) => (
-          <CreateListTile
-            key={item._id}
-            title={item.name}
-            subtitle={item.sold_by}
-            price={item.price_per_unit}
-            count={cartList.find(cartItem => cartItem._id === item._id)?.count || 0}
-            onAdd={() => addItem(item._id)}
-            onIncrement={() => incrementItem(item._id)}
-            onDecrement={() => decrementItem(item._id)}
-            image={item?.img_url}
-          />
-        ))
+        globalState.items.map((item) => {
+          console.log(item);
+          return (
+            <CreateListTile
+              key={item._id}
+              title={item.name}
+              subtitle={item.sold_by}
+              price={item.price_per_unit}
+              count={
+                cartList.find((cartItem) => cartItem._id === item._id)?.count ||
+                0
+              }
+              onAdd={() => addItem(item._id)}
+              onIncrement={() => incrementItem(item._id)}
+              onDecrement={() => decrementItem(item._id)}
+              img={item["img_url"]}
+            />
+          );
+        })
       ) : showNoDataAnimation ? (
         <div className="no-data-animation">
           <Player
@@ -83,19 +97,16 @@ const MenuPageBody = () => {
             loop
             src={noDataAnimation}
             style={{
-              height: '300px',
-              width: '300px',
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-             
-              
-              transform: 'translate(-50%, -50%)'  
+              height: "300px",
+              width: "300px",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+
+              transform: "translate(-50%, -50%)",
             }}
           />
-          <p>
-            No data 
-          </p>
+          <p>No data</p>
         </div>
       ) : null}
     </div>
