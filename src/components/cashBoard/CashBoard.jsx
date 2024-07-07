@@ -8,7 +8,9 @@ import ButtonInput from "../buttonInput/ButtonInput";
 const CashBoard = ({ totalPrice, onClick, isLoading }) => {
   const [inputCost, setInputCost] = useState("");
   const navigate = useNavigate();
-
+ const handleExtractAmount=()=>{
+  setInputCost(totalPrice);
+ }
   const submitHandler = async (e) => {
     e.preventDefault();
     const response = await onClick();
@@ -25,7 +27,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading }) => {
 
   return (
     <div className="cash-board">
-      <div className="exact-amount">
+      <div className="exact-amount" onClick={handleExtractAmount}>
         <WalletIcon /> <h4 className="exact-amount-btn-title">EXACT AMOUNT</h4>
       </div>
       <form onSubmit={submitHandler} className="cash-page-form">
