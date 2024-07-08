@@ -1,13 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import "./MainNav.css";
 import SearchIcon from "../../icons/SearchIcon";
-import BarCodeIcon from "../../icons/BarCodeIcon";
-import ListIcon from "../../icons/ListIcon";
 import SearchInput from "../../pages/searchInput/SearchInput";
 import CloseIcon from "../../icons/CloseIcon";
 import { useAppContext } from "../../appState/appStateContext";
+import AddIcon from "../../icons/AddIcon";
+import { useNavigate } from "react-router-dom";
 
 const MainHeaderMenu = () => {
+  const navigate = useNavigate();
   const { dispatch } = useAppContext();
   const [openSearchBox, setOpenSearchBox] = useState(false);
   const [options, setOptions] = useState([]);
@@ -125,11 +126,12 @@ const MainHeaderMenu = () => {
       <div className="search-icon-outer" onClick={handleSearch}>
         {openSearchBox ? <CloseIcon /> : <SearchIcon />}
       </div>
-      <div className="search-icon-outer">
-        <BarCodeIcon />
-      </div>
-      <div className="search-icon-outer">
-        <ListIcon />
+      <div className="search-icon-outer search-icon-outer1">
+        <AddIcon
+          onClick={() => {
+            navigate("/addproduct");
+          }}
+        />
       </div>
     </div>
   );
