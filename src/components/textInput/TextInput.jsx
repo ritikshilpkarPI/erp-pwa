@@ -39,8 +39,8 @@ const TextInput = (props) => {
                         onClick={togglePasswordVisibility}
                         className={`${className}-toggle-button`}
                     >
-                        {inputType === 'password' ? (<img src={EyeIcon} alt="" />) :
-                            (<img src={EyeOffIcon} alt="" />)}
+                        {inputType === 'password' ? (<img src={EyeOffIcon} alt="" />) :
+                            (<img src={EyeIcon} alt="" />)}
                     </button>
                 </div>
             )}

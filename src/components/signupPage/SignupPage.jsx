@@ -25,35 +25,54 @@ const SignupPage = () => {
     e.preventDefault();
   };
 
-  const signupHandler = async () => {
+  function throttle(func, limit) {
+    let inThrottle;
+    return function (...args) {
+      if (!inThrottle) {
+        func(...args);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    };
+  }
+  
+
+  const signupHandle = async () => {
     try {
+      // Trim the inputs
+      const usernameTrimmed = username.trim();
+      const emailTrimmed = newEmail.trim();
+      const passwordTrimmed = newPassword.trim();
 
-
-      if (!username || !newEmail || !newPassword) {
+      // Check if any field is empty after trimming
+      if (!usernameTrimmed || !emailTrimmed || !passwordTrimmed) {
         enqueueSnackbar("Please fill all the fields", { variant: "error" });
         return;
-      }    
+      }
 
-      setLoading(true); 
+      setLoading(true);
 
-      const responst = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: username,
-          email: newEmail,
-          password: newPassword,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: usernameTrimmed,
+            email: emailTrimmed,
+            password: passwordTrimmed,
+          }),
+        }
+      );
 
-      const result = await responst.json();
+      const result = await response.json();
 
       setLoading(false);
-      
+
       if (result?.error) {
-        enqueueSnackbar(result.error?.message, { variant: "error" }); 
+        enqueueSnackbar(result.error?.message, { variant: "error" });
       }
       if (result.token) {
         navigate("/login");
@@ -64,6 +83,8 @@ const SignupPage = () => {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
+
+  const signupHandler = throttle(signupHandle, 5000);
 
   return (
     <div className="signup-page-container">
@@ -105,18 +126,16 @@ const SignupPage = () => {
           />
           <div>
             <p>
-              <span>
-                Already have an account?
-              </span>
+              <span>Already have an account?</span>
               <Link to="/login" className="signup-login-link">
-                 Login
+                Login
               </Link>
             </p>
           </div>
           <ButtonInput
             type="submit"
             className="signup-submit-button-input"
-            title="Submit"
+            title="Sign up"
             onClick={() => {
               signupHandler();
             }}
