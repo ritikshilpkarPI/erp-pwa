@@ -28,7 +28,7 @@ const CustomerScreen = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate(-1);
+    navigate("/placeorder");
   };
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -45,6 +45,7 @@ const CustomerScreen = () => {
       (customer) => customer._id === customerId
     );
     dispatch({ type: "SET_CUSTOMER", payload: selectedCustomer });
+    navigate("/placeorder");
   };
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
@@ -120,7 +121,7 @@ const CustomerScreen = () => {
           className="customer-bottom"
           onClick={() => navigate("/addcustomer")}
         >
-          <div className="customer-bottom-button">Add a new client</div>
+          <div className="customer-bottom-button">Add a new customer</div>
         </div>
       )}
     </div>

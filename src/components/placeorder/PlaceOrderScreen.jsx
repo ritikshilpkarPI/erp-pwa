@@ -10,7 +10,7 @@ const PlaceOrderScreen = () => {
     const navigate = useNavigate();
 
     const handleClickBack = () => {
-        navigate(-1);
+        navigate("/cart");
     };
 
     const handleClickCustomer = () => {

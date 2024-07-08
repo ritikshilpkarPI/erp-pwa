@@ -78,7 +78,7 @@ const AddCustomerPage = () => {
           onClick={backFunc}
         />
       </div>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} className="add-customer-form">
         <TextInput
           className="login-user-id-input"
           type="text"
@@ -99,7 +99,7 @@ const AddCustomerPage = () => {
           className={`login-user-email-input`}
           type="email"
           labelTitle="Email"
-          placeholder="Email or Phone Number"
+          placeholder="Email your email address"
           value={email}
           onBlur={handleBlur} 
           onChange={(e) => setEmail(e.target.value)}
@@ -116,14 +116,14 @@ const AddCustomerPage = () => {
         <TextArea
           className="login-user-id-input-area"
           type="text"
-          placeholder="Enter your desc"
+          placeholder="Enter your Address"
           labelTitle="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
 
         <ButtonInput
-          disabled={!username || !telephone || !email || !address|| creditLimit || !isValid} 
+          disabled={!username && !telephone && !email && !address && creditLimit && !isValid} 
           type="submit"
           className={
             username && telephone && email && address && isValid && creditLimit
