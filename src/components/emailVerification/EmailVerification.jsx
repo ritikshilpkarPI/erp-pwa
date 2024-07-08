@@ -97,7 +97,7 @@ const EmailVerification = () => {
         onClick={backFunc}
       />
       <div className="email-verification-main">
-        <div className="email-title">Verify your Email or Mobile</div>
+        <div className="email-title">Verify your Email </div>
         <div className="email-description">
           We have sent you a <strong>One Time Password</strong> on this email
           address.
