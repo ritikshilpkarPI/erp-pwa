@@ -55,10 +55,15 @@
         gap: 40px;
         width: 350px;
         height: 40px;
+      
+
 
         .search-input {
           border: none;
           width: 350px;
+          border: none;
+          outline: none;
+          font-size: 14px;
         }
 
         .search-input::placeholder {
