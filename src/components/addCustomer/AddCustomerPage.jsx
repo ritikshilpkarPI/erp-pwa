@@ -1,4 +1,4 @@
-  import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./AddCustomerPage.css";
 import TextInput from "../textInput/TextInput";
 import TextArea from "../textArea/TextArea";
@@ -6,26 +6,22 @@ import ButtonInput from "../buttonInput/ButtonInput";
 import { useNavigate } from "react-router-dom";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIconImage from "../../image/BackIcon.svg";
-import { useContext } from "react"; 
-import { AppStateContext } from "../../appState/appStateContext"; 
+import { AppStateContext } from "../../appState/appStateContext";
 
 const AddCustomerPage = () => {
   const [username, setUsername] = useState("");
-  const [telephone, setTelephone] = useState();
+  const [telephone, setTelephone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [creditLimit, setCreditLimit] = useState()
+  const [creditLimit, setCreditLimit] = useState("");
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(true);
 
-  // Accessing global state and dispatch function from context
   const { dispatch } = useContext(AppStateContext);
 
-  const randomId=(length) =>{
-    return Math.random().toString(36).substring(2, length+2);
+  const randomId = (length) => {
+    return Math.random().toString(36).substring(2, length + 2);
   };
-
-  
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -37,19 +33,19 @@ const AddCustomerPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: username,
-          address: address,
-          id_number: randomId(8), 
-          credit_limit: 677, 
-          telephone: telephone,
-          is_deleted:false
+          name: username.replace(/^\s+/, ""),
+          address: address.replace(/^\s+/, ""),
+          id_number: randomId(8),
+          credit_limit: parseFloat(creditLimit.replace(/^\s+/, "")),
+          telephone: telephone.replace(/^\s+/, ""),
+          is_deleted: false
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
         dispatch({ type: 'ADD_CUSTOMER', payload: data });
-        navigate("/customers"); 
+        navigate("/customers");
       } else {
         console.error('Failed to submit form:', response.statusText);
       }
@@ -64,7 +60,7 @@ const AddCustomerPage = () => {
 
   const handleBlur = () => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    setIsValid(emailPattern.test(email));
+    setIsValid(emailPattern.test(email.replace(/^\s+/, "")));
   };
 
   return (
@@ -85,7 +81,7 @@ const AddCustomerPage = () => {
           labelTitle="Name"
           placeholder="Enter your Name"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value.replace(/^\s+/, ""))}
         />
         <TextInput
           className="login-user-telephone-input"
@@ -93,25 +89,25 @@ const AddCustomerPage = () => {
           labelTitle="Telephone"
           placeholder="Enter your Phone Number"
           value={telephone}
-          onChange={(e) => setTelephone(e.target.value)}
+          onChange={(e) => setTelephone(e.target.value.replace(/^\s+/, ""))}
         />
         <TextInput
           className={`login-user-email-input`}
           type="email"
           labelTitle="Email"
-          placeholder="Email your email address"
+          placeholder="Enter your email address"
           value={email}
-          onBlur={handleBlur} 
-          onChange={(e) => setEmail(e.target.value)}
+          onBlur={handleBlur}
+          onChange={(e) => setEmail(e.target.value.replace(/^\s+/, ""))}
         />
         <TextInput
           className={`login-user-credit-limit-input`}
-          type="Credit limit"
+          type="number"
           labelTitle="Credit limit"
-          placeholder="Credit limit"
+          placeholder="Enter credit limit"
           value={creditLimit}
-          onBlur={handleBlur} 
-          onChange={(e) => setCreditLimit(e.target.value)}
+          onBlur={handleBlur}
+          onChange={(e) => setCreditLimit(e.target.value.replace(/^\s+/, ""))}
         />
         <TextArea
           className="login-user-id-input-area"
@@ -119,11 +115,18 @@ const AddCustomerPage = () => {
           placeholder="Enter your Address"
           labelTitle="Address"
           value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          onChange={(e) => setAddress(e.target.value.replace(/^\s+/, ""))}
         />
 
         <ButtonInput
-          disabled={!username && !telephone && !email && !address && creditLimit && !isValid} 
+          disabled={
+            !username &&
+            !telephone&&
+            !email &&
+            !address && 
+            !creditLimit &&
+            !isValid
+          }
           type="submit"
           className={
             username && telephone && email && address && isValid && creditLimit
