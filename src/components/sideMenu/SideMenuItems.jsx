@@ -3,8 +3,8 @@ import HistoryTransImg from "../../icons/HistoryTransImg";
 import ReportImg from "../../icons/ReportImg";
 import ShopImg from "../../icons/ShopImg";
 import UserImg from "../../icons/UserImg";
-// import SupportImg from "../../icons/SupportImg";
 import SupportImg from "../../icons/SupportImg"
+import Category from "../../icons/Category";
 
 const SideMenuItems = [
   { logo: <CashImage />, label: "Cashier", route: "" },
@@ -18,6 +18,7 @@ const SideMenuItems = [
 
   { logo: <UserImg />, label: "Customer List", route: "/customers" },
   { logo: <SupportImg />, label: "Support", route: "" },
+  { logo: <Category />, label: "Add Category", route: "/addCategory" },
 ];
 
 export default SideMenuItems;
