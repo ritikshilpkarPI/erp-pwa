@@ -72,7 +72,7 @@ const MenuPageBody = () => {
         <LoadingCircle />
       ) : globalState.items.length > 0 ? (
         globalState.items.map((item) => {
-          console.log(item);
+          
           return (
             <CreateListTile
               key={item._id}
