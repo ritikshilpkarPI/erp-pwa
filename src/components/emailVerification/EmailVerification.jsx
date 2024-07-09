@@ -13,6 +13,7 @@ const EmailVerification = () => {
   const [validationMessage, setValidationMessage] = useState("");
   const navigate = useNavigate();
 
+  
   const backFunc = () => {
     navigate("/signup");
   };
