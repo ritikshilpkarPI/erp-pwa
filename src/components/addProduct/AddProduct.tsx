@@ -77,29 +77,18 @@ export const AddProduct = () => {
       formDataa.append("price_per_carton", prizeByCarton);
       formDataa.append("sku", storeKeepingUnit);
       formDataa.append("barcode", randomNumber);
-      console.log(formDataa);
+      
 
       const responst = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/item/additem`,
         {
           method: "POST",
           body: formDataa,
-          // JSON.stringify({
-          //   name: productName,
-          //   prize: Number(productSelling),
-          //   sold_by: selectedOption,
-          //   img_url: formData.photoPreview,
-          //   category: selectedValue,
-          //   price_per_unit: Number(prizeByUnit),
-          //   price_per_dozen: Number(prizeByDozen),
-          //   price_per_carton: Number(prizeByCarton),
-          //   sku: Number(storeKeepingUnit),
-          //   barcode: randomNumber,
-          // }),
+         
         }
       );
       const res = await responst.json();
-      console.log(res);
+      
       if (!res) {
         return;
       }
