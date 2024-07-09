@@ -3,6 +3,7 @@ import "./TransactionHistory.css";
 import backButtonImage from "../../image/BackButton.svg";
 import { useNavigate } from "react-router-dom";
 import { AppStateContext } from "../../appState/appStateContext";
+import LoadingCircle from "../loadinCircule/LoadingCircle";
 
 interface TransactionCardProps {
   amount: string;
@@ -37,14 +38,19 @@ export function TransactionHistory() {
   const { globalState, dispatch } = useContext(AppStateContext);
   const API = `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/sales`;
   const [selectedDate, setSelectedDate] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(API)
       .then((res) => res.json())
       .then((res) => {
         dispatch({ type: "SET_TRANSACTION_HISTORY", payload: res });
+        setLoading(false);
       })
-      .catch((error) => console.error("Error fetching transaction history:", error));
+      .catch((error) => {
+        console.error("Error fetching transaction history:", error);
+        setLoading(false);
+      });
   }, [dispatch, API]);
 
   const transactionHistory = globalState?.transactionHistory || [];
@@ -90,8 +96,8 @@ export function TransactionHistory() {
 
   const filteredTransactionHistory = selectedDate
     ? transactionHistory.filter((transaction: any) =>
-        new Date(transaction.date_of_sale).toLocaleDateString("en-CA") === selectedDate
-      )
+      new Date(transaction.date_of_sale).toLocaleDateString("en-CA") === selectedDate
+    )
     : transactionHistory;
 
   const formattedTransactionHistory = formatTransactionHistory(filteredTransactionHistory);
@@ -118,23 +124,28 @@ export function TransactionHistory() {
             )}
           </div>
         </header>
+
         <div className="transaction-history-container">
-          {formattedTransactionHistory?.length > 0 ? (
-            formattedTransactionHistory?.map((transactionGroup: any, index: number) => (
-              <React.Fragment key={index}>
-                <DateSummary date={transactionGroup?.date} totalAmount={transactionGroup?.totalAmount} />
-                {transactionGroup?.items?.map((transactionItem: any, itemIndex: number) => (
-                  <TransactionCard
-                    key={itemIndex}
-                    amount={!transactionItem?.amount?.includes('undefined') ? transactionItem?.amount : 'LKR NA'}
-                    time={transactionItem?.time}
-                    transactionId={transactionItem?.transactionId}
-                  />
-                ))}
-              </React.Fragment>
-            ))
+          {loading ? (
+            <LoadingCircle />
           ) : (
-            <p>No transaction history available.</p>
+            formattedTransactionHistory?.length > 0 ? (
+              formattedTransactionHistory?.map((transactionGroup: any, index: number) => (
+                <React.Fragment key={index}>
+                  <DateSummary date={transactionGroup?.date} totalAmount={transactionGroup?.totalAmount} />
+                  {transactionGroup?.items?.map((transactionItem: any, itemIndex: number) => (
+                    <TransactionCard
+                      key={itemIndex}
+                      amount={!transactionItem?.amount?.includes('undefined') ? transactionItem?.amount : 'LKR NA'}
+                      time={transactionItem?.time}
+                      transactionId={transactionItem?.transactionId}
+                    />
+                  ))}
+                </React.Fragment>
+              ))
+            ) : (
+              <p>No transaction history available.</p>
+            )
           )}
         </div>
       </main>
