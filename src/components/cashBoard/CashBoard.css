@@ -1,35 +1,35 @@
-.cash-board{
-    font-size: 40px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.cash-board {
+  font-size: 40px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.exact-amount{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background-color: white;
-    width: 355px;
-    height: 60px;
-    border-radius: 10px;
+.exact-amount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: white;
+  width: 355px;
+  height: 60px;
+  border-radius: 10px;
 }
 
-.exact-amount-btn-title{
-    font-size: 16px;
-    font-weight: 600;
+.exact-amount-btn-title {
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.cash-page-input-label,.cash-page-input1-label{
-    font-size: 16px;
+.cash-page-input-label,
+.cash-page-input1-label {
+  font-size: 16px;
 }
 
-.cash-page-input1-label{
-    color: red;
+.cash-page-input1-label {
+  color: red;
 }
-
 
 .cash-page-input,
 .cash-page-input1 {
@@ -40,23 +40,23 @@
   width: 100%;
 }
 
-.cash-page-input::placeholder,.cash-page-input1::placeholder{
-    color: #a7c5e9;
+.cash-page-input::placeholder,
+.cash-page-input1::placeholder {
+  color: #a7c5e9;
 }
 
-
-.cash-page-form{
-    margin-top: 10px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
+.cash-page-form {
+  margin-top: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.login-submit-button-input{
-   position: absolute;
-   bottom: 20px;
+.login-submit-button-input {
+  position: fixed;
+  bottom: 20px;
 }
 .login-submit-button-input.button-disabled {
-    background-color: #cccccc; 
-    cursor: not-allowed;
-  }
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

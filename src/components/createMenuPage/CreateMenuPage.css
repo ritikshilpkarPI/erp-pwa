@@ -108,6 +108,7 @@ body {
   > .tile-minus-btn {
     margin-left: 5px;
     display: flex;
+    width: 16px;
     align-items: center;
     justify-content: center;
   }
