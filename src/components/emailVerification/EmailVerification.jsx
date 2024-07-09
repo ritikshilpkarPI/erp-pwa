@@ -14,6 +14,7 @@ const EmailVerification = () => {
   const navigate = useNavigate();
 
   const backFunc = () => {
+    
     navigate("/signup");
   };
 
