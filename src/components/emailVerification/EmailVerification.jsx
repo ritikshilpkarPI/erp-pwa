@@ -8,9 +8,10 @@ import backbtnsvg from "../../image/BackButton.svg";
 import "./EmailVerification.css";
 
 const EmailVerification = () => {
-  const [input, setInput] = useState("");
+  const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState(true);
   const [validationMessage, setValidationMessage] = useState("");
+  const [buttonDisabled, setButtonDisabled] = useState(false)
   const navigate = useNavigate();
 
   const backFunc = () => {
@@ -19,7 +20,7 @@ const EmailVerification = () => {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setInput(value);
+    setEmail(value);
     setIsValid(true);
     setValidationMessage("");
   };
@@ -60,7 +61,7 @@ const EmailVerification = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ input }),
+          body: JSON.stringify({ email }),
         }
       );
 
@@ -79,13 +80,17 @@ const EmailVerification = () => {
   };
 
   const handleButtonClick = () => {
-    if (validateInput(input)) {
-      sendOtp();
+    if (validateInput(email)) {
+      setButtonDisabled(true); 
+      setTimeout(() => {
+        sendOtp();
+        setButtonDisabled(false);
+      }, 7000); 
     }
   };
 
  
-  const disabled = input === "";
+  const disabled = email === "";
 
   return (
     <div className="email-verification">
@@ -108,7 +113,7 @@ const EmailVerification = () => {
             type= "email"
             labelTitle=""
             placeholder="Enter your email "
-            value={input}
+            value={email}
             onChange={handleInputChange}
           />
         </div>
@@ -128,6 +133,7 @@ const EmailVerification = () => {
           title="Get OTP"
           disable={disabled}
           onClick={handleButtonClick}
+          disabled={buttonDisabled}
         />
       </div>
     </div>

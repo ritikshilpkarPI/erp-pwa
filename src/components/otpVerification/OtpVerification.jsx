@@ -31,7 +31,7 @@ const OtpVerification = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ otp }),
+          body: JSON.stringify({ otp , email}),
         }
       );
 
