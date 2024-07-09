@@ -107,6 +107,7 @@ body {
   }
   > .tile-minus-btn {
     display: flex;
+    width: 16px;
     align-items: center;
     justify-content: center;
   }
