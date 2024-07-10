@@ -31,7 +31,7 @@ const OtpVerification = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ otp }),
+          body: JSON.stringify({ otp, email }), // Include email in the body
         }
       );
 
@@ -39,7 +39,7 @@ const OtpVerification = () => {
       if (response.ok && data.message === "OTP verified") {
         setSuccessMessage("OTP verified successfully");
         navigate("/changepassword", {
-          state: { tempToken: data.tempToken, email: data.email },
+          state: { tempToken: data.tempToken, email: email },
         });
       } else {
         throw new Error(data.message || "OTP verification failed");
@@ -105,8 +105,8 @@ const OtpVerification = () => {
   const resendOtp = async () => {
     inputRefs.current[0].focus();
     setResendDisabled(true);
-    setErrorMessage("")
-    setSuccessMessage("")
+    setErrorMessage("");
+    setSuccessMessage("");
     try {
       const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/resend-otp`,
@@ -115,14 +115,14 @@ const OtpVerification = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ input: email }),
+          body: JSON.stringify({ email }), // Send email correctly
         }
       );
 
       const data = await response.json();
       if (response.ok && data.message === "OTP sent successfully") {
         setSuccessMessage("OTP resent successfully");
-        setTimeLeft(300); 
+        setTimeLeft(300);
       } else {
         throw new Error(data.message || "OTP resending failed");
       }
@@ -149,7 +149,8 @@ const OtpVerification = () => {
       <div className="otp-verification-main">
         <div className="otp-title">OTP Verification</div>
         <div className="otp-description">
-          Enter the code from the Email we sent to <span style={{fontWeight:600}}>{email}</span>
+          Enter the code from the Email we sent to{" "}
+          <span style={{ fontWeight: 600 }}>{email}</span>
         </div>
         <div className="timer-element">
           {timeLeft > 0 ? formatTime(timeLeft) : "Time expired"}
@@ -168,18 +169,18 @@ const OtpVerification = () => {
             />
           ))}
         </div>
-       <div className="message">
-       {errorMessage && <div className="error-message">{errorMessage}</div>}
-        {successMessage && (
-          <div className="success-message">{successMessage}</div>
-        )}
-       </div>
+        <div className="message">
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {successMessage && (
+            <div className="success-message">{successMessage}</div>
+          )}
+        </div>
         <div className="otp-footer">
           Didn't receive the OTP?{" "}
           <span
             onClick={resendOtp}
             className={resendDisabled ? "disabled" : ""}
-            style={{color:"blue"}}
+            style={{ color: "blue", cursor: resendDisabled ? "not-allowed" : "pointer" }}
           >
             Resend
           </span>

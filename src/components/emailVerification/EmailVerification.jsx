@@ -13,6 +13,7 @@ const EmailVerification = () => {
   const [validationMessage, setValidationMessage] = useState("");
   const navigate = useNavigate();
 
+  
   const backFunc = () => {
     navigate("/signup");
   };
@@ -53,38 +54,45 @@ const EmailVerification = () => {
 
   const sendOtp = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/generate-otp`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ input }),
-        }
-      );
+      // Ensure input is valid
+      if (!validateInput(input)) {
+        return;
+      }
 
+      // Send POST request to backend endpoint for OTP generation
+      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/generate-otp`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: input }), // Send 'email' instead of 'input'
+      });
+
+      // Parse response
       const data = await response.json();
+
+      // Check if OTP sent successfully
       if (response.ok && data.message === "OTP sent successfully") {
-        navigate("/otpverification", { state: { email: data.email } });
+        // Navigate to OTP verification page, passing email data
+        navigate("/otpverification", { state: { email: input } });
       } else {
         throw new Error(data.message || "OTP sending failed");
       }
     } catch (error) {
+      // Handle errors
       setIsValid(false);
-      setValidationMessage(
-        error.message || "Error sending OTP. Please try again."
-      );
+      setValidationMessage(error.message || "Error sending OTP. Please try again.");
     }
   };
 
   const handleButtonClick = () => {
+    // Validate input and send OTP if valid
     if (validateInput(input)) {
       sendOtp();
     }
   };
 
- 
+  // Disable button if input is empty
   const disabled = input === "";
 
   return (
@@ -97,17 +105,16 @@ const EmailVerification = () => {
         onClick={backFunc}
       />
       <div className="email-verification-main">
-        <div className="email-title">Verify your Email or Mobile</div>
+        <div className="email-title">Verify your Email </div>
         <div className="email-description">
-          We have sent you a <strong>One Time Password</strong> on this email
-          address.
+          We have sent you a <strong>One Time Password</strong> on this email address.
         </div>
         <div className="email-input">
           <TextInput
             className="email-verfication-input"
-            type= "email"
+            type="text" // Use "text" type for generic input, not "email"
             labelTitle=""
-            placeholder="Enter your email "
+            placeholder="Enter your email or phone number"
             value={input}
             onChange={handleInputChange}
           />

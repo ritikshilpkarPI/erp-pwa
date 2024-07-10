@@ -78,6 +78,7 @@
 
     .error-message {
       color: red;
+      margin-left: 10px;
     
     }
     .success-message {
