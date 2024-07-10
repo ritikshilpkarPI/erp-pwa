@@ -7,7 +7,7 @@
 
   height: 100svh;
 
-  > .customer-header {
+  >.customer-header {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -16,33 +16,32 @@
     border-bottom: 1px solid #ccc;
     box-shadow: 0px 2px 4px 0px #ccc;
 
-    > .customer-header-top {
-      display: flex;
-      border-bottom: 1px solid #ccc;
-      width: 100%;
-      padding: 10px 0;
+    >.navigation-header-container {
+      padding-bottom: 20px;
+      border: none;
+      box-shadow: none;
 
-      > .icon {
-        width: 18%;
-        font-size: 28px;
-        margin-top: 20px;
+      >.navigation-header-customer {
+        font-family: Rubik;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 37.92px;
         color: #1a72dd;
+
+
       }
 
-      > .customer-heading {
-        font-size: 25px;
-        color: #1a72dd;
-        text-align: center;
-        margin-top: 20px;
-        font-weight: bold;
-        padding-left: 50px;
+      >.back-button-image-icon {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
       }
     }
 
-    > .customer-header-bottom {
+    >.customer-header-bottom {
       padding: 10px 20px;
 
-      > .customer-input {
+      >.customer-input {
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 10px;
@@ -69,7 +68,7 @@
     }
   }
 
-  > .customer-content {
+  >.customer-content {
     padding-top: 10px;
     margin-bottom: 10px;
     height: inherit;
@@ -82,7 +81,7 @@
 
     gap: 15px;
 
-    > .customer-content-div {
+    >.customer-content-div {
       padding: 15px 20px;
 
       width: 100%;
@@ -91,12 +90,12 @@
       align-items: center;
       justify-content: space-between;
 
-      > .customer-content-heading {
+      >.customer-content-heading {
         font-size: 18px;
         font-weight: 500;
       }
 
-      > .icon2 {
+      >.icon2 {
         font-size: 22px;
 
         font-weight: 200;
@@ -104,16 +103,16 @@
     }
   }
 
-  > .customer-content::-webkit-scrollbar {
+  >.customer-content::-webkit-scrollbar {
     display: none;
   }
 
-  > .customer-bottom {
+  >.customer-bottom {
     background-color: #1a72dd;
     color: white;
-    border-radius: 5px;
+    border-radius: 15px;
 
-    > .customer-bottom-button {
+    >.customer-bottom-button {
       width: 327px;
       height: 57px;
       gap: 0px;

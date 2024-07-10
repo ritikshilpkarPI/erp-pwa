@@ -12,22 +12,24 @@
     justify-content: space-between;
     padding: 30px;
 
+    >.app-name-container {
+
+        >.app-name {
+            font-family: Rubik;
+            font-size: 45px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            line-height: 37.92px;
+            color: #1A72DD;
+
+        }
+    }
     >.splash-intro {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 20px;
 
-        >.app-name-container {
-
-            >.app-name {
-                font-family: Rubik;
-                font-size: 32px;
-                font-weight: 500;
-                line-height: 37.92px;
-
-            }
-        }
 
         >.splash-image-container {
             >.splash-image {
@@ -47,14 +49,7 @@
             }
         }
 
-        >.splash-scroll-image-container {
-            
-            >.splash-scroll-image {
-                width: 69.38px;
-                height: 5px;
-
-            }
-        }
+       
     }
 
     >.splash-button-container {

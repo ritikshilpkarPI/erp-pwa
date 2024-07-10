@@ -14,8 +14,8 @@ const AddCustomerPage = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [creditLimit, setCreditLimit] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
   const navigate = useNavigate();
-  const [isValid, setIsValid] = useState(true);
 
   const { dispatch } = useContext(AppStateContext);
 
@@ -58,12 +58,11 @@ const AddCustomerPage = () => {
 
   const handleBlur = () => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    setIsValid(emailPattern.test(email.replace(/^\s+/, "")));
+    setIsEmailValid(emailPattern.test(email.replace(/^\s+/, "")));
   };
 
   return (
     <div className="add-customer-page">
-      <div className="add-customer-navbar">
         <NavigationHeader
           title="Add Customer"
           titleClassName="navigation-header-add-customer"
@@ -71,7 +70,6 @@ const AddCustomerPage = () => {
           NavigationHeaderImageClassName="back-button-image-icon"
           onClick={backFunc}
         />
-      </div>
       <form onSubmit={submitHandler} className="add-customer-form">
         <TextInput
           className="login-user-id-input"
@@ -90,7 +88,7 @@ const AddCustomerPage = () => {
           onChange={(e) => setTelephone(e.target.value.replace(/^\s+/, ""))}
         />
         <TextInput
-          className={`login-user-email-input`}
+          className="login-user-email-input"
           type="email"
           labelTitle="Email"
           placeholder="Enter your email address"
@@ -99,12 +97,11 @@ const AddCustomerPage = () => {
           onChange={(e) => setEmail(e.target.value.replace(/^\s+/, ""))}
         />
         <TextInput
-          className={`login-user-credit-limit-input`}
+          className="login-user-credit-limit-input"
           type="number"
           labelTitle="Credit limit"
           placeholder="Enter credit limit"
           value={creditLimit}
-          onBlur={handleBlur}
           onChange={(e) => setCreditLimit(e.target.value.replace(/^\s+/, ""))}
         />
         <TextArea
@@ -118,16 +115,16 @@ const AddCustomerPage = () => {
 
         <ButtonInput
           disabled={
-            !username &&
-            !telephone &&
-            !email &&
-            !address &&
-            !creditLimit &&
-            !isValid
+            !username ||
+            !telephone ||
+            !email ||
+            !address ||
+            !creditLimit ||
+            !isEmailValid
           }
           type="submit"
           className={
-            username && telephone && email && address && isValid && creditLimit
+            username && telephone && email && address && isEmailValid && creditLimit
               ? "login-submit-button-input"
               : "login-submit-button-input-def"
           }

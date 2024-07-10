@@ -6,6 +6,21 @@
   margin: 0 auto;
   padding-bottom: 20px;
   overflow: scroll;
+  >.navigation-header-container{
+    padding-bottom: 20px;
+    >.navigation-header-addproduct{
+      font-family: Rubik;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 37.92px;
+      color: #1a72dd;
+    }
+    >.back-button-image-icon{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
 }
 
 .header {
@@ -200,7 +215,7 @@
   color: #fff;
   font: 500 16px Rubik, sans-serif;
   padding: 22px;
-  border-radius: 5px;
+  border-radius: 15px;
   border: none;
   width: 100%;
   margin-top: 27px;

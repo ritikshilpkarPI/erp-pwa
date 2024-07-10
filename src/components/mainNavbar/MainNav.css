@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
 html,
 body {
   width: 100%;
@@ -11,10 +12,31 @@ body {
 }
 
 .main-nav-bar {
+  >.navigation-header-container {
+    padding: 20px 15px 20px;
+    box-shadow: none;
+    border: none;
+
+    >.navigation-header-Items {
+      font-family: Rubik;
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 26.07px;
+      color: #1A72DD;
+
+    }
+    >.back-button-image-full{
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
   width: 100%;
-  height: 6.5rem;
+  /* height: 6.5rem; */
   box-shadow: 1px 1px 16px rgb(173, 173, 173);
 }
+
 
 .main-header {
   display: flex;
@@ -39,9 +61,10 @@ body {
   background-color: white;
   padding: 0px 10px 0px 0px;
   position: relative;
- 
+
 
 }
+
 .menu-header-search {
   width: 70%;
   padding: 12px 18px;
@@ -51,9 +74,10 @@ body {
   border: none;
   border-top: 0.5px solid #d1d1d1;
   border-right: 0.5px solid #d1d1d1;
- 
+
   outline: none;
 }
+
 .main-header-menu-select {
   padding: 12.5px;
   width: 70%;
@@ -65,11 +89,14 @@ body {
   border-right: 0.5px solid #d1d1d1;
   text-align: center;
   outline: none;
-  appearance: none; /* Hides the default arrow */
+  appearance: none;
+  /* Hides the default arrow */
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="none" stroke="black" stroke-width="2" d="M5 7l5 5 5-5"/></svg>');
   background-repeat: no-repeat;
-  background-position: right 18px center; /* Adjust the padding for the arrow */
-  background-size: 18px; /* Adjust the size of the arrow */
+  background-position: right 18px center;
+  /* Adjust the padding for the arrow */
+  background-size: 18px;
+  /* Adjust the size of the arrow */
 }
 
 
@@ -82,8 +109,9 @@ body {
   border-top: 0.5px solid #d1d1d1;
   padding: 9px 12px;
 }
+
 .search-icon-outer1 {
-  background-color: #156CD5;
+  background-color: blue;
   border-radius: 10px;
   height: 80%;
   display: flex;
