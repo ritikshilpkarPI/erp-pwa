@@ -8,19 +8,19 @@ import backbtnsvg from "../../image/BackButton.svg";
 import "./EmailVerification.css";
 
 const EmailVerification = () => {
-  const [email, setEmail] = useState("");
+  const [input, setInput] = useState("");
   const [isValid, setIsValid] = useState(true);
   const [validationMessage, setValidationMessage] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(false)
   const navigate = useNavigate();
 
+  
   const backFunc = () => {
     navigate("/signup");
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setEmail(value);
+    setInput(value);
     setIsValid(true);
     setValidationMessage("");
   };
@@ -54,43 +54,46 @@ const EmailVerification = () => {
 
   const sendOtp = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/generate-otp`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
+      // Ensure input is valid
+      if (!validateInput(input)) {
+        return;
+      }
 
+      // Send POST request to backend endpoint for OTP generation
+      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/generate-otp`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: input }), // Send 'email' instead of 'input'
+      });
+
+      // Parse response
       const data = await response.json();
+
+      // Check if OTP sent successfully
       if (response.ok && data.message === "OTP sent successfully") {
-        navigate("/otpverification", { state: { email: data.email } });
+        // Navigate to OTP verification page, passing email data
+        navigate("/otpverification", { state: { email: input } });
       } else {
         throw new Error(data.message || "OTP sending failed");
       }
     } catch (error) {
+      // Handle errors
       setIsValid(false);
-      setValidationMessage(
-        error.message || "Error sending OTP. Please try again."
-      );
+      setValidationMessage(error.message || "Error sending OTP. Please try again.");
     }
   };
 
   const handleButtonClick = () => {
-    if (validateInput(email)) {
-      setButtonDisabled(true); 
-      setTimeout(() => {
-        sendOtp();
-        setButtonDisabled(false);
-      }, 7000); 
+    // Validate input and send OTP if valid
+    if (validateInput(input)) {
+      sendOtp();
     }
   };
 
- 
-  const disabled = email === "";
+  // Disable button if input is empty
+  const disabled = input === "";
 
   return (
     <div className="email-verification">
@@ -104,16 +107,15 @@ const EmailVerification = () => {
       <div className="email-verification-main">
         <div className="email-title">Verify your Email </div>
         <div className="email-description">
-          We have sent you a <strong>One Time Password</strong> on this email
-          address.
+          We have sent you a <strong>One Time Password</strong> on this email address.
         </div>
         <div className="email-input">
           <TextInput
             className="email-verfication-input"
-            type= "email"
+            type="text" // Use "text" type for generic input, not "email"
             labelTitle=""
-            placeholder="Enter your email "
-            value={email}
+            placeholder="Enter your email or phone number"
+            value={input}
             onChange={handleInputChange}
           />
         </div>
@@ -133,7 +135,6 @@ const EmailVerification = () => {
           title="Get OTP"
           disable={disabled}
           onClick={handleButtonClick}
-          disabled={buttonDisabled}
         />
       </div>
     </div>
