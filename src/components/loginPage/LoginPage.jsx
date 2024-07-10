@@ -23,7 +23,7 @@ const LoginPage = () => {
     logInHandler();
   };
 
-  const backFunc = () => {
+  const handleBackClick = () => {
     navigate(-1);
   };
 
@@ -39,7 +39,7 @@ const LoginPage = () => {
       setLoading(true);
 
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/signin`,
+        `${process.env.REACT_APP_SIGNUP_URL}/signin`,
         {
           method: "POST",
           headers: {
@@ -91,11 +91,11 @@ const LoginPage = () => {
   return (
     <div className="login-page-container">
       <NavigationHeader
-        title="Log in"
+        title="Log In"
         titleClassName="navigation-header-login"
         NavigationHeaderImage={backButtonImage}
         NavigationHeaderImageClassName="back-button-image-full"
-        onClick={backFunc}
+        onClick={handleBackClick}
       />
 
       <div className="login-form-container">
@@ -121,7 +121,7 @@ const LoginPage = () => {
           <ButtonInput
             type="submit"
             className="login-submit-button-input"
-            title="Log in"
+            title="Log In"
             isLoading={loading}
           />
         </form>
@@ -129,19 +129,12 @@ const LoginPage = () => {
           Forgot Password?
         </Link>
         <div>
-          <span>Don't have an account?</span>
+          <span>Don't have an account? </span>
           <Link to="/signup" className="signup-link">
-            Sign in
+            Sign Up
           </Link>
         </div>
-        <div className="login-page-information-container">
-          <p className="login-page-information">
-            <span>
-              Use the cash register code that can be created by the owner in
-            </span>
-            <span>Manage Store -&gt; Cashier Code</span>
-          </p>
-        </div>
+        
       </div>
     </div>
   );

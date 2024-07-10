@@ -62,7 +62,7 @@
 .text-input-container .category-image-input::file-selector-button {
     width: 156px;
     height: 46px;
-    border-radius: 6px;
+    border-radius: 15px;
     background-color: #1a72dd;
     color: #fff;
     margin-right: 10px;
@@ -77,7 +77,7 @@
 .category-submit-button-input-def {
     width: 327px;
     height: 57px;
-    border-radius: 6px;
+    border-radius: 15px;
     font-family: Rubik;
     font-size: 18px;
     font-weight: 500;

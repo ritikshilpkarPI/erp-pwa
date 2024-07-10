@@ -1,4 +1,3 @@
-import { RiArrowLeftSLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import "./CustomerScreen.css";
 import SearchIcon from "../../icons/SearchIcon";
@@ -6,15 +5,21 @@ import { useContext, useEffect, useState } from "react";
 import { AppStateContext } from "../../appState/appStateContext";
 import { Player } from "@lottiefiles/react-lottie-player";
 import noDataAnimation from "../../animation/noDataAnimation.json";
+import NavigationHeader from "../navigationHeader/NavigationHeader";
+import backButtonIcon from "../../image/BackIcon.svg";
+
+
 
 const CustomerScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCustomers, setFilteredCustomers] = useState([]);
 
   const { globalState, dispatch } = useContext(AppStateContext);
-  const API = `${
-    process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
-  }/customers`;
+
+  const API = `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
+    }/customers`;
+
+
 
   useEffect(() => {
     fetch(API)
@@ -28,7 +33,7 @@ const CustomerScreen = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate("/placeorder");
+    navigate(-1);
   };
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -54,13 +59,13 @@ const CustomerScreen = () => {
   return (
     <div className="customer-screen-container">
       <div className="customer-header">
-        <div className="customer-header-top">
-          <RiArrowLeftSLine
-            className="arrow-icon icon"
-            onClick={handleBackClick}
-          />
-          <h1 className="customer-heading">Customer</h1>
-        </div>
+          <NavigationHeader
+          title="Customers"
+          titleClassName="navigation-header-customer"
+          NavigationHeaderImage={backButtonIcon}
+          NavigationHeaderImageClassName="back-button-image-icon"
+          onClick={handleBackClick}
+        />
         <div className="customer-header-bottom">
           <div className="customer-input">
             <input
@@ -121,7 +126,7 @@ const CustomerScreen = () => {
           className="customer-bottom"
           onClick={() => navigate("/addcustomer")}
         >
-          <div className="customer-bottom-button">Add a new customer</div>
+          <div className="customer-bottom-button">Add A New Customer</div>
         </div>
       )}
     </div>
