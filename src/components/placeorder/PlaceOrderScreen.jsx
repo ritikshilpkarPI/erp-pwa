@@ -1,18 +1,17 @@
 import React, { useContext, useMemo, useState } from "react";
 import "./PlaceOrderScreen.css";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
-// import DeleteIcon from '../../icons/DeleteIcon';
 import { useNavigate } from "react-router-dom";
 import { AppStateContext } from "../../appState/appStateContext";
 import DeleteIcon from "../../icons/DeleteIcon";
 
 const PlaceOrderScreen = () => {
-  const { globalState } = useContext(AppStateContext);
+  const { globalState, dispatch } = useContext(AppStateContext);
   const navigate = useNavigate();
 
-    const handleClickBack = () => {
-        navigate("/cart");
-    };
+  const handleClickBack = () => {
+    navigate("/cart");
+  };
 
   const handleClickCustomer = () => {
     navigate("/customers");
@@ -93,9 +92,15 @@ const PlaceOrderScreen = () => {
           <h1>Subtotal</h1>
           <h1>රු{totalPrice}</h1>
         </div>
-        <div className="placeorder-delete" onClick={() => navigate("/cart")}>
+        <div
+          className="placeorder-delete"
+          onClick={() => {
+            dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
+            navigate("/cart");
+          }}
+        >
           <DeleteIcon />
-          <p>Delete the order</p>
+          <p>Empty Cart</p>
         </div>
       </div>
       <div className="placeorder-bottom">

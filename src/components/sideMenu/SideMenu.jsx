@@ -2,9 +2,7 @@ import { useState } from "react";
 import "./SideMenu.css";
 import SideBarLogo from "../../icons/SideBarLogo";
 import ButtonInput from "../buttonInput/ButtonInput";
-// import DropDown from "../dropDown/DropDown";
 import SideMenuItems from "./SideMenuItems";
-import EllipseIcon from "../../icons/EllipseIcon";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../appState/appStateContext";
 
@@ -12,11 +10,6 @@ const SideMenu = () => {
   const { globalState, dispatch } = useAppContext();
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  // const options = [
-  //   { value: "option1", label: "Option 1" },
-  //   { value: "option2", label: "Option 2" },
-  //   { value: "option3", label: "Option 3" },
-  // ];
 
   const toggleOpen = () => {
     dispatch({ type: "TOGGLE_DRAWER" });
@@ -68,9 +61,7 @@ const SideMenu = () => {
             ))}
           </div>
           <div className="login-history">
-            <div className="ellipse-icon">
-              <EllipseIcon />
-            </div>
+            
             <div className="content">
               <p>Last Login</p>
               <p>Monday, July 1, 2020</p>
@@ -79,10 +70,6 @@ const SideMenu = () => {
           </div>
         </div>
         <div className="sidemenu-footer-btn">
-          {/* <ButtonInput
-            className="sidemenu-footer-button"
-            title="UPGRADE TO PREMIUM"
-          /> */}
           <ButtonInput
                 className="sidemenu-header-btn sidemenu-footer-button"
                 title="Log out"

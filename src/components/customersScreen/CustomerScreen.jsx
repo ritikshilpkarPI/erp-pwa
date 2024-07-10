@@ -1,9 +1,11 @@
-import { RiArrowLeftSLine } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
-import './CustomerScreen.css';
-import SearchIcon from '../../icons/SearchIcon';
-import { useContext, useEffect } from 'react';
-import { AppStateContext } from '../../appState/appStateContext';
+import { RiArrowLeftSLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import "./CustomerScreen.css";
+import SearchIcon from "../../icons/SearchIcon";
+import { useContext, useEffect, useState } from "react";
+import { AppStateContext } from "../../appState/appStateContext";
+import { Player } from "@lottiefiles/react-lottie-player";
+import noDataAnimation from "../../animation/noDataAnimation.json";
 
 const CustomerScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
