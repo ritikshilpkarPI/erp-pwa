@@ -53,9 +53,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading }) => {
           type="submit"
           className="login-submit-button-input"
           title="Complete Payment"
-          disabled={
-            inputCost === 0 || inputCost === "" || inputCost <= totalPrice
-          }
+          disabled={!inputCost || inputCost <= totalPrice}
           isLoading={isLoading}
         />
       </form>
