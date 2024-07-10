@@ -1,18 +1,23 @@
 .login-page-container {
   height: 100svh;
   text-align: center;
+  >.navigation-header-container{
 
-  .navigation-header-login {
-    font-family: Rubik;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 37.92px;
-    color: #1a72dd;
-  }
-  .back-button-image-full {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    padding-bottom: 20px;
+
+    
+    .navigation-header-login {
+      font-family: Rubik;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 37.92px;
+      color: #1a72dd;
+    }
+    .back-button-image-full {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
   }
 
   > .login-form-container {
