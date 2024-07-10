@@ -17,7 +17,7 @@ const SignupPage = () => {
 
   const navigate = useNavigate();
 
-  const backFunc = () => {
+  const handleBackClick = () => {
     navigate(-1);
   };
 
@@ -89,11 +89,11 @@ const SignupPage = () => {
   return (
     <div className="signup-page-container">
       <NavigationHeader
-        title="Sign up"
+        title="Sign Up"
         titleClassName="navigation-header-signup"
         NavigationHeaderImage={backButtonImage}
         NavigationHeaderImageClassName="back-button-image-full"
-        onClick={backFunc}
+        onClick={handleBackClick}
       />
 
       <div className="signup-form-container">
@@ -126,16 +126,13 @@ const SignupPage = () => {
           />
           <div>
             <p>
-              <span>Already have an account?</span>
-              <Link to="/login" className="signup-login-link">
-                Login
-              </Link>
+              <span>Already have an account? </span><Link to="/login" className="signup-login-link">Log In</Link>
             </p>
           </div>
           <ButtonInput
             type="submit"
             className="signup-submit-button-input"
-            title="Sign up"
+            title="Sign Up"
             onClick={() => {
               signupHandler();
             }}

@@ -4,12 +4,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  >.navigation-header-container{
+    padding-bottom: 20px;
+    >.navigation-header-add-customer{
+      font-family: Rubik;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 37.92px;
+      color: #1a72dd;
+    }
+    >.back-button-image-icon{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
  
 }
+
  .add-customer-form{
   padding-top: 30px;
 
+
  }
+ 
 .text-input-container,
 .text-area-container {
   width: 327px;
@@ -61,7 +80,7 @@
 .login-submit-button-input {
   width: 327px;
   height: 57px;
-  border-radius: 6px;
+  border-radius: 15px;
   font-family: Rubik;
   font-size: 18px;
   font-weight: 500;
@@ -74,7 +93,7 @@
 .login-submit-button-input-def {
   width: 327px;
   height: 57px;
-  border-radius: 6px;
+  border-radius: 15px;
   font-family: Rubik;
   font-size: 18px;
   font-weight: 500;
