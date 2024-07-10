@@ -55,6 +55,7 @@
 .login-submit-button-input {
   position: fixed;
   bottom: 20px;
+  border-radius: 15px;
 }
 .login-submit-button-input.button-disabled {
   background-color: #cccccc;

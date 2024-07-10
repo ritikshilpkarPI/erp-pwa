@@ -126,7 +126,7 @@ const CustomerScreen = () => {
           className="customer-bottom"
           onClick={() => navigate("/addcustomer")}
         >
-          <div className="customer-bottom-button">Add A New Customer</div>
+          <div className="customer-bottom-button">Add New Customer</div>
         </div>
       )}
     </div>
