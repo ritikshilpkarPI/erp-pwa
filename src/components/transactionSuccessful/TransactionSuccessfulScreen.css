@@ -5,10 +5,12 @@
 }
 .TransactionSuccessfull {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   background-color: #1a72dd;
   padding: 20px 30px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: 15px;
   overflow-y: scroll;
@@ -122,11 +124,11 @@
       cursor: pointer;
     }
     > .transaction-next-order-button {
-      padding: 14px;
+      padding: 20px 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      width: 85%;
       color: #1a72dd;
       font-weight: bold;
       font-size: 16px;
@@ -136,3 +138,9 @@
     }
   }
 }
+
+.transaction-successful{
+  position: fixed;
+  bottom: 20px;
+}
+

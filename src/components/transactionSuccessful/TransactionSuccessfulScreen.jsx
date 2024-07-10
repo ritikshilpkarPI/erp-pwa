@@ -30,7 +30,7 @@ const TransactionSuccessfulScreen = () => {
           </div>
           <div className="TransactionSuccessfull-content2">
             <h1 className="TransactionSuccessfull-heading">
-              Change: GNF {location.state.prize}
+              Change: LKR {location.state.prize}
             </h1>
           </div>
         </div>
@@ -42,10 +42,8 @@ const TransactionSuccessfulScreen = () => {
         </div>
       </div>
       <div className="TransactionSuccessfull-button-container">
-        <button className="transaction-print-receipt-button">
-          PRINT RECEIPT
-        </button>
-        <button className="transaction-next-order-button" onClick={onClick}>
+        
+        <button className="transaction-next-order-button transaction-successful" onClick={onClick}>
           NEXT ORDER
         </button>
       </div>

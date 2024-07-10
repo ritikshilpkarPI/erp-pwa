@@ -3,7 +3,7 @@
   display: flex;
   height: 100svh;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   margin: 0 auto;
 }
 
@@ -25,8 +25,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 5px 0;
-
+  padding: 5px 16px;
 }
 
 .transaction-history-container::-webkit-scrollbar {
@@ -66,8 +65,9 @@
 }
 
 .filter-section {
+  padding: 0px 26px;
   display: flex;
-  margin-top: 37px;
+  margin:  27px 0px;
   width: 100%;
   gap: 20px;
   font-size: 16px;
@@ -79,7 +79,6 @@
 .filter-label {
   display: flex;
   gap: 8px;
-
 }
 
 .filter-by-date {
@@ -90,7 +89,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 18.96px;
-
 }
 
 .clear-button {
@@ -105,7 +103,6 @@
   font-weight: 500;
   color: #fff;
   background-color: #0d62ca;
-
 }
 
 .filter-icon {

@@ -61,7 +61,7 @@
 .login-submit-button-input {
   width: 327px;
   height: 57px;
-  border-radius: 6px;
+  border-radius: 15px;
   font-family: Rubik;
   font-size: 18px;
   font-weight: 500;
@@ -90,7 +90,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 15px 50px;
+  padding: 20px 15px 20px;
 
   > .dummy-div {
     width: 34px;

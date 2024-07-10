@@ -8,9 +8,9 @@ import ButtonInput from "../buttonInput/ButtonInput";
 const CashBoard = ({ totalPrice, onClick, isLoading }) => {
   const [inputCost, setInputCost] = useState("");
   const navigate = useNavigate();
- const handleExtractAmount=()=>{
-  setInputCost(totalPrice);
- }
+  const handleExtractAmount = () => {
+    setInputCost(totalPrice);
+  };
   const submitHandler = async (e) => {
     e.preventDefault();
     const response = await onClick();
@@ -44,7 +44,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading }) => {
         <TextInput
           className="cash-page-input1"
           type="number"
-          labelTitle={inputCost > totalPrice ? "Amount Given" : "Amount Due"}
+          labelTitle={inputCost > totalPrice ? "Amount Return" : "Amount Due"}
           placeholder="LKR 0"
           value={(inputCost - totalPrice)?.toFixed(2)}
           readOnly
@@ -53,7 +53,9 @@ const CashBoard = ({ totalPrice, onClick, isLoading }) => {
           type="submit"
           className="login-submit-button-input"
           title="Complete Payment"
-          disabled={inputCost === 0 || inputCost === ""}
+          disabled={
+            inputCost === 0 || inputCost === "" || inputCost <= totalPrice
+          }
           isLoading={isLoading}
         />
       </form>
