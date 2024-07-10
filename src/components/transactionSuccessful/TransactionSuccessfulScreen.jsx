@@ -30,16 +30,11 @@ const TransactionSuccessfulScreen = () => {
           </div>
           <div className="TransactionSuccessfull-content2">
             <h1 className="TransactionSuccessfull-heading">
-              Change: LKR {location.state.prize}
+              Bill Total: LKR {location.state.prize}
             </h1>
           </div>
         </div>
-        <div className="TransactionSuccessfull-footer">
-          <button className="TransactionSuccessfull-button-email">Email</button>
-          <button className="TransactionSuccessfull-button-send-receipt">
-            SEND RECEIPT
-          </button>
-        </div>
+        
       </div>
       <div className="TransactionSuccessfull-button-container">
         
