@@ -39,7 +39,7 @@ const PlaceOrderScreen = () => {
       <hr />
       <div className="placeorder-head-bottom">
         <h1 className="placeorder-head-bottom-heading">
-          {globalState.setCustomer?.name || "Customer"}
+          {globalState.selectedCustomer?.name || "Customer"}
         </h1>
         <RiArrowRightSLine
           className="arrow-icon icon2"

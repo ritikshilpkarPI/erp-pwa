@@ -19,38 +19,36 @@ const AddCustomerPage = () => {
 
   const { dispatch } = useContext(AppStateContext);
 
-  const randomId = (length) => {
-    return Math.random().toString(36).substring(2, length + 2);
-  };
-
   const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/customers`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: username.replace(/^\s+/, ""),
-          address: address.replace(/^\s+/, ""),
-          id_number: randomId(8),
-          credit_limit: parseFloat(creditLimit.replace(/^\s+/, "")),
-          telephone: telephone.replace(/^\s+/, ""),
-          is_deleted: false
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/customers`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: username.replace(/^\s+/, ""),
+            address: address.replace(/^\s+/, ""),
+            credit_limit: parseFloat(creditLimit.replace(/^\s+/, "")),
+            telephone: telephone.replace(/^\s+/, ""),
+            is_deleted: false,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
-        dispatch({ type: 'ADD_CUSTOMER', payload: data });
+        dispatch({ type: "ADD_CUSTOMER", payload: data });
         navigate("/customers");
       } else {
-        console.error('Failed to submit form:', response.statusText);
+        console.error("Failed to submit form:", response.statusText);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -121,9 +119,9 @@ const AddCustomerPage = () => {
         <ButtonInput
           disabled={
             !username &&
-            !telephone&&
+            !telephone &&
             !email &&
-            !address && 
+            !address &&
             !creditLimit &&
             !isValid
           }

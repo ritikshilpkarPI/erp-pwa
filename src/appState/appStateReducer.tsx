@@ -5,7 +5,7 @@ export const appGlobalState: any = {
   bills: {},
   cartItems: [],
   customers: [],
-  setCustomer: {},
+  selectedCustomer: {},
   transactionHistory: [],
   isOpen: false,
   loggedInUser: decodeJwtToken(localStorage.getItem("token")) ?? null,
@@ -63,9 +63,9 @@ export const appStateReducer = (state: any, action: any) => {
       const newCustomers = action?.payload ?? [];
       return { ...state, customers: newCustomers };
 
-    case "SET_CUSTOMER":
+    case "SELECTED_CUSTOMER":
       const newCustomer = action.payload ?? {};
-      return { ...state, setCustomer: newCustomer };
+      return { ...state, selectedCustomer: newCustomer };
 
     case "SET_USER":
       const loggedInUser =

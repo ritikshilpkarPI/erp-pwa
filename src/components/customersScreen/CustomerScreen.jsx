@@ -40,11 +40,11 @@ const CustomerScreen = () => {
       setFilteredCustomers(filtered);
     }
   }, [searchQuery, globalState.customers]);
-  const selectedCustomerFuns = (customerId) => {
+  const selectedCustomerFunction = (customerId) => {
     const selectedCustomer = globalState.customers.find(
       (customer) => customer._id === customerId
     );
-    dispatch({ type: "SET_CUSTOMER", payload: selectedCustomer });
+    dispatch({ type: "SELECTED_CUSTOMER", payload: selectedCustomer });
     navigate("/placeorder");
   };
   const handleChange = (e) => {
@@ -79,7 +79,7 @@ const CustomerScreen = () => {
             <div
               key={customer._id}
               className="customer-content-div"
-              onClick={() => selectedCustomerFuns(customer._id)}
+              onClick={() => selectedCustomerFunction(customer._id)}
             >
               <label
                 className="customer-content-heading"
@@ -92,7 +92,7 @@ const CustomerScreen = () => {
                 name="customer"
                 id={customer._id}
                 value={customer._id}
-                checked={globalState.setCustomer?._id === customer._id}
+                checked={globalState.selectedCustomer?._id === customer._id}
               />
             </div>
           ))
