@@ -98,7 +98,7 @@
   background: transparent;
   border: none;
   outline: none;
-  font-family: Rubik, sans-serif;
+  font-family: Rubik;
   font-size: 14px;
   font-weight: 500;
   color: #fff;
@@ -218,4 +218,8 @@
 
 .navigation-button-container-history-btn-title {
   margin-right: 50px;
+}
+.navigation-header-payment{
+  font-size: 32px;
+  font-family: Rubik;
 }
