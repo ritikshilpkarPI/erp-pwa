@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CreateMenuPage.css";
 import AddIcon from "../../icons/AddIcon";
 import MinusIcon from "../../icons/MinusIcon";
+import { useAppContext } from "../../appState/appStateContext";
 
 const CreateListTile = ({
   title,
   subtitle,
   price,
+  price_per_unit,
+  price_per_dozen,
+  price_per_carton,
   onClick,
   count,
   onAdd,
@@ -14,6 +18,28 @@ const CreateListTile = ({
   onIncrement,
   img,
 }) => {
+  const [priceCategory, setPriceCategory] = useState("price_per_unit");
+
+  const { dispatch } = useAppContext();
+
+  const selectHandler = (event) => {
+    setPriceCategory(event.target.value);
+    dispatch({ type: "PRICING_PER_QUANTITY", payload: priceCategory });
+  };
+
+  const getPrice = () => {
+    switch (priceCategory) {
+      case "price_per_unit":
+        return price_per_unit;
+      case "price_per_dozen":
+        return price_per_dozen;
+      case "price_per_carton":
+        return price_per_carton;
+      default:
+        return price;
+    }
+  };
+
   return (
     <div className="create-list-tile">
       <div className="list-tile-outter">
@@ -26,18 +52,29 @@ const CreateListTile = ({
         />
         <div className="tile-content">
           <h3 className="tile-content-title">{title} </h3>
-          <h3 className="tile-content-subtitle">({subtitle})</h3>
-          <h3 className="tile-content-prize">රු {price ? price : "N/A"}</h3>
+          {/* <h3 className="tile-content-subtitle">({subtitle})</h3> */}
+          <select onChange={selectHandler} className="select-dropdown">
+            <option defaultValue={price_per_unit} value="price_per_unit">
+              Unit
+            </option>
+            <option value="price_per_dozen">Dozen</option>
+            <option value="price_per_carton">Carton</option>
+          </select>
+
+          <h3 className="tile-content-price">රු {getPrice()}</h3>
         </div>
       </div>
       <div className="tile-traling">
         {count > 0 ? (
           <>
             <span className="tile-minus-btn">
-              <MinusIcon onclick={onDecrement} />
+              <MinusIcon onClick={onDecrement} />
             </span>
             <div className="count">{count}</div>
-            <AddIcon className="tile-add--btn" onClick={onIncrement} />
+            <AddIcon
+              className="tile-add--btn"
+              onClick={() => onIncrement(getPrice())}
+            />
           </>
         ) : (
           <>
