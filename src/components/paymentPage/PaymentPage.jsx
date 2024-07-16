@@ -11,8 +11,8 @@ import { enqueueSnackbar } from "notistack";
 const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const { globalState, dispatch } = useContext(AppStateContext);
-  const [isCheckAvailable] = useState(false)
-  const [loading, setLoading] = useState()
+  const [isCheckAvailable] = useState(false);
+  const [loading, setLoading] = useState();
 
   const navigate = useNavigate();
 
@@ -29,29 +29,40 @@ const PaymentPage = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-  
+  console.log({ g: globalState.cartItems });
+
   const createSale = async () => {
-    const cashPaymentId = '60d5f9e9a60b2f1b4c3c1c84';
-    const chequePaymentId = '60d5f9e9a60b2f1b4c3c1c85';
+    const cashPaymentId = "60d5f9e9a60b2f1b4c3c1c84";
+    const chequePaymentId = "60d5f9e9a60b2f1b4c3c1c85";
 
     const saleData = {
-      customer_id: globalState?.setCustomer?._id,
-      item_id: globalState?.cartItems?.map((item) => item._id),
-      employee_id: globalState?.loggedInUser?._id,
+      customer_id: globalState?.selectedCustomer?._id,
+      items: globalState?.cartItems?.map((item) => {
+          return { _id: item._id, _count: item.count };
+      }),
+      employee_id: globalState?.loggedInUser?.user?._id,
       date_of_sale: new Date().toISOString(),
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
-      totalAmount: totalPrice
-    };
+      totalAmount: parseFloat(totalPrice), // Ensure totalPrice is a number
+  };
+  
+
+    console.log({ saleData, itemGlobal: globalState.cartItems });
 
     try {
       setLoading(true);
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL ?? 'http://localhost:5467/api/v1'}/sales`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(saleData)
-      });
+      const response = await fetch(
+        `${
+          process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
+        }/sales`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(saleData),
+        }
+      );
 
       if (!response.ok) {
         setLoading(false);
@@ -62,17 +73,15 @@ const PaymentPage = () => {
       const result = await response.json();
 
       if (result) {
-        dispatch({ type: 'ADD_ITEM_TO_CART', payload: [] });
+        dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
         setLoading(false);
         return true; // Return success status
       }
-
     } catch (error) {
       console.error("Error creating sale:", error);
       return false; // Return failure status
     }
   };
-  
 
   return (
     <div className="payment-page">
@@ -96,7 +105,6 @@ const PaymentPage = () => {
           className={
             activeTab === "tab1" ? "payment-cheque-tab" : "payment-cash-tab"
           }
-          
           onClick={() => handleTabClick("tab1")}
         >
           <h4 className="payment-cash-heading">Cash</h4>
@@ -105,7 +113,6 @@ const PaymentPage = () => {
           className={
             activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"
           }
-          
           onClick={() => handleTabClick("tab2")}
         >
           <h4 className="payment-cash-heading">Cheque</h4>
@@ -113,10 +120,25 @@ const PaymentPage = () => {
       </div>
 
       <div className="payment-page-body">
-        {activeTab === "tab1" && <CashBoard totalPrice={totalPrice} onClick={createSale} isLoading={loading} />}
-        {activeTab === "tab2" && (
-          isCheckAvailable ? <ChequeBoard totalPrice={totalPrice} onClick={createSale} isLoading={loading} /> : <div className="service-message">This service is not available for now</div>
+        {activeTab === "tab1" && (
+          <CashBoard
+            totalPrice={totalPrice}
+            onClick={createSale}
+            isLoading={loading}
+          />
         )}
+        {activeTab === "tab2" &&
+          (isCheckAvailable ? (
+            <ChequeBoard
+              totalPrice={totalPrice}
+              onClick={createSale}
+              isLoading={loading}
+            />
+          ) : (
+            <div className="service-message">
+              This service is not available for now
+            </div>
+          ))}
       </div>
     </div>
   );
