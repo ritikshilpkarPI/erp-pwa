@@ -1,8 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import TransactionIcon from "../../image/Transaction.png";
 import "./TransactionSuccessfulScreen.css";
+import { AppStateContext } from "../../appState/appStateContext";
+import { useContext } from "react";
 
 const TransactionSuccessfulScreen = () => {
+  const { globalState, dispatch } = useContext(AppStateContext);
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -19,30 +23,10 @@ const TransactionSuccessfulScreen = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            _id: "6690d3350d42800a60c09051",
-            customer_id: "667d033caef50bbed73f5aaa",
-            items: [
-              {
-                _id: "668d2b9a022b15324c548438",
-                _count: 3,
-              },
-              {
-                _id: "668d0e9115031093f55d86fc",
-                _count: 2,
-              },
-              {
-                _id: "668cec567cd4e129c728409d",
-                _count: 1,
-              },
-            ],
-            employee_id: "668402c9c9b79d623023b69a",
-            date_of_sale: "2024-07-12T06:54:45.072Z",
-            payment_id: "60d5f9e9a60b2f1b4c3c1c84",
-            totalAmount: 544,
-          }),
+          body: JSON.stringify(globalState?.currentTransaction),
         }
       );
+      dispatch({ type: "CURRENT_TRANSACTION", payload: {} });
 
       console.log("Response status:", response.status);
       console.log("Response headers:", response.headers);

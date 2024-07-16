@@ -74,6 +74,7 @@ const PaymentPage = () => {
 
       if (result) {
         dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
+        dispatch({ type: "CURRENT_TRANSACTION", payload: saleData });
         setLoading(false);
         return true; // Return success status
       }
