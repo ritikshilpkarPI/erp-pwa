@@ -35,7 +35,6 @@ const TransactionSuccessfulScreen = () => {
         throw new Error("Network response was not ok");
       }
 
-      
       const contentType = response.headers.get("Content-Type");
       if (contentType !== "application/pdf") {
         throw new Error(`Expected PDF response, got ${contentType}`);
@@ -47,17 +46,14 @@ const TransactionSuccessfulScreen = () => {
       const url = URL.createObjectURL(blob);
       console.log("PDF URL:", url);
 
-      
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', 'invoice.pdf');
+      link.setAttribute("download", "invoice.pdf");
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
 
-      
       URL.revokeObjectURL(url);
-      
     } catch (error) {
       console.error("Error fetching PDF:", error);
     }
@@ -89,13 +85,13 @@ const TransactionSuccessfulScreen = () => {
             </h1>
           </div>
         </div>
+        
         <div className="TransactionSuccessfull-footer">
-          <button className="TransactionSuccessfull-button-email">Email</button>
           <button
             className="TransactionSuccessfull-button-send-receipt"
             onClick={handleSendBtn}
           >
-            SEND RECEIPT
+            DOWNLOAD RECEIPT
           </button>
         </div>
       </div>
