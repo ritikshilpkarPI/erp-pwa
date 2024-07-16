@@ -7,14 +7,18 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import noDataAnimation from "../../animation/noDataAnimation.json";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backButtonIcon from "../../image/BackIcon.svg";
+import LoadingCircle from "../loadinCircule/LoadingCircle";
 
 
 
 const CustomerScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCustomers, setFilteredCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
 
   const { globalState, dispatch } = useContext(AppStateContext);
+  const [getError, setGetError] = useState(false); 
 
   const API = `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
     }/customers`;
@@ -26,8 +30,16 @@ const CustomerScreen = () => {
       .then((res) => res.json())
       .then((res) => {
         dispatch({ type: "SET_CUSTOMERS_LIST", payload: res });
+        setLoading(false);
+
       })
-      .catch((error) => console.error("Error fetching customer data:", error));
+      .catch((error) => {        
+        console.error("Error fetching customer data:", error)
+        setLoading(false);
+
+        setGetError(true)
+      }
+    );
   }, [dispatch, API]);
 
   const navigate = useNavigate();
@@ -79,7 +91,8 @@ const CustomerScreen = () => {
         </div>
       </div>
       <div className="customer-content">
-        {filteredCustomers?.length > 0 ? (
+        {loading ?( <LoadingCircle />):
+        (!getError || filteredCustomers.length>0 ? (
           filteredCustomers.map((customer) => (
             <div
               key={customer._id}
@@ -119,7 +132,8 @@ const CustomerScreen = () => {
             />
             <p>No data</p>
           </div>
-        )}
+        ))
+      }
       </div>
       {Boolean(globalState?.customers) && (
         <div
