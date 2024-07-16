@@ -20,12 +20,21 @@ const PlaceOrderScreen = () => {
     navigate("/payment");
   };
 
+  const [btnClicked, setBtnClicked] = useState("take");
+
   const totalPrice = useMemo(() => {
     return globalState.cartItems
       .reduce((total, item) => total + item.price_per_unit * item.count, 0)
       .toFixed(2);
   }, [globalState.cartItems]);
-  const [btnClicked, setBtnClicked] = useState("take");
+
+  const handlePriceChange = (index, newPrice) => {
+    const updatedCartItems = globalState.cartItems.map((item, i) => {
+      const price = newPrice === "" ? "" : parseFloat(newPrice);
+      return i === index ? { ...item, price_per_unit: price } : item;
+    });
+    dispatch({ type: "UPDATE_CART_ITEMS", payload: updatedCartItems });
+  };
 
   return (
     <div className="placeorder-screen-container">
@@ -79,7 +88,15 @@ const PlaceOrderScreen = () => {
               <button>{cartItem.count}</button>
               <div className="placeorder-menu">{cartItem.name}</div>
               <div className="placeorder-price">
-                රු{cartItem.price_per_unit}
+                <div className="placeorder-input-box">
+                  <h5 className="placeorder-input-box-heading">රු</h5>
+                  <input
+                    className="placeorder-input-box-input"
+                    type="number"
+                    value={cartItem.price_per_unit === "" ? "" : cartItem.price_per_unit}
+                    onChange={(e) => handlePriceChange(index, e.target.value)}
+                  />
+                </div>
               </div>
             </div>
           ))}
