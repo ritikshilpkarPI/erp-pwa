@@ -4,6 +4,7 @@ import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIcon from "../../image/BackIcon.svg";
 import TextInput from "../textInput/TextInput";
 import "../addProduct/AddProduct.css";
+import { enqueueSnackbar } from "notistack";
 
 interface FormData {
   categories: string;
@@ -89,11 +90,15 @@ export const AddProduct = () => {
       );
       const res = await responst.json();
       
-      if (!res) {
-        return;
+      if (!res) { 
+        enqueueSnackbar("Something went wrong", { variant: "error" });
+        
+      }else{
+
+        navigate("/cart");
       }
-      navigate("/cart");
     } catch (error) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
       console.log(error);
     }
   };

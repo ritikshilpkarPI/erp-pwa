@@ -72,13 +72,14 @@ const MenuPageBody = () => {
         <LoadingCircle />
       ) : globalState.items.length > 0 ? (
         globalState.items.map((item) => {
-          
           return (
             <CreateListTile
               key={item._id}
               title={item.name}
               subtitle={item.sold_by}
-              price={item.price_per_unit}
+              price_per_unit={item.price_per_unit}
+              price_per_dozen={item.price_per_dozen}
+              price_per_carton={item.price_per_carton}
               count={
                 cartList.find((cartItem) => cartItem._id === item._id)?.count ||
                 0
