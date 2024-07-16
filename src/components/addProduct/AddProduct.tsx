@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIcon from "../../image/BackIcon.svg";
@@ -16,7 +16,6 @@ interface FormData {
 }
 
 export const AddProduct = () => {
-  const [isActive, setIsActive] = useState<boolean>(false);
   const [productName, setProductName] = useState<string>("");
   const [productSelling, setProductSelling] = useState<string>("");
   const [prizeByUnit, setPrizeByUnit] = useState<string>("");
@@ -25,7 +24,6 @@ export const AddProduct = () => {
   const [storeKeepingUnit, setStoreKeepingUnit] = useState<string>("");
   const [barcode, setbarcode] = useState<string>("");
   const [categories, setCategories] = useState([]);
-  const [selectedOption, setSelectedOption] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<string>("");
   const [randomNumber, setRandomNumber] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
@@ -70,7 +68,6 @@ export const AddProduct = () => {
       const formDataa = new FormData();
       formDataa.append("name", productName);
       formDataa.append("prize", productSelling);
-      formDataa.append("sold_by", selectedOption);
       formDataa.append("img_url", formData.photo);
       formDataa.append("category", selectedValue);
       formDataa.append("price_per_unit", prizeByUnit);
@@ -112,9 +109,7 @@ export const AddProduct = () => {
     });
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value);
-  };
+ 
 
   const navigate = useNavigate();
 
@@ -150,31 +145,9 @@ export const AddProduct = () => {
             onChange={(e: any) => setProductSelling(e.target.value)}
           />
 
-          <div className="price-type-toggle">
-            <span className="toggle-label">Add a price type</span>
-            <div
-              onClick={() => {
-                setIsActive(!isActive);
-              }}
-              className={isActive ? "toggle-switch" : "toggle-switch1"}
-            >
-              <div className="toggle-button" />
-            </div>
-          </div>
+         
 
-          <section className="add-product-section-radio">
-            {["Unit", "Dozen", "Carton"].map((option, index) => (
-              <div className="radio-btn" key={index}>
-                <input
-                  type="radio"
-                  value={option}
-                  checked={selectedOption === option}
-                  onChange={handleChange}
-                />
-                <label>{option}</label>
-              </div>
-            ))}
-          </section>
+         
 
           <h2 className="section-title">More details (optional)</h2>
           <div className="photo-upload">
@@ -272,13 +245,13 @@ export const AddProduct = () => {
               (productName &&
                 productSelling &&
                 categories &&
-                barcode &&
-                selectedOption) ||
+                barcode
+                ) ||
               (productName &&
                 productSelling &&
                 categories &&
-                randomNumber &&
-                selectedOption)
+                randomNumber
+                )
                 ? "add-product-button"
                 : "add-product-button1"
             }
