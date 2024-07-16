@@ -72,6 +72,12 @@ export const appStateReducer = (state: any, action: any) => {
         decodeJwtToken(localStorage.getItem("token")) ?? null;
       return { ...state, loggedInUser, isLoggedIn: Boolean(loggedInUser) };
 
+    case "UPDATE_CART_ITEMS":
+      return {
+        ...state,
+        cartItems: action.payload,
+      };
+
     default:
       return state;
   }
