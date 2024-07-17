@@ -85,10 +85,16 @@
   border: none;
   outline: none;
   height: 34px;
+  width: max-content;
   font-family: Rubik;
   font-size: 16px;
   font-weight: 400;
   line-height: 18.96px;
+}
+
+.filter-by-date::before{
+  content: "MM/DD/YYYY";
+  font-size: 14px;
 }
 
 .clear-button {
