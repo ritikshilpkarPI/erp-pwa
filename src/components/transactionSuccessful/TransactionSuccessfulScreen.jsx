@@ -54,6 +54,9 @@ const TransactionSuccessfulScreen = () => {
       link.parentNode.removeChild(link);
 
       URL.revokeObjectURL(url);
+
+
+      
     } catch (error) {
       console.error("Error fetching PDF:", error);
     }
