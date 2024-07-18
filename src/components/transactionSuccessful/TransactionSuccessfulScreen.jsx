@@ -14,6 +14,8 @@ const TransactionSuccessfulScreen = () => {
     navigate("/cart");
   };
 
+  
+
   const handleSendBtn = async () => {
     try {
       const response = await fetch(
@@ -54,9 +56,6 @@ const TransactionSuccessfulScreen = () => {
       link.parentNode.removeChild(link);
 
       URL.revokeObjectURL(url);
-
-
-      
     } catch (error) {
       console.error("Error fetching PDF:", error);
     }
@@ -88,7 +87,7 @@ const TransactionSuccessfulScreen = () => {
             </h1>
           </div>
         </div>
-        
+
         <div className="TransactionSuccessfull-footer">
           <button
             className="TransactionSuccessfull-button-send-receipt"

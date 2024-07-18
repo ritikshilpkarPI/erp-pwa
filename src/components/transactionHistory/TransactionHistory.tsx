@@ -10,18 +10,22 @@ interface TransactionCardProps {
   amount: string;
   time: string;
   transactionId: string;
+  onClick: (transactionId: string) => void;
 }
 
 const TransactionCard: React.FC<TransactionCardProps> = ({
   amount,
   time,
   transactionId,
+  onClick,
 }) => (
-  <article className="transaction-card">
+  <article className="transaction-card" onClick={() => onClick(transactionId)}>
     <div className="transaction-details">
       <div className="transaction-amount">{amount}</div>
-      <div className="transaction-info">{`${time} `}</div>
-      <div className="transaction-info"> {` Trans Id - ${transactionId}`} </div>
+      <div className="transaction-info">{time}</div>
+      <div className="transaction-info">
+        Trans Id - {transactionId.slice(-6)}
+      </div>
     </div>
     <div className="status-badge">PAID</div>
   </article>
@@ -70,7 +74,7 @@ export function TransactionHistory() {
         new Date(a?.date_of_sale).getTime()
     );
 
-    const groupedTransactions = sortedData?.reduce(
+    const groupedTransactions = sortedData.reduce(
       (acc: any, transaction: any) => {
         const date = new Date(transaction?.date_of_sale).toLocaleDateString(
           "en-US",
@@ -108,13 +112,38 @@ export function TransactionHistory() {
       {}
     );
 
-    return Object?.entries(groupedTransactions)?.map(
+    return Object.entries(groupedTransactions).map(
       ([date, { totalAmount, items }]: any) => ({
         date,
         totalAmount: `LKR ${totalAmount?.toFixed(2)}`,
         items,
       })
     );
+  };
+
+  const GetSaleById = async (id: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/transaction-history`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data);
+
+        navigate("/invoice", { state: data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,6 +179,7 @@ export function TransactionHistory() {
               className="filter-by-date"
               type="date"
               value={selectedDate}
+              
               onChange={handleDateChange}
             />
           </div>
@@ -166,28 +196,29 @@ export function TransactionHistory() {
         <div className="transaction-history-container">
           {loading ? (
             <LoadingCircle />
-          ) : formattedTransactionHistory?.length > 0 ? (
-            formattedTransactionHistory?.map(
+          ) : formattedTransactionHistory.length > 0 ? (
+            formattedTransactionHistory.map(
               (transactionGroup: any, index: number) => (
                 <React.Fragment key={index}>
                   <DateSummary
-                    date={transactionGroup?.date}
-                    totalAmount={transactionGroup?.totalAmount}
+                    date={transactionGroup.date}
+                    totalAmount={transactionGroup.totalAmount}
                   />
-                  {transactionGroup?.items?.map(
+                  {transactionGroup.items.map(
                     (transactionItem: any, itemIndex: number) => {
-                      const sixDigit = transactionItem?.transactionId.slice(-6);
+                      const sixDigit = transactionItem.transactionId;
 
                       return (
                         <TransactionCard
                           key={itemIndex}
                           amount={
-                            !transactionItem?.amount?.includes("undefined")
-                              ? transactionItem?.amount
+                            !transactionItem.amount.includes("undefined")
+                              ? transactionItem.amount
                               : "LKR NA"
                           }
-                          time={transactionItem?.time}
+                          time={transactionItem.time}
                           transactionId={sixDigit}
+                          onClick={GetSaleById}
                         />
                       );
                     }
