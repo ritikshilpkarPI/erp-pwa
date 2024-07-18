@@ -1,0 +1,65 @@
+.navigation-invoice-login {
+  font-family: Rubik;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 37.92px;
+      color: #1a72dd;
+}
+
+.invoice-container {
+  padding: 20px;
+  max-width: 800px;
+  
+}
+
+.invoice-header, .invoice-body {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.invoice-header-heading{
+  text-align: center;
+}
+
+.invoice-header h1, .invoice-body h2 {
+  margin: 10px 0;
+}
+
+.invoice-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.invoice-body table th, .invoice-body table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.invoice-body table th {
+  background-color: #f2f2f2;
+}
+
+.invoice-body p {
+  margin: 5px 0;
+}
+
+@media (max-width: 600px) {
+  .invoice-container {
+    padding: 10px;
+  }
+
+  .invoice-header, .invoice-body {
+    text-align: left;
+  }
+
+  .invoice-header p, .invoice-body p {
+    font-size: 14px;
+  }
+
+  .invoice-body table th, .invoice-body table td {
+    font-size: 12px;
+    padding: 5px;
+  }
+}
