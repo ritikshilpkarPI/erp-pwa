@@ -77,15 +77,21 @@
 }
 
 .filter-label {
+  width: 200px;
+  height: 1.5rem;
   display: flex;
+  align-items: start;
   gap: 8px;
+  overflow: hidden;
+  
 }
 
 .filter-by-date {
   border: none;
   outline: none;
-  height: 34px;
+  /* height: 34px; */
   width: max-content;
+  height: max-content;
   font-family: Rubik;
   font-size: 16px;
   font-weight: 400;
@@ -93,8 +99,8 @@
 }
 
 .filter-by-date::before{
-  content: "MM/DD/YYYY";
-  font-size: 14px;
+  content: "mm/dd/yyyy";
+  font-size: 16px;
 }
 
 .clear-button {

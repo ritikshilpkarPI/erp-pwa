@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: flex-start;
 
-  height: 100vh;
+  height: 100svh;
   /* width: 100vw; */
 
   >.placeorder-head {
@@ -214,10 +214,6 @@
   font-weight: 500;
   line-height: 16.59px;
 
-
-
-
-  >.placeorder-input-box-heading {}
 
   >.placeorder-input-box-input {
     border: none;

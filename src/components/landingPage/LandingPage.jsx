@@ -65,9 +65,7 @@ const LandingPage = () => {
     useEffect(() => {
         fetchItems();
     }, []);
-    useEffect(()=>{
-        console.log(globalState?.cartItems);
-    })
+   
 
     useEffect(() => {
         if (cartList && dispatch) {
