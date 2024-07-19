@@ -11,7 +11,7 @@ import LoadingCircle from '../loadinCircule/LoadingCircle';
 import SumTotalizerFooter from '../sumTotalizerFooter/SumTotalizerFooter';
 
 const LandingPage = () => {
-    const { globalState, dispatch } = useAppContext();
+    const { dispatch } = useAppContext();
     const navigate = useNavigate();
     const [itemsList, setItemsList] = useState([]);
     const [cartList, setCartList] = useState([]);
