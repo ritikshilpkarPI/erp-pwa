@@ -62,9 +62,9 @@ const NavigationMenu = ({ onClick, API }) => {
                     }
                 </div>
                 <div className='navigation-menu-add-button-container' onClick={onClick}>
-                    <div className='navigation-menu-add-button'>
+                    <button className='navigation-menu-add-button'>
                         <AddIcon />
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
