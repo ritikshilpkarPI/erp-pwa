@@ -51,8 +51,7 @@ const CreateListTile = ({
           alt=""
         />
         <div className="tile-content">
-          <h3 className="tile-content-title">{title} </h3>
-          {/* <h3 className="tile-content-subtitle">({subtitle})</h3> */}
+          <h3 className="tile-content-title">{title}</h3>
           <select onChange={selectHandler} className="select-dropdown">
             <option defaultValue={price_per_unit} value="price_per_unit">
               Unit
@@ -60,7 +59,6 @@ const CreateListTile = ({
             <option value="price_per_dozen">Dozen</option>
             <option value="price_per_carton">Carton</option>
           </select>
-
           <h3 className="tile-content-price">රු {getPrice()}</h3>
         </div>
       </div>
@@ -68,7 +66,7 @@ const CreateListTile = ({
         {count > 0 ? (
           <>
             <span className="tile-minus-btn">
-              <MinusIcon onClick={onDecrement} />
+              <MinusIcon onClick={() => onDecrement()} />
             </span>
             <div className="count">{count}</div>
             <AddIcon
@@ -77,9 +75,7 @@ const CreateListTile = ({
             />
           </>
         ) : (
-          <>
-            <AddIcon onClick={onAdd} />
-          </>
+          <AddIcon onClick={onAdd} />
         )}
       </div>
     </div>

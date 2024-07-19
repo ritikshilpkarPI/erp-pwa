@@ -1,0 +1,122 @@
+.item-card-container {
+    width: 95vw;
+    height: 100px;
+    border-radius: 20px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    >.item-card-image-container {
+        height: 100%;
+        width: 150px;
+        background-color: #dadada;
+        overflow: hidden;
+
+        >.item-card-image {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    >.item-card-text-container {
+        height: 100%;
+        width: inherit;
+        padding: 10px;
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        flex-direction: column;
+
+        >.item-card-name-container {
+            >.item-card-name {
+                font-family: Rubik;
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 16.59px;
+
+            }
+        }
+
+        >.item-card-select-dropdown-and-button-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            >.item-card-select-dropdown-container {
+                padding: .5px;
+                border: 0.8px solid #BDBDBD;
+                border-radius: 5px;
+
+                >.item-card-select-dropdown {
+                    width: 120px;
+                    height: 24px;
+                    outline: none;
+                    border: none;
+                    font-family: Rubik;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 16.59px;
+
+                }
+
+            }
+
+            >.item-card-select-button-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                background: linear-gradient(224.61deg, #1A72DD -15.95%, #0D62CA 88.4%);
+                color: #FFFFFF;
+                border-radius: 8px;
+
+                >.display-item-count {
+                    font-family: Rubik;
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 18.96px;
+
+                }
+
+                >.subtract-item-count,
+                .add-item-count {
+                    color: #FFFFFF;
+                    width: 36.25px;
+                    height: 34px;
+                    border-radius: 10px;
+                    border: none;
+                    outline: none;
+                    /* background: linear-gradient(224.61deg, #1A72DD -15.95%, #0D62CA 88.4%); */
+                    background-color: transparent;
+
+
+                }
+            }
+
+        }
+
+
+        >.item-card-price-container {
+            >.item-card-price {
+                font-family: Rubik;
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 18.96px;
+                color: #1A72DD;
+
+
+            }
+        }
+
+
+    }
+
+
+
+}

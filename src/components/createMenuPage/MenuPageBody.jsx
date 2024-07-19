@@ -63,9 +63,14 @@ const MenuPageBody = () => {
       )
       .filter((cartItem) => cartItem.count > 0);
     setCartList(carItemsListCopy);
-    dispatch({ type: "ADD_ITEM_TO_CART", payload: carItemsListCopy });
+    dispatch({ type: "REMOVE_ITEM_TO_CART", payload: carItemsListCopy });
   };
-
+  useEffect(() => {
+  
+    console.log(cartList);
+   
+  }, [cartList])
+  
   return (
     <div className="menu-page-body">
       {globalState.isLoading ? (

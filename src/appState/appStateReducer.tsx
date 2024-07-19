@@ -27,6 +27,7 @@ export const appStateReducer = (state: any, action: any) => {
       const newCartItems = [...action.payload];
       return { ...state, cartItems: newCartItems };
 
+
     case "SET_TRANSACTION_HISTORY":
       const newTransactionHistory = action?.payload ?? [];
       return { ...state, transactionHistory: newTransactionHistory };
