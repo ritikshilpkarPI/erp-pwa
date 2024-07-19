@@ -92,7 +92,7 @@ export const AddProduct = () => {
         
       }else{
 
-        navigate("/cart");
+        navigate("/landing");
       }
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
@@ -261,7 +261,7 @@ export const AddProduct = () => {
           </button>
           <button
             className="delete-product-button"
-            onClick={() => navigate("/cart")}
+            onClick={() => navigate("/landing")}
           >
             <img
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/302717b4ee4ab7d3462fc8605ada0ceaae8d5d7fbbd06287efa863058454024d?apiKey=d03ff6b018f84c75b88104249d2053b6&"

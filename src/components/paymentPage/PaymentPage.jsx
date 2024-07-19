@@ -17,10 +17,10 @@ const PaymentPage = () => {
   const navigate = useNavigate();
 
   const totalPrice = useMemo(() => {
-    return globalState.cartItems
-      .reduce((total, item) => total + item.price_per_unit * item.count, 0)
+    return globalState?.cartItems
+      .reduce((total, item) => total + item.prize * item.count, 0)
       .toFixed(2);
-  }, [globalState.cartItems]);
+  }, [globalState?.cartItems]);
 
   const backFunc = () => {
     navigate(-1);
@@ -29,7 +29,6 @@ const PaymentPage = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-  console.log({ g: globalState.cartItems });
 
   const createSale = async () => {
     const cashPaymentId = "60d5f9e9a60b2f1b4c3c1c84";
@@ -38,22 +37,20 @@ const PaymentPage = () => {
     const saleData = {
       customer_id: globalState?.selectedCustomer?._id,
       items: globalState?.cartItems?.map((item) => {
-          return { _id: item._id, _count: item.count };
+        return { _id: item._id, _count: item.count };
       }),
       employee_id: globalState?.loggedInUser?.user?._id,
       date_of_sale: new Date().toISOString(),
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
-      totalAmount: parseFloat(totalPrice), // Ensure totalPrice is a number
-  };
-  
+      totalAmount: parseFloat(totalPrice), 
+    };
 
-    console.log({ saleData, itemGlobal: globalState.cartItems });
+
 
     try {
       setLoading(true);
       const response = await fetch(
-        `${
-          process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
+        `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
         }/sales`,
         {
           method: "POST",

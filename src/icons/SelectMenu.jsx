@@ -5,7 +5,7 @@ const SelectMenu = ({ onTap, click, label}) => {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    navigate("/cart");
+    navigate("/landing");
   };
 
   return (

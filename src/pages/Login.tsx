@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
   if (globalState?.isLoggedIn) {
-     navigate("/cart")
+     navigate("/landing")
   }
   // eslint-disable-next-line
   }, [globalState?.isLoggedIn]);
