@@ -2,10 +2,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import TransactionIcon from "../../image/Transaction.png";
 import "./TransactionSuccessfulScreen.css";
 import { AppStateContext } from "../../appState/appStateContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const TransactionSuccessfulScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
+  const [useremail, setUseremail] = useState("");
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,12 +15,10 @@ const TransactionSuccessfulScreen = () => {
     navigate("/cart");
   };
 
-  
-
   const handleSendBtn = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/download-invoice`,
+        `${process.env.REACT_APP_SIGNUP_URL}/download-invoice?email=${useremail}`,
         {
           method: "POST",
           headers: {
@@ -89,6 +88,7 @@ const TransactionSuccessfulScreen = () => {
         </div>
 
         <div className="TransactionSuccessfull-footer">
+          <input type="text" onChange={(e) => setUseremail(e.target.value)} />
           <button
             className="TransactionSuccessfull-button-send-receipt"
             onClick={handleSendBtn}
