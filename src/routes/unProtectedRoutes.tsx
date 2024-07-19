@@ -10,7 +10,7 @@ import { AddProductForm } from "../pages/AddProduct";
 import EmailVerification from "../components/emailVerification/EmailVerification";
 import OtpVerification from "../components/otpVerification/OtpVerification";
 import ChangePassword from "../components/changePassword/ChangePassword";
-import Invoice from "../components/billPage/Invoice";
+import Landing from "../pages/Landing";
 
 const unProtectedRouteMap = Object.freeze({
   "/": <Splash />,
@@ -25,8 +25,9 @@ const unProtectedRouteMap = Object.freeze({
   "/emailverification": <EmailVerification />,
   "/changepassword": <ChangePassword />,
   "/addCategory": <AddCategory />,
-  "/invoice": <Invoice />,
-});
+  "/landing": <Landing/>
+})
+
 
 export const UnProtectedRoute = () => {
   return (

@@ -12,7 +12,7 @@ const TransactionSuccessfulScreen = () => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate("/cart");
+    navigate("/landing");
   };
 
   const handleSendBtn = async () => {

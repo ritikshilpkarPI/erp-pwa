@@ -65,7 +65,7 @@ const LoginPage = () => {
         if (typeof window !== "undefined") {
           window.localStorage.setItem("token", result.token);
         }
-        navigate("/cart");
+        navigate("/landing");
       }
     } catch (error) {
       console.error(error);
