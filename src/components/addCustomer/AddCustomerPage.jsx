@@ -33,6 +33,7 @@ const AddCustomerPage = () => {
           body: JSON.stringify({
             name: username.replace(/^\s+/, ""),
             address: address.replace(/^\s+/, ""),
+            email: email,
             credit_limit: parseFloat(creditLimit.replace(/^\s+/, "")),
             telephone: telephone.replace(/^\s+/, ""),
             is_deleted: false,
@@ -42,6 +43,7 @@ const AddCustomerPage = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         dispatch({ type: "ADD_CUSTOMER", payload: data });
         navigate("/customers");
       } else {
@@ -63,13 +65,13 @@ const AddCustomerPage = () => {
 
   return (
     <div className="add-customer-page">
-        <NavigationHeader
-          title="Add Customer"
-          titleClassName="navigation-header-add-customer"
-          NavigationHeaderImage={backIconImage}
-          NavigationHeaderImageClassName="back-button-image-icon"
-          onClick={backFunc}
-        />
+      <NavigationHeader
+        title="Add Customer"
+        titleClassName="navigation-header-add-customer"
+        NavigationHeaderImage={backIconImage}
+        NavigationHeaderImageClassName="back-button-image-icon"
+        onClick={backFunc}
+      />
       <form onSubmit={submitHandler} className="add-customer-form">
         <TextInput
           className="login-user-id-input"
@@ -124,7 +126,12 @@ const AddCustomerPage = () => {
           }
           type="submit"
           className={
-            username && telephone && email && address && isEmailValid && creditLimit
+            username &&
+            telephone &&
+            email &&
+            address &&
+            isEmailValid &&
+            creditLimit
               ? "login-submit-button-input"
               : "login-submit-button-input-def"
           }

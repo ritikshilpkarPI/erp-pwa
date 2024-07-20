@@ -154,5 +154,8 @@
 
 .transtaction-email-input{
   width: 100%;
-  height: 2rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  border: .1px solid grey;
+  padding: 1px 10px;
 }
