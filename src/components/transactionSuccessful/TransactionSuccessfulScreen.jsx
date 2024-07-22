@@ -2,19 +2,54 @@ import { useLocation, useNavigate } from "react-router-dom";
 import TransactionIcon from "../../image/Transaction.png";
 import "./TransactionSuccessfulScreen.css";
 import { AppStateContext } from "../../appState/appStateContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const TransactionSuccessfulScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
+  const [useremail, setUseremail] = useState(
+    globalState.selectedCustomer?.email || ""
+  );
 
   const location = useLocation();
   const navigate = useNavigate();
 
   const onClick = () => {
     navigate("/landing");
+    dispatch({ type: "CURRENT_TRANSACTION", payload: {} });
   };
 
-  
+  const handleEmailSendBtn = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/email-invoice?email=${useremail}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(globalState?.currentTransaction),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const contentType = response.headers.get("Content-Type");
+      if (contentType !== "application/json") {
+        throw new Error(`Expected JSON response, got ${contentType}`);
+      }
+
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || "Failed to send email");
+      }
+
+      console.log("Email sent successfully:", result.message);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
 
   const handleSendBtn = async () => {
     try {
@@ -28,10 +63,6 @@ const TransactionSuccessfulScreen = () => {
           body: JSON.stringify(globalState?.currentTransaction),
         }
       );
-      dispatch({ type: "CURRENT_TRANSACTION", payload: {} });
-
-      console.log("Response status:", response.status);
-      console.log("Response headers:", response.headers);
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -43,17 +74,14 @@ const TransactionSuccessfulScreen = () => {
       }
 
       const blob = await response.blob();
-      console.log("Blob:", blob);
-
       const url = URL.createObjectURL(blob);
-      console.log("PDF URL:", url);
 
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", "invoice.pdf");
       document.body.appendChild(link);
       link.click();
-      link.parentNode.removeChild(link);
+      link.remove();
 
       URL.revokeObjectURL(url);
     } catch (error) {
@@ -89,6 +117,19 @@ const TransactionSuccessfulScreen = () => {
         </div>
 
         <div className="TransactionSuccessfull-footer">
+          <input
+            type="text"
+            placeholder="Enter your email"
+            className="transtaction-email-input"
+            value={useremail}
+            onChange={(e) => setUseremail(e.target.value)}
+          />
+          <button
+            className="TransactionSuccessfull-button-send-receipt"
+            onClick={handleEmailSendBtn}
+          >
+            SEND RECEIPT
+          </button>
           <button
             className="TransactionSuccessfull-button-send-receipt"
             onClick={handleSendBtn}

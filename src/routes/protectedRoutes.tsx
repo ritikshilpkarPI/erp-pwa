@@ -12,7 +12,7 @@ import AddCustomers from "../pages/AddCustomers";
 import PaymentPage from "../components/paymentPage/PaymentPage";
 import { AddProductForm } from "../pages/AddProduct";
 import { TransactionSuccessful } from "../pages/TransactionSuccessful";
-
+import Invoice from "../components/billPage/Invoice";
 
 const protectedRouteMap = Object.freeze({
   "/about": <About />,
@@ -25,7 +25,7 @@ const protectedRouteMap = Object.freeze({
   "/payment": <PaymentPage />,
   "/addproduct": <AddProductForm />,
   "/transactionSuccessfull": <TransactionSuccessful />,
-  
+  "/invoice": <Invoice />,
 });
 
 export const ProtectedRoute = () => {
