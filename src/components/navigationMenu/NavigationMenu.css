@@ -58,6 +58,8 @@
                 width: 41.25px;
                 height: 39px;
                 border-radius: 10px;
+                border: none;
+                outline: none;
 
                 background: linear-gradient(224.61deg, #1A72DD -15.95%, #0D62CA 88.4%);
 

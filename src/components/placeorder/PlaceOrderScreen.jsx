@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import "./PlaceOrderScreen.css";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
@@ -8,14 +8,20 @@ import DeleteIcon from "../../icons/DeleteIcon";
 const PlaceOrderScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
   const navigate = useNavigate();
+  const [cartList, setCartList] = useState([]);
+
+  useEffect(() => {
+    setCartList(globalState?.cartItems || []);
+  }, [globalState?.cartItems]);
 
   const handleClickBack = () => {
-    navigate("/cart");
+    navigate(-1);
   };
 
   const handleClickCustomer = () => {
     navigate("/customers");
   };
+
   const handleClickPayment = () => {
     navigate("/payment");
   };
@@ -23,18 +29,23 @@ const PlaceOrderScreen = () => {
   const [btnClicked, setBtnClicked] = useState("take");
 
   const totalPrice = useMemo(() => {
-    return globalState.cartItems
-      .reduce((total, item) => total + item.price_per_unit * item.count, 0)
+    return cartList
+      .reduce((total, item) => total + item.prize * item.count, 0)
       .toFixed(2);
-  }, [globalState.cartItems]);
+  }, [cartList]);
 
   const handlePriceChange = (index, newPrice) => {
-    const updatedCartItems = globalState.cartItems.map((item, i) => {
+    const updatedCartItems = cartList.map((item, i) => {
       const price = newPrice === "" ? "" : parseFloat(newPrice);
-      return i === index ? { ...item, price_per_unit: price } : item;
+      return i === index ? { ...item, prize: price } : item;
     });
+    setCartList(updatedCartItems);
     dispatch({ type: "UPDATE_CART_ITEMS", payload: updatedCartItems });
   };
+
+  useEffect(() => {
+    console.log(cartList);
+  }, [cartList]);
 
   return (
     <div className="placeorder-screen-container">
@@ -83,17 +94,26 @@ const PlaceOrderScreen = () => {
       </div>
       <div className="placeorder-content">
         <div className="placeorder-list-content">
-          {globalState?.cartItems?.map((cartItem, index) => (
+          {cartList.map((cartItem, index) => (
             <div className="placeorder-content-div" key={index}>
               <button>{cartItem.count}</button>
-              <div className="placeorder-menu">{cartItem.name}</div>
+              <div className="placeorder-menu">
+                <h5>
+
+                {cartItem.name}
+                </h5>
+                <p>
+
+                {cartItem.sold_by}
+                </p>
+                </div>
               <div className="placeorder-price">
                 <div className="placeorder-input-box">
                   <h5 className="placeorder-input-box-heading">රු</h5>
                   <input
                     className="placeorder-input-box-input"
                     type="number"
-                    value={cartItem.price_per_unit === "" ? "" : cartItem.price_per_unit}
+                    value={cartItem.prize === "" ? "" : cartItem.prize}
                     onChange={(e) => handlePriceChange(index, e.target.value)}
                   />
                 </div>
@@ -101,19 +121,16 @@ const PlaceOrderScreen = () => {
             </div>
           ))}
         </div>
-        <div className="placeorder-diskon">
-          <h1>Discount</h1>
-          <RiArrowRightSLine className="arrow-icon icon3" />
-        </div>
+       
         <div className="placeorder-total">
           <h1>Subtotal</h1>
-          <h1>රු{totalPrice}</h1>
+          <h1>රු {totalPrice}</h1>
         </div>
         <div
           className="placeorder-delete"
           onClick={() => {
             dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
-            navigate("/cart");
+            navigate("/landing");
           }}
         >
           <DeleteIcon />

@@ -16,11 +16,11 @@ const ItemCard = ({ ID, name, price_per_carton, price_per_dozen, price_per_unit,
     const getPrice = useCallback(() => {
         switch (priceCategory) {
             case "price_per_unit":
-                return { prize: price_per_unit, sold_by: 'unit' };
+                return { prize: price_per_unit, sold_by: 'Unit' };
             case "price_per_dozen":
-                return { prize: price_per_dozen, sold_by: 'dozen' };
+                return { prize: price_per_dozen, sold_by: 'Dozen' };
             case "price_per_carton":
-                return { prize: price_per_carton, sold_by: 'carton' };
+                return { prize: price_per_carton, sold_by: 'Carton' };
             default:
                 return { prize, sold_by: 'unit' }; // Default case to handle unknown priceCategory
         }
