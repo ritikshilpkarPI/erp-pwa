@@ -47,6 +47,10 @@ const PlaceOrderScreen = () => {
     console.log(cartList);
   }, [cartList]);
 
+  useEffect(() => {
+    console.log(globalState?.cartItems);
+  }, []);
+
   return (
     <div className="placeorder-screen-container">
       <div className="placeorder-head">

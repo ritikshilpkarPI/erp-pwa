@@ -37,20 +37,19 @@ const PaymentPage = () => {
     const saleData = {
       customer_id: globalState?.selectedCustomer?._id,
       items: globalState?.cartItems?.map((item) => {
-        return { _id: item._id, _count: item.count };
+        return { _id: item.ID, _count: item.count };
       }),
       employee_id: globalState?.loggedInUser?.user?._id,
       date_of_sale: new Date().toISOString(),
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
-      totalAmount: parseFloat(totalPrice), 
+      totalAmount: parseFloat(totalPrice),
     };
-
-
 
     try {
       setLoading(true);
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
+        `${
+          process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
         }/sales`,
         {
           method: "POST",
