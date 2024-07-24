@@ -234,7 +234,7 @@ const SignupPage = () => {
 
           <div>
             <p>
-              <span>Already have an account? {otpRes} </span>
+              <span>Already have an account? </span>
               <Link to="/login" className="signup-login-link">
                 Log In
               </Link>
