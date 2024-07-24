@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SignupPage.css";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backButtonImage from "../../image/BackButton.svg";
@@ -16,6 +16,43 @@ const SignupPage = () => {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [timer, setTimer] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [isResendEnabled, setIsResendEnabled] = useState(false);
+
+  useEffect(() => {
+    let interval;
+    if (timer !== null) {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            setIsResendEnabled(true);
+            setTimer(null);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  const handleVerifyEmail = () => {
+    verifyEmail();
+    setTimeLeft(60);
+    setTimer(true);
+    setIsResendEnabled(false);
+  };
+
+  const handleResendOTP = () => {
+    verifyEmail();
+    setTimeLeft(60);
+    setTimer(true);
+    setIsResendEnabled(false);
+  };
 
   const handleBackClick = () => {
     navigate(-1);
@@ -45,8 +82,6 @@ const SignupPage = () => {
         return;
       }
 
-      setLoading(true);
-
       const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/send-otp`,
         {
@@ -63,7 +98,6 @@ const SignupPage = () => {
       const result = await response.json();
       setOtpRes(result);
       console.log(result);
-      setLoading(false);
 
       if (result?.error) {
         enqueueSnackbar(result.error?.message, { variant: "error" });
@@ -73,7 +107,7 @@ const SignupPage = () => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
@@ -131,6 +165,7 @@ const SignupPage = () => {
   };
 
   const signupHandler = throttle(signupHandle, 5000);
+  const verifyEmail = throttle(verifyEmailHandler, 10000);
 
   return (
     <div className="signup-page-container">
@@ -161,9 +196,21 @@ const SignupPage = () => {
             value={newEmail}
             onChange={(e) => setNewEmail(e.target.value)}
           />
-          <h4 className="verify-email-button" onClick={verifyEmailHandler}>
-            Verify Email
-          </h4>
+          <div className="verify-email-button-outer">
+            {otpRes && newEmail && isOtpSent ? (
+              <h4 className="verify-email-button">
+                {isResendEnabled ? (
+                  <span onClick={handleResendOTP}>Resend OTP</span>
+                ) : (
+                  `Resend OTP in ${timeLeft}s`
+                )}
+              </h4>
+            ) : (
+              <h4 className="verify-email-button" onClick={handleVerifyEmail}>
+                Verify Email
+              </h4>
+            )}
+          </div>
 
           <TextInput
             className="signup-user-password-input"
@@ -198,12 +245,14 @@ const SignupPage = () => {
             className="signup-submit-button-input"
             title="Sign Up"
             onClick={() => {
-              otp == otpRes
+              parseInt(otp) === otpRes
                 ? signupHandler()
-                : enqueueSnackbar("Sorry Wrong password");
+                : enqueueSnackbar("Fill the correct OTP", { variant: "error" });
             }}
             isLoading={loading}
-            disabled={!isOtpSent || !otp}
+            disabled={
+              !isOtpSent || !otp || !username || !newEmail || !newPassword
+            }
           />
         </form>
       </div>
