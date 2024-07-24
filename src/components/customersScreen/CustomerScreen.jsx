@@ -56,13 +56,16 @@ const CustomerScreen = () => {
       );
       setFilteredCustomers(filtered);
     }
-  }, [searchQuery, globalState.customers]);
+  }, [searchQuery, globalState?.customers]);
   const selectedCustomerFunction = (customerId) => {
-    const selectedCustomer = globalState.customers.find(
-      (customer) => customer._id === customerId
-    );
-    dispatch({ type: "SELECTED_CUSTOMER", payload: selectedCustomer });
-    navigate("/placeorder");
+    if (globalState?.cartItems?.length>0) {
+      
+      const selectedCustomer = globalState.customers.find(
+        (customer) => customer._id === customerId
+      );
+      dispatch({ type: "SELECTED_CUSTOMER", payload: selectedCustomer });
+      navigate("/placeorder");
+    }
   };
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
