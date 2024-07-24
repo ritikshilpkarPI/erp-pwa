@@ -11,12 +11,15 @@ const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [newPhone, setnewPhone] = useState("");
+  const [newBussinessName, setnewBussinessName] = useState("");
+  const [newAddress, setnewAddress] = useState("");
+
   const [otp, setOtp] = useState("");
   const [otpRes, setOtpRes] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const [timer, setTimer] = useState(null);
   const [timeLeft, setTimeLeft] = useState(60);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
@@ -118,12 +121,18 @@ const SignupPage = () => {
       const emailTrimmed = newEmail.trim();
       const passwordTrimmed = newPassword.trim();
       const otpTrimmed = otp.trim();
+      const phoneTrimmed = newPhone.trim();
+      const bussinessnameTrimmed = newBussinessName.trim();
+      const addressTrimmed = newAddress.trim();
 
       if (
         !usernameTrimmed ||
         !emailTrimmed ||
         !passwordTrimmed ||
-        !otpTrimmed
+        !otpTrimmed ||
+        !phoneTrimmed ||
+        !bussinessnameTrimmed ||
+        !addressTrimmed
       ) {
         enqueueSnackbar("Please fill all the fields and enter OTP", {
           variant: "error",
@@ -144,6 +153,9 @@ const SignupPage = () => {
             name: usernameTrimmed,
             email: emailTrimmed,
             password: passwordTrimmed,
+            phone_number: phoneTrimmed,
+            business_name: bussinessnameTrimmed,
+            address: addressTrimmed,
           }),
         }
       );
@@ -189,6 +201,30 @@ const SignupPage = () => {
           />
 
           <TextInput
+            className="signup-user-phone-input"
+            type="number"
+            labelTitle="Phone Number"
+            placeholder="Enter your number"
+            value={newPhone}
+            onChange={(e) => setnewPhone(e.target.value)}
+          />
+          <TextInput
+            className="signup-user-bussiness-name-input"
+            type="text"
+            labelTitle="Bussiness Name"
+            placeholder="Enter your email"
+            value={newBussinessName}
+            onChange={(e) => setnewBussinessName(e.target.value)}
+          />
+          <TextInput
+            className="signup-user-address-input"
+            type="text"
+            labelTitle="Bussiness Address"
+            placeholder="Enter your Address"
+            value={newAddress}
+            onChange={(e) => setnewAddress(e.target.value)}
+          />
+          <TextInput
             className="signup-user-email-input"
             type="email"
             labelTitle="Email"
@@ -232,14 +268,6 @@ const SignupPage = () => {
             />
           )}
 
-          <div>
-            <p>
-              <span>Already have an account? </span>
-              <Link to="/login" className="signup-login-link">
-                Log In
-              </Link>
-            </p>
-          </div>
           <ButtonInput
             type="submit"
             className="signup-submit-button-input"
@@ -254,6 +282,14 @@ const SignupPage = () => {
               !isOtpSent || !otp || !username || !newEmail || !newPassword
             }
           />
+          <div>
+            <p>
+              <span>Already have an account? </span>
+              <Link to="/login" className="signup-login-link">
+                Log In
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>

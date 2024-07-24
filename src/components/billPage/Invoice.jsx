@@ -7,11 +7,15 @@ import backIconImage from "../../image/BackIcon.svg";
 const Invoice = () => {
   const location = useLocation();
   const data = location.state;
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   console.log(location);
 
   const handleBackClick = () => {
-    navigation(-1);
+    navigate(-1);
+  };
+
+  const handlePrintClick = () => {
+    window.print();
   };
 
   return (
@@ -25,17 +29,15 @@ const Invoice = () => {
       />
       <div className="invoice-container">
         <div className="invoice-header">
-          <h1 className="invoice-header-heading">Avenue E-Commerce Limited</h1>
-          <p>
-            Avenue E-Commerce Ltd. Survey No. 6, Hissa No. 15, Barave Village
-            Near Godrej Hill,
-          </p>
-          <p>Khadakpada, Kalyan West, Thane Maharashtra -421301</p>
+          <h1 className="invoice-header-heading">
+            {data.employeData.business_name}
+          </h1>
+          <p>{data.employeData.address}</p>
         </div>
         <div className="invoice-body">
           <h2>BILL INVOICE</h2>
           <p>
-            <strong>Customer ID:</strong> {data.transaction.customer_id}
+            <strong>Customer Name:</strong> {data.customer.name}
           </p>
           <p>
             <strong>Payment ID:</strong> {data.transaction.payment_id}
@@ -77,13 +79,18 @@ const Invoice = () => {
             <strong>TXN NUMBER:</strong> {data.transaction.payment_id}
           </p>
           <p>
-            <strong>ORDER TIME:</strong>{" "}
+            <strong>ORDER TIME:</strong>
             {new Date(data.transaction.date_of_sale).toLocaleTimeString()}
           </p>
           <p>
-            <strong>ORDER DATE:</strong>{" "}
+            <strong>ORDER DATE:</strong>
             {new Date(data.transaction.date_of_sale).toLocaleDateString()}
           </p>
+        </div>
+        <div className="print-btn-outer">
+          <button onClick={handlePrintClick} className="print-button">
+            Print Invoice
+          </button>
         </div>
       </div>
     </>
