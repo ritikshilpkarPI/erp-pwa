@@ -1,27 +1,28 @@
 .navigation-invoice-login {
   font-family: Rubik;
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 37.92px;
-      color: #1a72dd;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 37.92px;
+  color: #1a72dd;
 }
 
 .invoice-container {
   padding: 20px;
   max-width: 800px;
-  
 }
 
-.invoice-header, .invoice-body {
+.invoice-header,
+.invoice-body {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.invoice-header-heading{
+.invoice-header-heading {
   text-align: center;
 }
 
-.invoice-header h1, .invoice-body h2 {
+.invoice-header h1,
+.invoice-body h2 {
   margin: 10px 0;
 }
 
@@ -31,7 +32,8 @@
   margin-top: 20px;
 }
 
-.invoice-body table th, .invoice-body table td {
+.invoice-body table th,
+.invoice-body table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
@@ -45,20 +47,41 @@
   margin: 5px 0;
 }
 
+.print-btn-outer {
+  width: 100%;
+  position: fixed;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.print-button {
+  padding: 20px 60px;
+  background-color: #1a72dd;
+  color: white;
+  border-radius: 16px;
+  border: 0.2px solid gray;
+  font-size: 16px;
+}
+
 @media (max-width: 600px) {
   .invoice-container {
     padding: 10px;
   }
 
-  .invoice-header, .invoice-body {
+  .invoice-header,
+  .invoice-body {
     text-align: left;
   }
 
-  .invoice-header p, .invoice-body p {
+  .invoice-header p,
+  .invoice-body p {
     font-size: 14px;
   }
 
-  .invoice-body table th, .invoice-body table td {
+  .invoice-body table th,
+  .invoice-body table td {
     font-size: 12px;
     padding: 5px;
   }

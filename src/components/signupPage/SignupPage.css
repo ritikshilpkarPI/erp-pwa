@@ -1,6 +1,10 @@
 .signup-page-container {
   height: 100svh;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
 
   > .navigation-header-container {
     padding-bottom: 20px;
@@ -19,11 +23,13 @@
     }
   }
   > .signup-form-container {
+    padding: 25px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    margin-top: 25px;
+    overflow-y: scroll;
+    height: inherit;
 
     > .signup-form {
       display: flex;
@@ -39,7 +45,10 @@
 
         > .signup-user-email-input-label,
         .signup-user-phone-number-input-label,
-        .signup-user-password-input-label {
+        .signup-user-password-input-label,
+        .signup-user-bussiness-name-input-label,
+        .signup-user-phone-input-label,
+        .signup-user-address-input-label {
           font-family: Rubik;
           font-size: 18px;
           font-weight: 400;
@@ -48,7 +57,10 @@
 
         > .signup-user-email-input,
         .signup-user-phone-number-input,
-        .signup-user-otp-input {
+        .signup-user-otp-input,
+        .signup-user-phone-input,
+        .signup-user-address-input,
+        .signup-user-bussiness-name-input {
           width: 327px;
           height: 56px;
           border-radius: 16px;
@@ -118,6 +130,9 @@
       justify-content: center;
       padding: 10px;
     }
+  }
+  > .signup-form-container::-webkit-scrollbar {
+    display: none;
   }
 }
 .signup-login-link {
