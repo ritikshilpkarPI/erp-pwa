@@ -11,26 +11,34 @@ import LoadingCircle from '../loadinCircule/LoadingCircle';
 import SumTotalizerFooter from '../sumTotalizerFooter/SumTotalizerFooter';
 
 const LandingPage = () => {
-    const { dispatch } = useAppContext();
     const navigate = useNavigate();
+    const { globalState, dispatch } = useAppContext();
     const [itemsList, setItemsList] = useState([]);
     const [cartList, setCartList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const fetchItems = async () => {
+    const fetchItems = useCallback(async () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/items`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            setItemsList(data);
+            dispatch({ type: "SET_ITEMS", payload: data });
             setIsLoading(false);
         } catch (error) {
             console.error("Error fetching items:", error);
             setIsLoading(false);
         }
-    };
+    }, [dispatch]);
+
+    useEffect(() => {
+        fetchItems();
+    }, [fetchItems]);
+
+    useEffect(() => {
+        setItemsList(globalState?.items || []);
+    }, [globalState?.items]);
 
     const handleHamburger = () => {
         dispatch({ type: 'TOGGLE_DRAWER' });
@@ -63,11 +71,6 @@ const LandingPage = () => {
     }, []);
 
     useEffect(() => {
-        fetchItems();
-    }, []);
-   
-
-    useEffect(() => {
         if (cartList && dispatch) {
             dispatch({ type: "ADD_ITEM_TO_CART", payload: cartList });
         }
@@ -83,7 +86,7 @@ const LandingPage = () => {
                     NavigationHeaderImageClassName="back-button-image-full"
                     onClick={handleHamburger}
                 />
-                <NavigationMenu onClick={clickAddProduct} />
+                <NavigationMenu onClick={clickAddProduct} setItemsList={setItemsList} />
             </div>
             <div className='landing-page-item-card-container'>
                 {isLoading ? (
@@ -105,8 +108,9 @@ const LandingPage = () => {
                     ))
                 )}
                 {cartList.length > 0 && (
-                    <SumTotalizerFooter cartList={cartList}
-                    onClick = {clickHandler}
+                    <SumTotalizerFooter
+                        cartList={cartList}
+                        onClick={clickHandler}
                     />
                 )}
             </div>
