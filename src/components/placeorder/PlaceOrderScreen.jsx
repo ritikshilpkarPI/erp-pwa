@@ -47,10 +47,6 @@ const PlaceOrderScreen = () => {
     console.log(cartList);
   }, [cartList]);
 
-  useEffect(() => {
-    console.log(globalState?.cartItems);
-  }, []);
-
   return (
     <div className="placeorder-screen-container">
       <div className="placeorder-head">
@@ -102,15 +98,9 @@ const PlaceOrderScreen = () => {
             <div className="placeorder-content-div" key={index}>
               <button>{cartItem.count}</button>
               <div className="placeorder-menu">
-                <h5>
-
-                {cartItem.name}
-                </h5>
-                <p>
-
-                {cartItem.sold_by}
-                </p>
-                </div>
+                <h5>{cartItem.name}</h5>
+                <p>{cartItem.sold_by}</p>
+              </div>
               <div className="placeorder-price">
                 <div className="placeorder-input-box">
                   <h5 className="placeorder-input-box-heading">රු</h5>
@@ -125,7 +115,7 @@ const PlaceOrderScreen = () => {
             </div>
           ))}
         </div>
-       
+
         <div className="placeorder-total">
           <h1>Subtotal</h1>
           <h1>රු {totalPrice}</h1>
