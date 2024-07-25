@@ -3,6 +3,7 @@ import TransactionIcon from "../../image/Transaction.png";
 import "./TransactionSuccessfulScreen.css";
 import { AppStateContext } from "../../appState/appStateContext";
 import { useContext, useState } from "react";
+import ButtonInput from "../buttonInput/ButtonInput";
 import { enqueueSnackbar } from "notistack";
 
 const TransactionSuccessfulScreen = () => {
@@ -130,14 +131,13 @@ const TransactionSuccessfulScreen = () => {
           </button>
         </div>
       </div>
-      <div className="TransactionSuccessfull-button-container">
-        <button
-          className="transaction-next-order-button transaction-successful"
-          onClick={onClick}
-        >
-          NEXT ORDER
-        </button>
-      </div>
+
+      <ButtonInput
+        type="submit"
+        className="next-order-button-input"
+        title="NEXT ORDER"
+        onClick={onClick}
+      />
     </div>
   );
 };

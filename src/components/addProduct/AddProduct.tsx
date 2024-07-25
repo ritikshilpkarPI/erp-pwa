@@ -16,6 +16,11 @@ interface FormData {
   photoPreview: string | null;
 }
 
+interface Category {
+  _id: string;
+  category_name: string;
+}
+
 export const AddProduct = () => {
   const [productName, setProductName] = useState<string>("");
   const [productSelling, setProductSelling] = useState<string>("");
@@ -24,8 +29,8 @@ export const AddProduct = () => {
   const [prizeByCarton, setPrizeByCarton] = useState<string>("");
   const [storeKeepingUnit, setStoreKeepingUnit] = useState<string>("");
   const [barcode, setBarcode] = useState<string>("");
-  const [categories, setCategories] = useState([]);
-  const [selectedValue, setSelectedValue] = useState<string>("");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedValue, setSelectedValue] = useState<string>("Choose a category");
   const [randomNumber, setRandomNumber] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
@@ -37,6 +42,8 @@ export const AddProduct = () => {
     photoPreview: null,
   });
 
+  const navigate = useNavigate();
+
   const generateRandomNumber = () => {
     let number = "";
     for (let i = 0; i < 10; i++) {
@@ -45,9 +52,8 @@ export const AddProduct = () => {
     setRandomNumber(number);
   };
 
-  const handleSelectedValue = (e: any) => {
-    const value = e.target.value;
-    setSelectedValue(value);
+  const handleSelectedValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(e.target.value);
   };
 
   useEffect(() => {
@@ -59,7 +65,7 @@ export const AddProduct = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const addProductHandler = async (e: any) => {
+  const addProductHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData.photo) {
       alert("Please select a file first!");
@@ -85,15 +91,16 @@ export const AddProduct = () => {
         {
           method: "POST",
           body: formDataa,
+         
         }
       );
       const res = await response.json();
-
-      setIsLoading(false);
-
-      if (!res) {
+      
+      if (!res) { 
         enqueueSnackbar("Something went wrong", { variant: "error" });
-      } else {
+        
+      }else{
+
         navigate("/landing");
         enqueueSnackbar("Add Product Successfully", { variant: "success" });
       }
@@ -104,7 +111,7 @@ export const AddProduct = () => {
     }
   };
 
-  const handlePhotoChange = (e: any) => {
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setFormData({
       ...formData,
@@ -112,8 +119,6 @@ export const AddProduct = () => {
       photoPreview: file ? URL.createObjectURL(file) : null,
     });
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="product-page">
@@ -135,7 +140,7 @@ export const AddProduct = () => {
             labelTitle="Product name"
             placeholder="Enter product name"
             value={productName}
-            onChange={(e: any) => setProductName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductName(e.target.value)}
           />
 
           <TextInput
@@ -144,7 +149,7 @@ export const AddProduct = () => {
             labelTitle="Selling price"
             placeholder="Enter selling price"
             value={productSelling}
-            onChange={(e: any) => setProductSelling(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductSelling(e.target.value)}
           />
 
           <h2 className="section-title">More details (optional)</h2>
@@ -168,24 +173,19 @@ export const AddProduct = () => {
           </div>
 
           <div className="add-product-categories">
-            <label htmlFor="add">categories</label>
+            <label htmlFor="add">Categories</label>
             <select
               id="add"
               value={selectedValue}
               onChange={handleSelectedValue}
               className="add-product-select"
             >
-              {categories.map((e, i) => {
-                return (
-                  <option
-                    key={i}
-                    value={e["category_name"]}
-                    onChange={handleSelectedValue}
-                  >
-                    {e["category_name"]}
-                  </option>
-                );
-              })}
+              <option value="Choose a category">Choose a category</option>
+              {categories.map((option, index) => (
+                <option key={option._id || index} value={option.category_name.toLowerCase()}>
+                  {option.category_name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -195,7 +195,7 @@ export const AddProduct = () => {
             labelTitle="Price per unit"
             placeholder="Enter price per unit"
             value={prizeByUnit}
-            onChange={(e: any) => setPrizeByUnit(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByUnit(e.target.value)}
           />
           <TextInput
             className="product-page-input3"
@@ -203,7 +203,7 @@ export const AddProduct = () => {
             labelTitle="Price per dozen"
             placeholder="Enter price per dozen"
             value={prizeByDozen}
-            onChange={(e: any) => setPrizeByDozen(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByDozen(e.target.value)}
           />
           <TextInput
             className="product-page-input3"
@@ -211,7 +211,7 @@ export const AddProduct = () => {
             labelTitle="Price per carton"
             placeholder="Enter price per carton"
             value={prizeByCarton}
-            onChange={(e: any) => setPrizeByCarton(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByCarton(e.target.value)}
           />
 
           <TextInput
@@ -220,9 +220,9 @@ export const AddProduct = () => {
             labelTitle="Stock Keeping Unit"
             placeholder="Enter stock unit"
             value={storeKeepingUnit}
-            onChange={(e: any) => setStoreKeepingUnit(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStoreKeepingUnit(e.target.value)}
           />
-          <h2 className="product-page-codebare">Code barre</h2>
+          <h2 className="product-page-codebare">Barcode</h2>
           <div className="barcode-input">
             <input
               type="text"
@@ -242,7 +242,16 @@ export const AddProduct = () => {
           <ButtonInput
             type="submit"
             className={
-              productName && productSelling && selectedValue && (barcode || randomNumber)
+              (productName &&
+                productSelling &&
+                categories &&
+                barcode
+                ) ||
+              (productName &&
+                productSelling &&
+                categories &&
+                randomNumber
+                )
                 ? "add-product-button"
                 : "add-product-button1"
             }

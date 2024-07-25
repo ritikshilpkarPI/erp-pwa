@@ -46,7 +46,7 @@
         overflow-y: scroll;
 
         >.sum-totalizer-footer-container {
-            position: sticky;
+            position: fixed;
             bottom: 100px;
 
         }
