@@ -3,6 +3,7 @@ import TransactionIcon from "../../image/Transaction.png";
 import "./TransactionSuccessfulScreen.css";
 import { AppStateContext } from "../../appState/appStateContext";
 import { useContext, useState } from "react";
+import ButtonInput from "../buttonInput/ButtonInput";
 
 const TransactionSuccessfulScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
@@ -137,15 +138,14 @@ const TransactionSuccessfulScreen = () => {
             DOWNLOAD RECEIPT
           </button>
         </div>
-      </div>
-      <div className="TransactionSuccessfull-button-container">
-        <button
-          className="transaction-next-order-button transaction-successful"
-          onClick={onClick}
-        >
-          NEXT ORDER
-        </button>
-      </div>
+      </div>  
+
+      <ButtonInput
+            type="submit"
+            className="next-order-button-input"
+            title="NEXT ORDER"
+            onClick={onClick}
+          />
     </div>
   );
 };

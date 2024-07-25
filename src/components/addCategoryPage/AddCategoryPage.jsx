@@ -40,6 +40,7 @@ const AddCategoryPage = () => {
       console.error("Error submitting form:", error);
     } finally {
       setIsLoading(false);
+
     }
   };
 
