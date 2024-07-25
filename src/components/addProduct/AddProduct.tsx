@@ -15,6 +15,11 @@ interface FormData {
   photoPreview: string | null;
 }
 
+interface Category {
+  _id: string;
+  category_name: string;
+}
+
 export const AddProduct = () => {
   const [productName, setProductName] = useState<string>("");
   const [productSelling, setProductSelling] = useState<string>("");
@@ -22,9 +27,9 @@ export const AddProduct = () => {
   const [prizeByDozen, setPrizeByDozen] = useState<string>("");
   const [prizeByCarton, setPrizeByCarton] = useState<string>("");
   const [storeKeepingUnit, setStoreKeepingUnit] = useState<string>("");
-  const [barcode, setbarcode] = useState<string>("");
-  const [categories, setCategories] = useState([]);
-  const [selectedValue, setSelectedValue] = useState<string>("");
+  const [barcode, setBarcode] = useState<string>("");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedValue, setSelectedValue] = useState<string>("Choose a category");
   const [randomNumber, setRandomNumber] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
     categories: "Choose a category",
@@ -35,6 +40,8 @@ export const AddProduct = () => {
     photoPreview: null,
   });
 
+  const navigate = useNavigate();
+
   const generateRandomNumber = () => {
     let number = "";
     for (let i = 0; i < 10; i++) {
@@ -43,9 +50,8 @@ export const AddProduct = () => {
     setRandomNumber(number);
   };
 
-  const handleSelectedValue = (e: any) => {
-    const value = e.target.value;
-    setSelectedValue(value);
+  const handleSelectedValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(e.target.value);
   };
 
   useEffect(() => {
@@ -57,7 +63,7 @@ export const AddProduct = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const addProductHandler = async (e: any) => {
+  const addProductHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData.photo) {
       alert("Please select a file first!");
@@ -65,33 +71,28 @@ export const AddProduct = () => {
     }
 
     try {
-      const formDataa = new FormData();
-      formDataa.append("name", productName);
-      formDataa.append("prize", productSelling);
-      formDataa.append("img_url", formData.photo);
-      formDataa.append("category", selectedValue);
-      formDataa.append("price_per_unit", prizeByUnit);
-      formDataa.append("price_per_dozen", prizeByDozen);
-      formDataa.append("price_per_carton", prizeByCarton);
-      formDataa.append("sku", storeKeepingUnit);
-      formDataa.append("barcode", randomNumber);
-      
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", productName);
+      formDataToSend.append("prize", productSelling);
+      formDataToSend.append("img_url", formData.photo);
+      formDataToSend.append("category", selectedValue);
+      formDataToSend.append("price_per_unit", prizeByUnit);
+      formDataToSend.append("price_per_dozen", prizeByDozen);
+      formDataToSend.append("price_per_carton", prizeByCarton);
+      formDataToSend.append("sku", storeKeepingUnit);
+      formDataToSend.append("barcode", randomNumber);
 
-      const responst = await fetch(
+      const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/item/additem`,
         {
           method: "POST",
-          body: formDataa,
-         
+          body: formDataToSend,
         }
       );
-      const res = await responst.json();
-      
-      if (!res) { 
-        enqueueSnackbar("Something went wrong", { variant: "error" });
-        
-      }else{
 
+      if (!response.ok) {
+        enqueueSnackbar("Something went wrong", { variant: "error" });
+      } else {
         navigate("/landing");
       }
     } catch (error) {
@@ -100,7 +101,7 @@ export const AddProduct = () => {
     }
   };
 
-  const handlePhotoChange = (e: any) => {
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setFormData({
       ...formData,
@@ -108,10 +109,6 @@ export const AddProduct = () => {
       photoPreview: file ? URL.createObjectURL(file) : null,
     });
   };
-
- 
-
-  const navigate = useNavigate();
 
   return (
     <div className="product-page">
@@ -133,7 +130,7 @@ export const AddProduct = () => {
             labelTitle="Product name"
             placeholder="Enter product name"
             value={productName}
-            onChange={(e: any) => setProductName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductName(e.target.value)}
           />
 
           <TextInput
@@ -142,12 +139,8 @@ export const AddProduct = () => {
             labelTitle="Selling price"
             placeholder="Enter selling price"
             value={productSelling}
-            onChange={(e: any) => setProductSelling(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductSelling(e.target.value)}
           />
-
-         
-
-         
 
           <h2 className="section-title">More details (optional)</h2>
           <div className="photo-upload">
@@ -170,24 +163,19 @@ export const AddProduct = () => {
           </div>
 
           <div className="add-product-categories">
-            <label htmlFor="add">categories</label>
+            <label htmlFor="add">Categories</label>
             <select
               id="add"
               value={selectedValue}
               onChange={handleSelectedValue}
               className="add-product-select"
             >
-              {categories.map((e, i) => {
-                return (
-                  <option
-                    key={i}
-                    value={e["category_name"]}
-                    onChange={handleSelectedValue}
-                  >
-                    {e["category_name"]}
-                  </option>
-                );
-              })}
+              <option value="Choose a category">Choose a category</option>
+              {categories.map((option, index) => (
+                <option key={option._id || index} value={option.category_name.toLowerCase()}>
+                  {option.category_name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -197,7 +185,7 @@ export const AddProduct = () => {
             labelTitle="Price per unit"
             placeholder="Enter price per unit"
             value={prizeByUnit}
-            onChange={(e: any) => setPrizeByUnit(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByUnit(e.target.value)}
           />
           <TextInput
             className="product-page-input3"
@@ -205,7 +193,7 @@ export const AddProduct = () => {
             labelTitle="Price per dozen"
             placeholder="Enter price per dozen"
             value={prizeByDozen}
-            onChange={(e: any) => setPrizeByDozen(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByDozen(e.target.value)}
           />
           <TextInput
             className="product-page-input3"
@@ -213,7 +201,7 @@ export const AddProduct = () => {
             labelTitle="Price per carton"
             placeholder="Enter price per carton"
             value={prizeByCarton}
-            onChange={(e: any) => setPrizeByCarton(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByCarton(e.target.value)}
           />
 
           <TextInput
@@ -222,15 +210,15 @@ export const AddProduct = () => {
             labelTitle="Stock Keeping Unit"
             placeholder="Enter stock unit"
             value={storeKeepingUnit}
-            onChange={(e: any) => setStoreKeepingUnit(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStoreKeepingUnit(e.target.value)}
           />
-          <h2 className="product-page-codebare">Code barre</h2>
+          <h2 className="product-page-codebare">Barcode</h2>
           <div className="barcode-input">
             <input
               type="text"
               value={barcode || randomNumber}
               className="barcode-field"
-              onChange={(e) => setbarcode(e.target.value)}
+              onChange={(e) => setBarcode(e.target.value)}
               name="barcode"
             />
             <img
@@ -242,20 +230,14 @@ export const AddProduct = () => {
           </div>
           <button
             className={
-              (productName &&
-                productSelling &&
-                categories &&
-                barcode
-                ) ||
-              (productName &&
-                productSelling &&
-                categories &&
-                randomNumber
-                )
+              productName &&
+              productSelling &&
+              selectedValue !== "Choose a category" &&
+              (barcode || randomNumber)
                 ? "add-product-button"
                 : "add-product-button1"
             }
-            onClick={addProductHandler}
+            type="submit"
           >
             Add a new product
           </button>
