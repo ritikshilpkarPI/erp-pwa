@@ -37,8 +37,7 @@ const Invoice = () => {
         <div className="invoice-body">
           <h2>BILL INVOICE</h2>
           <p>
-            <strong>Customer Name:</strong>{" "}
-            {data.customer.name === null ? "Chutki" : data.customer.name}
+            <strong>Customer Name:</strong> {data.customer.name}
           </p>
           <p>
             <strong>Payment ID:</strong> {data.transaction.payment_id}
