@@ -3,6 +3,7 @@ import TransactionIcon from "../../image/Transaction.png";
 import "./TransactionSuccessfulScreen.css";
 import { AppStateContext } from "../../appState/appStateContext";
 import { useContext, useState } from "react";
+import { enqueueSnackbar } from "notistack";
 
 const TransactionSuccessfulScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
@@ -31,23 +32,11 @@ const TransactionSuccessfulScreen = () => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const contentType = response.headers.get("Content-Type");
-      if (contentType !== "application/json") {
-        throw new Error(`Expected JSON response, got ${contentType}`);
-      }
-
-      const result = await response.json();
-      if (!result.success) {
-        throw new Error(result.message || "Failed to send email");
-      }
-
-      console.log("Email sent successfully:", result.message);
+      await response.json();
+      enqueueSnackbar("Email sent successfully!", { variant: "success" });
     } catch (error) {
       console.error("Error sending email:", error);
+      enqueueSnackbar("Error sending email.", { variant: "error" });
     }
   };
 
@@ -84,8 +73,11 @@ const TransactionSuccessfulScreen = () => {
       link.remove();
 
       URL.revokeObjectURL(url);
+
+      enqueueSnackbar("PDF downloaded successfully!", { variant: "success" });
     } catch (error) {
       console.error("Error fetching PDF:", error);
+      enqueueSnackbar("Error downloading PDF.", { variant: "error" });
     }
   };
 

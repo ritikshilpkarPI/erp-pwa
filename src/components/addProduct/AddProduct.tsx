@@ -5,6 +5,7 @@ import backIcon from "../../image/BackIcon.svg";
 import TextInput from "../textInput/TextInput";
 import "../addProduct/AddProduct.css";
 import { enqueueSnackbar } from "notistack";
+import ButtonInput from "../buttonInput/ButtonInput";
 
 interface FormData {
   categories: string;
@@ -22,10 +23,11 @@ export const AddProduct = () => {
   const [prizeByDozen, setPrizeByDozen] = useState<string>("");
   const [prizeByCarton, setPrizeByCarton] = useState<string>("");
   const [storeKeepingUnit, setStoreKeepingUnit] = useState<string>("");
-  const [barcode, setbarcode] = useState<string>("");
+  const [barcode, setBarcode] = useState<string>("");
   const [categories, setCategories] = useState([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
   const [randomNumber, setRandomNumber] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
     categories: "Choose a category",
     capitalPrice: "GNF 3410.99",
@@ -64,6 +66,8 @@ export const AddProduct = () => {
       return;
     }
 
+    setIsLoading(true);
+
     try {
       const formDataa = new FormData();
       formDataa.append("name", productName);
@@ -75,26 +79,26 @@ export const AddProduct = () => {
       formDataa.append("price_per_carton", prizeByCarton);
       formDataa.append("sku", storeKeepingUnit);
       formDataa.append("barcode", randomNumber);
-      
 
-      const responst = await fetch(
+      const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/item/additem`,
         {
           method: "POST",
           body: formDataa,
-         
         }
       );
-      const res = await responst.json();
-      
-      if (!res) { 
-        enqueueSnackbar("Something went wrong", { variant: "error" });
-        
-      }else{
+      const res = await response.json();
 
+      setIsLoading(false);
+
+      if (!res) {
+        enqueueSnackbar("Something went wrong", { variant: "error" });
+      } else {
         navigate("/landing");
+        enqueueSnackbar("Add Product Successfully", { variant: "success" });
       }
     } catch (error) {
+      setIsLoading(false);
       enqueueSnackbar("Something went wrong", { variant: "error" });
       console.log(error);
     }
@@ -108,8 +112,6 @@ export const AddProduct = () => {
       photoPreview: file ? URL.createObjectURL(file) : null,
     });
   };
-
- 
 
   const navigate = useNavigate();
 
@@ -144,10 +146,6 @@ export const AddProduct = () => {
             value={productSelling}
             onChange={(e: any) => setProductSelling(e.target.value)}
           />
-
-         
-
-         
 
           <h2 className="section-title">More details (optional)</h2>
           <div className="photo-upload">
@@ -230,7 +228,7 @@ export const AddProduct = () => {
               type="text"
               value={barcode || randomNumber}
               className="barcode-field"
-              onChange={(e) => setbarcode(e.target.value)}
+              onChange={(e) => setBarcode(e.target.value)}
               name="barcode"
             />
             <img
@@ -240,25 +238,21 @@ export const AddProduct = () => {
               onClick={() => generateRandomNumber()}
             />
           </div>
-          <button
+
+          <ButtonInput
+            type="submit"
             className={
-              (productName &&
-                productSelling &&
-                categories &&
-                barcode
-                ) ||
-              (productName &&
-                productSelling &&
-                categories &&
-                randomNumber
-                )
+              productName && productSelling && selectedValue && (barcode || randomNumber)
                 ? "add-product-button"
                 : "add-product-button1"
             }
-            onClick={addProductHandler}
-          >
-            Add a new product
-          </button>
+            title="Add a new product"
+            disabled={
+              !productName || !productSelling || !selectedValue || !(barcode || randomNumber)
+            }
+            isLoading={isLoading}
+          />
+
           <button
             className="delete-product-button"
             onClick={() => navigate("/landing")}
