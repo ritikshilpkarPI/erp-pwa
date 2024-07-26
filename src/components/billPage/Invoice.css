@@ -13,7 +13,7 @@
 
 .invoice-header,
 .invoice-body {
-  text-align: center;
+  text-align: left;
   margin-bottom: 20px;
 }
 
@@ -85,4 +85,35 @@
     font-size: 12px;
     padding: 5px;
   }
+}
+
+/* Other styles */
+
+@media print {
+  .navigation-header,
+  .print-btn-outer {
+    display: none;
+  }
+
+  .invoice-container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  .navigation-invoice-login,
+  .navigation-header-container {
+    display: none;
+    margin-top: 10vh;
+  }
+}
+
+.print-btn-outer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.print-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }

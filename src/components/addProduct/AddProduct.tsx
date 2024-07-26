@@ -5,6 +5,7 @@ import backIcon from "../../image/BackIcon.svg";
 import TextInput from "../textInput/TextInput";
 import "../addProduct/AddProduct.css";
 import { enqueueSnackbar } from "notistack";
+import ButtonInput from "../buttonInput/ButtonInput";
 
 interface FormData {
   categories: string;
@@ -31,6 +32,7 @@ export const AddProduct = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("Choose a category");
   const [randomNumber, setRandomNumber] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
     categories: "Choose a category",
     capitalPrice: "GNF 3410.99",
@@ -70,32 +72,40 @@ export const AddProduct = () => {
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("name", productName);
-      formDataToSend.append("prize", productSelling);
-      formDataToSend.append("img_url", formData.photo);
-      formDataToSend.append("category", selectedValue);
-      formDataToSend.append("price_per_unit", prizeByUnit);
-      formDataToSend.append("price_per_dozen", prizeByDozen);
-      formDataToSend.append("price_per_carton", prizeByCarton);
-      formDataToSend.append("sku", storeKeepingUnit);
-      formDataToSend.append("barcode", randomNumber);
+      const formDataa = new FormData();
+      formDataa.append("name", productName);
+      formDataa.append("prize", productSelling);
+      formDataa.append("img_url", formData.photo);
+      formDataa.append("category", selectedValue);
+      formDataa.append("price_per_unit", prizeByUnit);
+      formDataa.append("price_per_dozen", prizeByDozen);
+      formDataa.append("price_per_carton", prizeByCarton);
+      formDataa.append("sku", storeKeepingUnit);
+      formDataa.append("barcode", randomNumber);
 
       const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/item/additem`,
         {
           method: "POST",
-          body: formDataToSend,
+          body: formDataa,
+         
         }
       );
-
-      if (!response.ok) {
+      const res = await response.json();
+      
+      if (!res) { 
         enqueueSnackbar("Something went wrong", { variant: "error" });
-      } else {
+        
+      }else{
+
         navigate("/landing");
+        enqueueSnackbar("Add Product Successfully", { variant: "success" });
       }
     } catch (error) {
+      setIsLoading(false);
       enqueueSnackbar("Something went wrong", { variant: "error" });
       console.log(error);
     }
@@ -228,19 +238,30 @@ export const AddProduct = () => {
               onClick={() => generateRandomNumber()}
             />
           </div>
-          <button
+
+          <ButtonInput
+            type="submit"
             className={
-              productName &&
-              productSelling &&
-              selectedValue !== "Choose a category" &&
-              (barcode || randomNumber)
+              (productName &&
+                productSelling &&
+                categories &&
+                barcode
+                ) ||
+              (productName &&
+                productSelling &&
+                categories &&
+                randomNumber
+                )
                 ? "add-product-button"
                 : "add-product-button1"
             }
-            type="submit"
-          >
-            Add a new product
-          </button>
+            title="Add a new product"
+            disabled={
+              !productName || !productSelling || !selectedValue || !(barcode || randomNumber)
+            }
+            isLoading={isLoading}
+          />
+
           <button
             className="delete-product-button"
             onClick={() => navigate("/landing")}

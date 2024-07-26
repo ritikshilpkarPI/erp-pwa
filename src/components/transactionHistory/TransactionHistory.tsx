@@ -46,11 +46,10 @@ const DateSummary: React.FC<DateSummaryProps> = ({ date, totalAmount }) => (
 export function TransactionHistory() {
   const navigate = useNavigate();
   const { globalState, dispatch } = useContext(AppStateContext);
-  const API = `${
-    process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
-  }/sales`;
+  const API = `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/sales`;
   const [selectedDate, setSelectedDate] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {
     fetch(API)
@@ -123,6 +122,7 @@ export function TransactionHistory() {
 
   const GetSaleById = async (id: string) => {
     try {
+      setLoadingDetail(true);
       const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/transaction-history`,
         {
@@ -130,19 +130,17 @@ export function TransactionHistory() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            id: id,
-          }),
+          body: JSON.stringify({ id }),
         }
       );
       const data = await response.json();
+      setLoadingDetail(false);
       if (response.ok) {
-        console.log(data);
-
         navigate("/invoice", { state: data });
       }
     } catch (error) {
       console.log(error);
+      setLoadingDetail(false);
     }
   };
 
@@ -179,15 +177,11 @@ export function TransactionHistory() {
               className="filter-by-date"
               type="date"
               value={selectedDate}
-              
               onChange={handleDateChange}
             />
           </div>
           {selectedDate && (
-            <button
-              className="clear-button"
-              onClick={() => setSelectedDate("")}
-            >
+            <button className="clear-button" onClick={() => setSelectedDate("")}>
               Clear all filter
             </button>
           )}
@@ -230,6 +224,12 @@ export function TransactionHistory() {
             <p>No transaction history available.</p>
           )}
         </div>
+
+        {loadingDetail && (
+          <div className="loading-overlay">
+            <LoadingCircle />
+          </div>
+        )}
       </main>
     </>
   );
