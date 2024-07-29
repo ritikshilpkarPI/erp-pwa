@@ -16,7 +16,7 @@ const SideMenuItems = [
 
   { logo: <UserImg />, label: "Customer List", route: "/customers" },
   
-  { logo: <Category />, label: "Add Category", route: "/addCategory" },
+  { logo: <Category />, label: "Category list", route: "/category" },
 ];
 
 export default SideMenuItems;

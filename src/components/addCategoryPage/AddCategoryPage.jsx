@@ -40,11 +40,13 @@ const AddCategoryPage = () => {
       console.error("Error submitting form:", error);
     } finally {
       setIsLoading(false);
+      navigate('/category')
+
 
     }
   };
 
-  const isFormFilled = addCategory !== "" && addColor !== "" && addImage !== null;
+  const isFormFilled = addCategory !== "" && addColor !== "";
 
   return (
     <div className="add-category-page-container">

@@ -27,6 +27,13 @@
     flex-direction: column;
     gap: 12px;
 }
+.navigation-header-add-category{
+    font-family: Rubik;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 37.92px;
+    color:#1A72DD ;
+}
 
 .text-input-container .category-name-input-label,
 .text-input-container .category-color-input-label,

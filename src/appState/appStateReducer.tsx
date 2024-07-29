@@ -5,6 +5,7 @@ export const appGlobalState: any = {
   bills: {},
   cartItems: [],
   customers: [],
+  categories: [],
   pricingPerQuantity: "",
   selectedCustomer: {},
   currentTransaction: {},
@@ -65,6 +66,10 @@ export const appStateReducer = (state: any, action: any) => {
     case "SET_CUSTOMERS_LIST":
       const newCustomers = action?.payload ?? [];
       return { ...state, customers: newCustomers };
+
+      case "SET_CATEGORIES_LIST":
+        const newCategories = action?.payload ?? [];
+        return { ...state, categories: newCategories };
 
     case "SELECTED_CUSTOMER":
       const newCustomer = action.payload ?? {};
