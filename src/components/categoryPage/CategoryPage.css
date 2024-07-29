@@ -1,0 +1,47 @@
+.categorys-page-container {
+    background-color: hsla(0, 0%, 0%, 0.051);
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+
+    >.categorys-page-headers {
+        width: 100vw;
+        box-shadow: 0px 6px 20px 0px #0000000F;
+
+        >.navigation-header-container {
+            border: none;
+            box-shadow: none;
+
+            >.navigation-header-categorys {
+                font-family: Rubik;
+                font-size: 32px;
+                font-weight: 700;
+                line-height: 37.92px;
+                color:#1A72DD ;
+
+            }
+        }
+        
+    }
+
+    >.categorys-cart-container {
+        padding: 10px 0;
+        height: inherit;
+        width: 100%;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        overflow-y: scroll;
+    }
+    >.categorys-cart-container::-webkit-scrollbar{
+        display: none;
+    }
+
+
+
+}

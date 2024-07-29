@@ -11,6 +11,7 @@ import EmailVerification from "../components/emailVerification/EmailVerification
 import OtpVerification from "../components/otpVerification/OtpVerification";
 import ChangePassword from "../components/changePassword/ChangePassword";
 import Landing from "../pages/Landing";
+import Category from "../pages/Category";
 
 const unProtectedRouteMap = Object.freeze({
   "/": <Splash />,
@@ -25,7 +26,8 @@ const unProtectedRouteMap = Object.freeze({
   "/emailverification": <EmailVerification />,
   "/changepassword": <ChangePassword />,
   "/addCategory": <AddCategory />,
-  "/landing": <Landing/>
+  "/category": <Category />,
+  "/landing": <Landing />
 })
 
 
