@@ -13,12 +13,13 @@ const SideMenuItems = [
     route: "/history",
   },
   { logo: <ShopImg />, label: "Add Product", route: "/addproduct" },
-  
+
 
   { logo: <UserImg />, label: "Customer List", route: "/customers" },
-  
+
   { logo: <Category />, label: "Category list", route: "/category" },
   { logo: <SquareChartGantt />, label: "Policy", route: "/policy" },
 ];
+
 
 export default SideMenuItems;
