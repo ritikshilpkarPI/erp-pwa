@@ -12,7 +12,7 @@ const ItemCard = ({ ID, name, price_per_carton, price_per_dozen, price_per_unit,
         // Reset item count when selecting a new price category
         setItemCount(0);
     };
-
+ 
     const getPrice = useCallback(() => {
         switch (priceCategory) {
             case "price_per_unit":
