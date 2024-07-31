@@ -21,8 +21,7 @@ const SumTotalizerFooter = ({ cartList ,onClick  }) => {
         onClick={onClick}
         >
             <div className='sum-totalizer-footer-text'>
-                <CartIcon />
-                <p>{cartList.length} Element</p>
+                <p><CartIcon /> {cartList.length} Element</p>
             </div>
             <div className='sum-totalizer-footer-total-amount'>
                <p>Total: LKR {totalAmount.toFixed(2)} </p>
