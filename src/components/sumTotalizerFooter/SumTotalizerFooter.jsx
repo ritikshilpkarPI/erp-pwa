@@ -14,7 +14,7 @@ const SumTotalizerFooter = ({ cartList ,onClick  }) => {
         setTotalAmount(sum);
     }, [cartList]);
 
-
+ 
 
     return (
         <div className='sum-totalizer-footer-container'

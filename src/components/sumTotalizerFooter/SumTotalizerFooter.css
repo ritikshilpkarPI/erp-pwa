@@ -1,9 +1,9 @@
 .sum-totalizer-footer-container {
     bottom: 0;
     background: linear-gradient(224.61deg, #1A72DD -15.95%, #0D62CA 88.4%);
-    width: 327px;
-    height: 60px;
-    border-radius: 5px;
+    width: 90vw;
+    height: 80px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -15,12 +15,30 @@
     line-height: 18.96px;
     flex-shrink: 0;
     margin-top: 5px;
-    
+
     >.sum-totalizer-footer-text {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 5px;
+        flex-shrink: 0;
+        p{
+            font-family: Rubik;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 18.96px;
+        }
+
+    }
+
+    >.sum-totalizer-footer-total-amount {
+        p{
+            font-family: Rubik;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 18.96px;
+        }
+
     }
 
 

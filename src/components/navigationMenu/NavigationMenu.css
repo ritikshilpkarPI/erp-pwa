@@ -10,7 +10,7 @@
     >.navigation-menu-search-select-container {
         height: 100%;
         width: inherit;
-        padding: 5px;
+        padding: 10px;
 
         >.navigation-menu-search,.navigation-menu-select {
             height: 100%;
@@ -18,14 +18,8 @@
             outline: none;
             border: none;
             padding: 0 10px;
-        }
-
-        >.navigation-menu-select {
-            height: 100%;
-            width: 100%;
-            outline: none;
-            border: none;
-        }
+            background-color: transparent;
+        }       
     }
 
     >.navigation-menu-button-container {
