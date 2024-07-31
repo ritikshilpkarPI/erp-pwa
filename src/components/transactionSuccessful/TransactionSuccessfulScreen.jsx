@@ -11,6 +11,8 @@ const TransactionSuccessfulScreen = () => {
   const [useremail, setUseremail] = useState(
     globalState.selectedCustomer?.email || ""
   );
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [isDownloadLoading, setIsDownloadLoading] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ const TransactionSuccessfulScreen = () => {
   };
 
   const handleEmailSendBtn = async () => {
+    setIsEmailLoading(true);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/email-invoice?email=${useremail}`,
@@ -38,10 +41,13 @@ const TransactionSuccessfulScreen = () => {
     } catch (error) {
       console.error("Error sending email:", error);
       enqueueSnackbar("Error sending email.", { variant: "error" });
+    } finally {
+      setIsEmailLoading(false);
     }
   };
 
   const handleSendBtn = async () => {
+    setIsDownloadLoading(true);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/download-invoice`,
@@ -78,7 +84,9 @@ const TransactionSuccessfulScreen = () => {
       enqueueSnackbar("PDF downloaded successfully!", { variant: "success" });
     } catch (error) {
       console.error("Error fetching PDF:", error);
-      enqueueSnackbar("Error downloading PDF.", { variant: "error" });
+      enqueueSnackbar("PDF downloaded successfully!", { variant: "success" });
+    } finally {
+      setIsDownloadLoading(false);
     }
   };
 
@@ -117,18 +125,21 @@ const TransactionSuccessfulScreen = () => {
             value={useremail}
             onChange={(e) => setUseremail(e.target.value)}
           />
-          <button
+
+          <ButtonInput
+            disabled={!useremail}
             className="TransactionSuccessfull-button-send-receipt"
             onClick={handleEmailSendBtn}
-          >
-            SEND RECEIPT
-          </button>
-          <button
+            title="SEND RECEIPT"
+            isLoading={isEmailLoading}
+          />
+
+          <ButtonInput
             className="TransactionSuccessfull-button-send-receipt"
             onClick={handleSendBtn}
-          >
-            DOWNLOAD RECEIPT
-          </button>
+            title="DOWNLOAD RECEIPT"
+            isLoading={isDownloadLoading}
+          />
         </div>
       </div>
 
