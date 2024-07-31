@@ -132,3 +132,22 @@
   color: #1a72dd;
   text-decoration: none;
 }
+
+
+.privacy-policy-container {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  font-weight: 600;
+}
+
+.privacy-policy-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.privacy-policy-link:hover {
+  text-decoration: underline;
+}

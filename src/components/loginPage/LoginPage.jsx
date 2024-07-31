@@ -134,6 +134,13 @@ const LoginPage = () => {
             Sign Up
           </Link>
         </div>
+
+        <div className="privacy-policy-container">
+          <span>By logging in, you agree to our </span>
+          <Link to="/policy" className="privacy-policy-link">
+            Privacy Policy
+          </Link>
+        </div>
         
       </div>
     </div>
