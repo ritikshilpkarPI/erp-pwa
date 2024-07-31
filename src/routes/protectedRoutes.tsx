@@ -13,6 +13,12 @@ import PaymentPage from "../components/paymentPage/PaymentPage";
 import { AddProductForm } from "../pages/AddProduct";
 import { TransactionSuccessful } from "../pages/TransactionSuccessful";
 import Invoice from "../components/billPage/Invoice";
+import Landing from "../pages/Landing";
+import AddCategory from "../pages/AddCategory";
+import Category from "../pages/Category";
+import PolicyPage from "../components/policyPage/PolicyPage";
+import PlaceOrder from "../pages/PlaceOrder";
+import Customers from "../pages/Customers";
 
 const protectedRouteMap = Object.freeze({
   "/about": <About />,
@@ -26,10 +32,20 @@ const protectedRouteMap = Object.freeze({
   "/addproduct": <AddProductForm />,
   "/transactionSuccessfull": <TransactionSuccessful />,
   "/invoice": <Invoice />,
+  "/landing": <Landing />,
+  "/addCategory": <AddCategory />,
+  "/category": <Category />,
+  "/policy":<PolicyPage/>,
+  "/placeorder": <PlaceOrder />,
+  "/customers": <Customers />,
 });
 
 export const ProtectedRoute = () => {
+  
   const isLoggedIn = true;
+
+ 
+  
 
   return (
     <>
