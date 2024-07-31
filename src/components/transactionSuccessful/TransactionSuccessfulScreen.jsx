@@ -84,7 +84,7 @@ const TransactionSuccessfulScreen = () => {
       enqueueSnackbar("PDF downloaded successfully!", { variant: "success" });
     } catch (error) {
       console.error("Error fetching PDF:", error);
-      enqueueSnackbar("PDF downloaded successfully!", { variant: "success" });
+      enqueueSnackbar("Error downloading PDF.", { variant: "error" });
     } finally {
       setIsDownloadLoading(false);
     }
