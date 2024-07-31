@@ -53,13 +53,17 @@
             justify-content: space-between;
 
             >.item-card-select-dropdown-container {
-                padding: 0 5px;
+                /* padding: 0 10px; */
                 border: 0.8px solid #BDBDBD;
                 border-radius: 5px;
+                width: 120px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
                 >.item-card-select-dropdown {
-                    width: 120px;
-                    height: 24px;
+                    width: 85%;
                     outline: none;
                     border: none;
                     font-family: Rubik;
