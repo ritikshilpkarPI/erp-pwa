@@ -103,12 +103,12 @@
 
 
 .filter-by-date-filled::before{ 
-  content: "mm/dd/yyyy";
-  font-size: 16px;
+  content: "";
 }
 
 .filter-by-date-not-filled::before {
-  content: "";
+  content: "mm/dd/yyyy";
+  font-size: 16px;
 }
 
 
