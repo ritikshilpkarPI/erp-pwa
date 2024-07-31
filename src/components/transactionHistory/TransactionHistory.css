@@ -87,21 +87,31 @@
 }
 
 .filter-by-date {
-  border: none;
-  outline: none;
-  /* height: 34px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  
   width: max-content;
-  height: max-content;
+  /* height: max-content; */
+  height: 25px;
   font-family: Rubik;
   font-size: 16px;
   font-weight: 400;
   line-height: 18.96px;
+  display: flex;
 }
 
-.filter-by-date::before{
+
+.filter-by-date-filled::before{ 
   content: "mm/dd/yyyy";
   font-size: 16px;
 }
+
+.filter-by-date-not-filled::before {
+  content: "";
+}
+
+
 
 .clear-button {
   height: 34px;

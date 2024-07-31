@@ -174,7 +174,7 @@ export function TransactionHistory() {
         <div className="filter-section">
           <div className="filter-label">
             <input
-              className="filter-by-date"
+              className={`filter-by-date ${ Boolean(selectedDate) ? 'filter-by-date-filled' : 'filter-by-date-not-filled' }`}
               type="date"
               value={selectedDate}
               onChange={handleDateChange}
