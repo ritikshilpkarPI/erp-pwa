@@ -53,10 +53,9 @@
             justify-content: space-between;
 
             >.item-card-select-dropdown-container {
-                /* padding: 0 10px; */
                 border: 0.8px solid #BDBDBD;
                 border-radius: 5px;
-                width: 120px;
+                width: 25vw;
                 height: 24px;
                 display: flex;
                 align-items: center;
@@ -101,10 +100,7 @@
                     border-radius: 10px;
                     border: none;
                     outline: none;
-                    /* background: linear-gradient(224.61deg, #1A72DD -15.95%, #0D62CA 88.4%); */
                     background-color: transparent;
-
-
                 }
             }
 
@@ -118,14 +114,7 @@
                 font-weight: 700;
                 line-height: 18.96px;
                 color: #1A72DD;
-
-
             }
         }
-
-
     }
-
-
-
 }
