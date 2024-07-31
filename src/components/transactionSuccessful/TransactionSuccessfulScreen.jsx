@@ -38,6 +38,7 @@ const TransactionSuccessfulScreen = () => {
 
       await response.json();
       enqueueSnackbar("Email sent successfully!", { variant: "success" });
+      setUseremail("");
     } catch (error) {
       console.error("Error sending email:", error);
       enqueueSnackbar("Error sending email.", { variant: "error" });
@@ -119,7 +120,7 @@ const TransactionSuccessfulScreen = () => {
 
         <div className="TransactionSuccessfull-footer">
           <input
-            type="text"
+            type="email"
             placeholder="Enter your email"
             className="transtaction-email-input"
             value={useremail}
