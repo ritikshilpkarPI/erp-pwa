@@ -83,11 +83,12 @@ const AddCustomerPage = () => {
         />
         <TextInput
           className="login-user-telephone-input"
-          type="tel"
+          type="number"
           labelTitle="Telephone"
           placeholder="Enter your Phone Number"
           value={telephone}
           onChange={(e) => setTelephone(e.target.value.replace(/^\s+/, ""))}
+          isPhoneNumber = 'true'
         />
         <TextInput
           className="login-user-email-input"

@@ -6,7 +6,7 @@ import backIconImage from "../../image/BackIcon.svg";
 
 const Invoice = () => {
   const location = useLocation();
-  const data = location.state;
+  const data = location?.state;
   const navigate = useNavigate();
   console.log(location);
 
@@ -30,23 +30,23 @@ const Invoice = () => {
       <div className="invoice-container">
         <div className="invoice-header">
           <h1 className="invoice-header-heading">
-            {data.employeData.business_name}
+            {data?.employeData?.business_name}
           </h1>
-          <p>{data.employeData.address}</p>
+          <p>{data?.employeData?.address}</p>
         </div>
         <div className="invoice-body">
           <h2>BILL INVOICE</h2>
           <p>
-            <strong>Customer Name:</strong> {data.customer.name}
+            <strong>Customer Name:</strong> {data?.customer?.name}
           </p>
           <p>
-            <strong>Payment ID:</strong> {data.transaction.payment_id}
+            <strong>Payment ID:</strong> {data?.transaction?.payment_id}
           </p>
           <p>
-            <strong>Total Amount:</strong> {data.transaction.totalAmount}
+            <strong>Total Amount:</strong> {data?.transaction?.totalAmount}
           </p>
           <p>
-            <strong>Total Items:</strong> {data.items.length}
+            <strong>Total Items:</strong> {data?.items?.length}
           </p>
           <table>
             <thead>
@@ -60,7 +60,7 @@ const Invoice = () => {
               </tr>
             </thead>
             <tbody>
-              {data.items.map((item, index) => (
+              {data?.items?.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item._name}</td>
@@ -73,18 +73,18 @@ const Invoice = () => {
             </tbody>
           </table>
           <p>
-            <strong>SUB TOTAL:</strong> {data.transaction.totalAmount}
+            <strong>SUB TOTAL:</strong> {data?.transaction?.totalAmount}
           </p>
           <p>
-            <strong>TXN NUMBER:</strong> {data.transaction.payment_id}
+            <strong>TXN NUMBER:</strong> {data?.transaction?.payment_id}
           </p>
           <p>
             <strong>ORDER TIME:</strong>
-            {new Date(data.transaction.date_of_sale).toLocaleTimeString()}
+            {new Date(data?.transaction?.date_of_sale).toLocaleTimeString()}
           </p>
           <p>
             <strong>ORDER DATE:</strong>
-            {new Date(data.transaction.date_of_sale).toLocaleDateString()}
+            {new Date(data?.transaction?.date_of_sale).toLocaleDateString()}
           </p>
         </div>
         <div className="print-btn-outer">

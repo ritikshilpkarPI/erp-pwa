@@ -207,6 +207,7 @@ const SignupPage = () => {
             placeholder="Enter your number"
             value={newPhone}
             onChange={(e) => setnewPhone(e.target.value)}
+            isPhoneNumber = 'true'
           />
           <TextInput
             className="signup-user-bussiness-name-input"
