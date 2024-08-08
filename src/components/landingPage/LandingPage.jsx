@@ -14,7 +14,6 @@ const LandingPage = () => {
     const navigate = useNavigate();
     const { globalState, dispatch } = useAppContext();
     const [itemsList, setItemsList] = useState([]);
-    const [cartList, setCartList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchItems = useCallback(async () => {
@@ -40,6 +39,15 @@ const LandingPage = () => {
         setItemsList(globalState?.items || []);
     }, [globalState?.items]);
 
+    useEffect(() => {
+        const storedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        dispatch({ type: "SET_CART_ITEMS", payload: storedCart });
+    }, [dispatch]);
+
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(globalState.cartItems));
+    }, [globalState.cartItems]);
+
     const handleHamburger = () => {
         dispatch({ type: 'TOGGLE_DRAWER' });
     };
@@ -53,28 +61,25 @@ const LandingPage = () => {
     };
 
     const addToCart = useCallback((ID, name, { prize, sold_by }, priceCategory, count) => {
-        setCartList(prevCart => {
-            const existingItemIndex = prevCart.findIndex(item => item.ID === ID && item.priceCategory === priceCategory);
-            if (existingItemIndex !== -1) {
-                const updatedCart = [...prevCart];
-                updatedCart[existingItemIndex].count = count;
-                if (updatedCart[existingItemIndex].count <= 0) {
-                    updatedCart.splice(existingItemIndex, 1);
-                }
-                return updatedCart;
-            } else if (count > 0) {
-                return [...prevCart, { ID, name, prize, sold_by, priceCategory, count }];
-            } else {
-                return prevCart;
-            }
-        });
-    }, []);
+        const updatedCart = globalState.cartItems.slice();
+        const existingItemIndex = updatedCart.findIndex(item => item.ID === ID && item.priceCategory === priceCategory);
 
-    useEffect(() => {
-        if (cartList && dispatch) {
-            dispatch({ type: "ADD_ITEM_TO_CART", payload: cartList });
+        if (existingItemIndex !== -1) {
+            updatedCart[existingItemIndex].count = count;
+            if (updatedCart[existingItemIndex].count <= 0) {
+                updatedCart.splice(existingItemIndex, 1);
+            }
+        } else if (count > 0) {
+            updatedCart.push({ ID, name, prize, sold_by, priceCategory, count });
         }
-    }, [cartList, dispatch]);
+
+        dispatch({ type: "ADD_ITEM_TO_CART", payload: updatedCart });
+    }, [globalState.cartItems, dispatch]);
+
+    const getInitialCount = (itemId, priceCategory) => {
+        const item = globalState.cartItems.find(cartItem => cartItem.ID === itemId && cartItem.priceCategory === priceCategory);
+        return item ? item.count : 0;
+    };
 
     return (
         <div className='landing-page-container'>
@@ -103,13 +108,15 @@ const LandingPage = () => {
                             img_url={item.img_url}
                             prize={item.prize}
                             addToCart={addToCart}
-                            initialCount={cartList.find(cartItem => cartItem.ID === item._id && cartItem.priceCategory === "price_per_unit")?.count || 0}
+                            initialUnitCount={getInitialCount(item._id, "price_per_unit")}
+                            initialDozenCount={getInitialCount(item._id, "price_per_dozen")}
+                            initialCartonCount={getInitialCount(item._id, "price_per_carton")}
                         />
                     ))
                 )}
-                {cartList.length > 0 && (
+                {globalState.cartItems.length > 0 && (
                     <SumTotalizerFooter
-                        cartList={cartList}
+                        cartList={globalState.cartItems}
                         onClick={clickHandler}
                     />
                 )}

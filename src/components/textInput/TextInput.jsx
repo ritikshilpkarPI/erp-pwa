@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import EyeIcon from '../../image/EyeIcon.svg'
-import EyeOffIcon from '../../image/EyeOffIcon.svg'
-
+import EyeIcon from '../../image/EyeIcon.svg';
+import EyeOffIcon from '../../image/EyeOffIcon.svg';
 
 const TextInput = (props) => {
-    const { className, type, placeholder, labelTitle, value, onChange, accept } = props;
+    const { className, type, placeholder, labelTitle, value, onChange, accept, isPhoneNumber } = props;
     const [inputType, setInputType] = useState(type);
 
     const togglePasswordVisibility = () => {
         setInputType((prevType) => (prevType === 'password' ? 'text' : 'password'));
+    };
+
+    const handleChange = (e) => {
+        if (isPhoneNumber && e.target.value.length > 10) {
+            return;
+        }
+        onChange(e);
     };
 
     return (
@@ -21,7 +27,7 @@ const TextInput = (props) => {
                     type={type}
                     placeholder={placeholder}
                     value={value}
-                    onChange={onChange}
+                    onChange={handleChange}
                     accept={accept}
                 />
             ) : (
@@ -39,8 +45,8 @@ const TextInput = (props) => {
                         onClick={togglePasswordVisibility}
                         className={`${className}-toggle-button`}
                     >
-                        {inputType === 'password' ? (<img src={EyeOffIcon} alt="" />) :
-                            (<img src={EyeIcon} alt="" />)}
+                        {inputType === 'password' ? (<img src={EyeOffIcon} alt="Hide Password" />) :
+                            (<img src={EyeIcon} alt="Show Password" />)}
                     </button>
                 </div>
             )}

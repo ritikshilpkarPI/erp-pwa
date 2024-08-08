@@ -3,16 +3,24 @@ import './ItemCard.css';
 import Minus from '../../icons/Minus';
 import Plus from '../../icons/Plus';
 
-const ItemCard = ({ ID, name, price_per_carton, price_per_dozen, price_per_unit, img_url, prize, addToCart, initialCount }) => {
+const ItemCard = ({ ID, name, price_per_carton, price_per_dozen, price_per_unit, img_url, prize, addToCart, initialUnitCount, initialDozenCount, initialCartonCount }) => {
     const [priceCategory, setPriceCategory] = useState("price_per_unit");
-    const [itemCount, setItemCount] = useState(initialCount || 0);
+    const [itemCount, setItemCount] = useState(initialUnitCount);
 
     const selectHandler = (event) => {
-        setPriceCategory(event.target.value);
-        // Reset item count when selecting a new price category
-        setItemCount(0);
+        const selectedCategory = event.target.value;
+        setPriceCategory(selectedCategory);
+
+        // Update the item count based on the selected category
+        if (selectedCategory === "price_per_unit") {
+            setItemCount(initialUnitCount);
+        } else if (selectedCategory === "price_per_dozen") {
+            setItemCount(initialDozenCount);
+        } else if (selectedCategory === "price_per_carton") {
+            setItemCount(initialCartonCount);
+        }
     };
- 
+
     const getPrice = useCallback(() => {
         switch (priceCategory) {
             case "price_per_unit":
