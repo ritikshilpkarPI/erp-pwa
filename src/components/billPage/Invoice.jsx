@@ -39,9 +39,7 @@ const Invoice = () => {
           <p>
             <strong>Customer Name:</strong> {data?.customer?.name}
           </p>
-          <p>
-            <strong>Payment ID:</strong> {data?.transaction?.payment_id}
-          </p>
+         
           <p>
             <strong>Total Amount:</strong> {data?.transaction?.totalAmount}
           </p>
@@ -54,7 +52,6 @@ const Invoice = () => {
                 <th>SR NO.</th>
                 <th>NAME</th>
                 <th>RATE (Rs.)</th>
-                <th>CATEGORY</th>
                 <th>QTY</th>
                 <th>VALUE (Rs.)</th>
               </tr>
@@ -65,7 +62,6 @@ const Invoice = () => {
                   <td>{index + 1}</td>
                   <td>{item._name}</td>
                   <td>{item._prize}</td>
-                  <td>{item.category || "Unknown"}</td>
                   <td>{item._count}</td>
                   <td>{item._prize * item._count}</td>
                 </tr>
@@ -74,9 +70,6 @@ const Invoice = () => {
           </table>
           <p>
             <strong>SUB TOTAL:</strong> {data?.transaction?.totalAmount}
-          </p>
-          <p>
-            <strong>TXN NUMBER:</strong> {data?.transaction?.payment_id}
           </p>
           <p>
             <strong>ORDER TIME:</strong>
