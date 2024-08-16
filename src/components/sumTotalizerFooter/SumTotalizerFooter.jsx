@@ -23,7 +23,7 @@ const SumTotalizerFooter = ({ onClick }) => {
                 <p><CartIcon /> {globalState?.cartItems?.length} Element{globalState?.cartItems?.length !== 1 ? 's' : ''}</p>
             </div>
             <div className='sum-totalizer-footer-total-amount'>
-                <p>Total: LKR { }</p>
+                <p>Total: LKR {totalAmount}</p>
             </div>
         </div>
     );

@@ -35,7 +35,7 @@ const LandingPage = () => {
 
     useEffect(() => {
         fetchItem();
-    }, []);
+    },[]);
 
     const addToCart = (_id, name, count, price, pricePer) => {
         const itemIndex = globalState?.cartItems.findIndex(item => item._id === _id && item.pricePer === pricePer);
