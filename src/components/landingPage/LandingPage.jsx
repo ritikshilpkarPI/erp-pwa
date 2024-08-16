@@ -14,7 +14,6 @@ const LandingPage = () => {
     const navigate = useNavigate();
     const { globalState, dispatch } = useAppContext();
     const [itemList, setItemList] = useState([]);
-    const [cartList, setCartList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchItem = async () => {
@@ -54,12 +53,7 @@ const LandingPage = () => {
         dispatch({ type: "ADD_ITEM_TO_CART", payload: updatedCart });
 
 
-        setCartList(updatedCart);
     };
-
-    useEffect(() => {
-        console.log(cartList);
-    }, [cartList]);
 
     const clickHandler = () => {
         navigate("/placeorder");

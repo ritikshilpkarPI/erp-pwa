@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./PlaceOrderScreen.css";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,6 @@ import DeleteIcon from "../../icons/DeleteIcon";
 const PlaceOrderScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
   const navigate = useNavigate();
-  const [cartList, setCartList] = useState([]);
 
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -35,10 +34,6 @@ const PlaceOrderScreen = () => {
     }
 };
 
-  useEffect(() => {
-    setCartList(globalState?.cartItems || []);
-  }, [globalState?.cartItems]);
-
   const handleClickBack = () => {
     navigate(-1);
   };
@@ -51,26 +46,18 @@ const PlaceOrderScreen = () => {
     navigate("/payment");
   };
 
-  const [btnClicked, setBtnClicked] = useState("take");
 
-  const totalPrice = useMemo(() => {
-    return cartList
-      .reduce((total, item) => total + item.prize * item.count, 0)
-      .toFixed(2);
-  }, [cartList]);
+
 
   const handlePriceChange = (index, newPrice) => {
     const updatedCartItems = globalState?.cartItems?.map((item, i) => {
       const price = newPrice === "" ? "" : parseFloat(newPrice);
       return i === index ? { ...item, price } : item;
     });
-    setCartList(updatedCartItems);
     dispatch({ type: "UPDATE_CART_ITEMS", payload: updatedCartItems });
   };
 
-  useEffect(() => {
-    console.log(cartList);
-  }, [cartList]);
+
 
   return (
     <div className="placeorder-screen-container">
