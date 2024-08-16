@@ -79,7 +79,7 @@ const ItemCard = ({
                             <option value="price_per_carton">Carton</option>
                         </select>
                     </div>
-                    <div className='item-card-select-button-container'>
+                    <div className='item-card-select-button-input-container'>
                         {itemCount <= 0 ? (
                             <button className='add-item-count' onClick={handleAddClick}>
                                 <Plus />
