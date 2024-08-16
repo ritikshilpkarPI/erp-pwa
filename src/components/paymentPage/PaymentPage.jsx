@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./PaymentPage.css";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIconImage from "../../image/BackIcon.svg";
@@ -13,14 +13,20 @@ const PaymentPage = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
   const [isCheckAvailable] = useState(false);
   const [loading, setLoading] = useState();
+  const [totalAmount, setTotalAmount] = useState(0);
 
-  const navigate = useNavigate();
+  const navigate = useNavigate();   
 
-  const totalPrice = useMemo(() => {
-    return globalState?.cartItems
-      .reduce((total, item) => total + item.prize * item.count, 0)
-      .toFixed(2);
-  }, [globalState?.cartItems]);
+
+  useEffect(() => {
+    let sum = 0;
+    globalState?.cartItems.forEach(item => {
+        const price = item.price;
+        const count = item.count;
+        sum += price * count;
+    });
+    setTotalAmount(sum);
+}, [globalState?.cartItems]);
 
   const backFunc = () => {
     navigate(-1);
@@ -37,12 +43,12 @@ const PaymentPage = () => {
     const saleData = {
       customer_id: globalState?.selectedCustomer?._id,
       items: globalState?.cartItems?.map((item) => {
-        return { _id: item.ID, _count: item.count };
+        return { _id: item._id, _count: item.count };
       }),
       employee_id: globalState?.loggedInUser?.user?._id,
       date_of_sale: new Date().toISOString(),
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
-      totalAmount: parseFloat(totalPrice),
+      totalAmount: totalAmount.toFixed(2),
     };
 
     try {
@@ -94,7 +100,7 @@ const PaymentPage = () => {
           <h4 className="payment-page-total-heading">Total invoice</h4>
         </div>
         <div className="payment-page-total-right">
-          <h4 className="payment-page-price-heading">LKR : {totalPrice}</h4>
+          <h4 className="payment-page-price-heading">LKR : {totalAmount}</h4>
         </div>
       </div>
       <div className="payment-page-tabs">
@@ -119,7 +125,7 @@ const PaymentPage = () => {
       <div className="payment-page-body">
         {activeTab === "tab1" && (
           <CashBoard
-            totalPrice={totalPrice}
+            totalPrice={totalAmount}
             onClick={createSale}
             isLoading={loading}
           />
@@ -127,7 +133,7 @@ const PaymentPage = () => {
         {activeTab === "tab2" &&
           (isCheckAvailable ? (
             <ChequeBoard
-              totalPrice={totalPrice}
+              totalPrice={totalAmount}
               onClick={createSale}
               isLoading={loading}
             />

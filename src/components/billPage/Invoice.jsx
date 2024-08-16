@@ -9,6 +9,8 @@ const Invoice = () => {
   const data = location?.state;
   const navigate = useNavigate();
   console.log(location);
+  console.log(data);
+  
 
   const handleBackClick = () => {
     navigate(-1);

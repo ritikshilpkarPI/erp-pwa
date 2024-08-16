@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import './SumTotalizerFooter.css';
 import CartIcon from '../../icons/CartIcon';
-const SumTotalizerFooter = ({ cartList ,onClick  }) => {
-    const [totalAmount, setTotalAmount] = useState(0)
+import { useAppContext } from '../../appState/appStateContext';
 
-   
+const SumTotalizerFooter = ({ onClick }) => {
+    const { globalState } = useAppContext();
+    const [totalAmount, setTotalAmount] = useState(0);
 
     useEffect(() => {
         let sum = 0;
-        cartList.forEach(item => {
-            sum += item.prize * item.count;
+        globalState?.cartItems.forEach(item => {
+            const price = item.price;
+            const count = item.count;
+            sum += price * count;
         });
         setTotalAmount(sum);
-    }, [cartList]);
-
- 
+    }, [globalState?.cartItems]);
 
     return (
-        <div className='sum-totalizer-footer-container'
-        onClick={onClick}
-        >
+        <div className='sum-totalizer-footer-container' onClick={onClick}>
             <div className='sum-totalizer-footer-text'>
-                <p><CartIcon /> {cartList.length} Element</p>
+                <p><CartIcon /> {globalState?.cartItems?.length} Element{globalState?.cartItems?.length !== 1 ? 's' : ''}</p>
             </div>
             <div className='sum-totalizer-footer-total-amount'>
-               <p>Total: LKR {totalAmount.toFixed(2)} </p>
+                <p>Total: LKR {totalAmount}</p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SumTotalizerFooter
+export default SumTotalizerFooter;

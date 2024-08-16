@@ -1,54 +1,62 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import './ItemCard.css';
 import Minus from '../../icons/Minus';
 import Plus from '../../icons/Plus';
 
-const ItemCard = ({ ID, name, price_per_carton, price_per_dozen, price_per_unit, img_url, prize, addToCart, initialUnitCount, initialDozenCount, initialCartonCount }) => {
-    const [priceCategory, setPriceCategory] = useState("price_per_unit");
-    const [itemCount, setItemCount] = useState(initialUnitCount);
+const ItemCard = ({
+    _id,                  
+    name,
+    img_url,  
+    price_per_carton,
+    price_per_dozen,
+    price_per_unit,
+    addToCart,
+    count,
+    _pricePer
+}) => {
+    const [pricePer, setPricePer] = useState(_pricePer || 'price_per_unit');
+    const [itemCount, setItemCount] = useState(count || 0);
 
-    const selectHandler = (event) => {
-        const selectedCategory = event.target.value;
-        setPriceCategory(selectedCategory);
-
-        // Update the item count based on the selected category
-        if (selectedCategory === "price_per_unit") {
-            setItemCount(initialUnitCount);
-        } else if (selectedCategory === "price_per_dozen") {
-            setItemCount(initialDozenCount);
-        } else if (selectedCategory === "price_per_carton") {
-            setItemCount(initialCartonCount);
+    const getPrice = (pricePer) => {
+        switch (pricePer) {
+            case 'price_per_unit':
+                return price_per_unit;
+            case 'price_per_dozen':
+                return price_per_dozen;
+            case 'price_per_carton':
+                return price_per_carton;
+            default:
+                return 0;
         }
     };
-
-    const getPrice = useCallback(() => {
-        switch (priceCategory) {
-            case "price_per_unit":
-                return { prize: price_per_unit, sold_by: 'Unit' };
-            case "price_per_dozen":
-                return { prize: price_per_dozen, sold_by: 'Dozen' };
-            case "price_per_carton":
-                return { prize: price_per_carton, sold_by: 'Carton' };
-            default:
-                return { prize, sold_by: 'unit' }; // Default case to handle unknown priceCategory
-        }
-    }, [priceCategory, price_per_carton, price_per_dozen, price_per_unit, prize]);
 
     const handleAddClick = () => {
         const newCount = itemCount + 1;
         setItemCount(newCount);
-        addToCart(ID, name, getPrice(), priceCategory, newCount);
+        const price = getPrice(pricePer);
+        addToCart(_id, name, newCount, price, pricePer);
     };
 
-    const handleSubtractClick = () => {
-        const newCount = itemCount > 0 ? itemCount - 1 : 0;
+    const handlePriceSelect = (e) => {
+        const selectedPricePer = e.target.value;
+        const price = getPrice(selectedPricePer);
+        setPricePer(selectedPricePer);
+        addToCart(_id, name, itemCount, price, selectedPricePer);
+    };
+
+    const handleSubClick = () => {
+        const newCount = Math.max(itemCount - 1, 0);
         setItemCount(newCount);
-        addToCart(ID, name, getPrice(), priceCategory, newCount);
+        const price = getPrice(pricePer);
+        addToCart(_id, name, newCount, price, pricePer);
     };
 
-    useEffect(() => {
-        addToCart(ID, name, getPrice(), priceCategory, itemCount);
-    }, [ID, name, getPrice, priceCategory, itemCount, addToCart]);
+    const handleInputChange = (e) => {
+        const newCount = parseInt(e.target.value) || 0;
+        setItemCount(newCount);
+        const price = getPrice(pricePer);
+        addToCart(_id, name, newCount, price, pricePer);
+    };
 
     return (
         <div className='item-card-container'>
@@ -61,23 +69,32 @@ const ItemCard = ({ ID, name, price_per_carton, price_per_dozen, price_per_unit,
                 </div>
                 <div className='item-card-select-dropdown-and-button-container'>
                     <div className='item-card-select-dropdown-container'>
-                        <select onChange={selectHandler} className="item-card-select-dropdown" value={priceCategory}>
+                        <select 
+                            onChange={handlePriceSelect} 
+                            className="item-card-select-dropdown" 
+                            value={pricePer}
+                        >
                             <option value="price_per_unit">Unit</option>
                             <option value="price_per_dozen">Dozen</option>
                             <option value="price_per_carton">Carton</option>
                         </select>
                     </div>
                     <div className='item-card-select-button-container'>
-                        {itemCount === 0 ? (
+                        {itemCount <= 0 ? (
                             <button className='add-item-count' onClick={handleAddClick}>
                                 <Plus />
                             </button>
                         ) : (
                             <>
-                                <button className='subtract-item-count' onClick={handleSubtractClick}>
+                                <button className='subtract-item-count' onClick={handleSubClick}>
                                     <Minus />
                                 </button>
-                                <h3 className='display-item-count'>{itemCount}</h3>
+                                <input 
+                                    type="number" 
+                                    value={itemCount} 
+                                    onChange={handleInputChange} 
+                                    className='display-item-count' 
+                                />
                                 <button className='add-item-count' onClick={handleAddClick}>
                                     <Plus />
                                 </button>
@@ -86,7 +103,7 @@ const ItemCard = ({ ID, name, price_per_carton, price_per_dozen, price_per_unit,
                     </div>
                 </div>
                 <div className="item-card-price-container">
-                    <h3 className="item-card-price">රු {getPrice().prize}</h3>
+                    <h3 className="item-card-price">රු {getPrice(pricePer)}</h3>
                 </div>
             </div>
         </div>
