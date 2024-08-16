@@ -93,7 +93,7 @@ const ItemCard = ({
                                     type="number" 
                                     value={itemCount} 
                                     onChange={handleInputChange} 
-                                    className='display-item-count' 
+                                    className='display-item-count-input' 
                                 />
                                 <button className='add-item-count' onClick={handleAddClick}>
                                     <Plus />
