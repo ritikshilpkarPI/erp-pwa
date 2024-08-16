@@ -10,7 +10,22 @@
   padding: 20px;
   max-width: 800px;
 }
-
+.invoice-header{
+  width: 100%;
+}
+.invoice-header-text{
+  margin-bottom: 20px;
+}
+.invoice-header-body{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.invoice-header-left,.invoice-body-right{
+  width: 50%;
+  text-align: left;
+}
 .invoice-header,
 .invoice-body {
   text-align: left;
@@ -117,3 +132,5 @@
   font-size: 16px;
   cursor: pointer;
 }
+
+

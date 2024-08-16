@@ -10,7 +10,6 @@ const Invoice = () => {
   const navigate = useNavigate();
   console.log(location);
   console.log(data);
-  
 
   const handleBackClick = () => {
     navigate(-1);
@@ -31,23 +30,44 @@ const Invoice = () => {
       />
       <div className="invoice-container">
         <div className="invoice-header">
-          <h1 className="invoice-header-heading">
-            {data?.employeData?.business_name}
-          </h1>
-          <p>{data?.employeData?.address}</p>
+          <h2 className="invoice-header-text">BILL INVOICE</h2>
+          <div className="invoice-header-body">
+
+          <div className="invoice-header-left">
+
+            <p>
+              <strong>Customer Name:</strong> {data?.customer?.name}
+            </p>
+
+            <p>
+              <strong>Total Amount:</strong> {data?.transaction?.totalAmount}
+            </p>
+            <p>
+              <strong>Total Items:</strong> {data?.items?.length}
+            </p>
+
+          </div>
+          <div className="invoice-header-right">
+            <p>
+              <strong>Business Name:</strong> {data?.employeData?.business_name}
+            </p>
+
+            <p>
+              <strong>Address:</strong> {data?.employeData?.address}
+            </p>
+            <p>
+              <strong>Number:</strong> {data?.employeData?.phone_number}
+            </p>
+
+            <h1 className="invoice-header-heading">
+
+            </h1>
+          </div>
+          </div>
+
         </div>
         <div className="invoice-body">
-          <h2>BILL INVOICE</h2>
-          <p>
-            <strong>Customer Name:</strong> {data?.customer?.name}
-          </p>
-         
-          <p>
-            <strong>Total Amount:</strong> {data?.transaction?.totalAmount}
-          </p>
-          <p>
-            <strong>Total Items:</strong> {data?.items?.length}
-          </p>
+
           <table>
             <thead>
               <tr>
