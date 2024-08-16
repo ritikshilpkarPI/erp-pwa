@@ -10,6 +10,31 @@ const PlaceOrderScreen = () => {
   const navigate = useNavigate();
   const [cartList, setCartList] = useState([]);
 
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+      let sum = 0;
+      globalState?.cartItems.forEach(item => {
+          const price = item.price;
+          const count = item.count;                
+          sum += price * count;
+      });
+      setTotalAmount(sum);
+  }, [globalState?.cartItems]);
+
+  const getPriceBy = (pricePer) => {
+    switch (pricePer) {
+        case 'price_per_unit':
+            return "Unit";
+        case 'price_per_dozen':
+            return 'Dozen';
+        case 'price_per_carton':
+            return 'Carton';
+        default:
+            return 0;
+    }
+};
+
   useEffect(() => {
     setCartList(globalState?.cartItems || []);
   }, [globalState?.cartItems]);
@@ -35,9 +60,9 @@ const PlaceOrderScreen = () => {
   }, [cartList]);
 
   const handlePriceChange = (index, newPrice) => {
-    const updatedCartItems = cartList.map((item, i) => {
+    const updatedCartItems = globalState?.cartItems?.map((item, i) => {
       const price = newPrice === "" ? "" : parseFloat(newPrice);
-      return i === index ? { ...item, prize: price } : item;
+      return i === index ? { ...item, price } : item;
     });
     setCartList(updatedCartItems);
     dispatch({ type: "UPDATE_CART_ITEMS", payload: updatedCartItems });
@@ -66,40 +91,15 @@ const PlaceOrderScreen = () => {
           onClick={handleClickCustomer}
         />
       </div>
-      <div className="placeorder-buttons">
-        <button
-          onClick={() => {
-            setBtnClicked("take");
-          }}
-          className={btnClicked === "take" ? "btnclick1" : "btnclick"}
-        >
-          Take-away
-        </button>
-        <button
-          onClick={() => {
-            setBtnClicked("del");
-          }}
-          className={btnClicked === "del" ? "btnclick1" : "btnclick"}
-        >
-          Delivery
-        </button>
-        <button
-          onClick={() => {
-            setBtnClicked("eat");
-          }}
-          className={btnClicked === "eat" ? "btnclick1" : "btnclick"}
-        >
-          Eat-in
-        </button>
-      </div>
+     
       <div className="placeorder-content">
         <div className="placeorder-list-content">
-          {cartList.map((cartItem, index) => (
+          {globalState?.cartItems?.map((cartItem, index) => (
             <div className="placeorder-content-div" key={index}>
               <button>{cartItem.count}</button>
               <div className="placeorder-menu">
                 <h5>{cartItem.name}</h5>
-                <p>{cartItem.sold_by}</p>
+                <p>{getPriceBy(cartItem?.pricePer)}</p>
               </div>
               <div className="placeorder-price">
                 <div className="placeorder-input-box">
@@ -107,7 +107,7 @@ const PlaceOrderScreen = () => {
                   <input
                     className="placeorder-input-box-input"
                     type="number"
-                    value={cartItem.prize === "" ? "" : cartItem.prize}
+                    value={cartItem.price === "" ? "" : cartItem.price}
                     onChange={(e) => handlePriceChange(index, e.target.value)}
                   />
                 </div>
@@ -118,7 +118,7 @@ const PlaceOrderScreen = () => {
 
         <div className="placeorder-total">
           <h1>Subtotal</h1>
-          <h1>රු {totalPrice}</h1>
+          <h1>රු {totalAmount}</h1>
         </div>
         <div
           className="placeorder-delete"
@@ -134,7 +134,7 @@ const PlaceOrderScreen = () => {
       <div className="placeorder-bottom">
         <div className="placeorder-total">
           <h1>Subtotal</h1>
-          <h1>රු{totalPrice}</h1>
+          <h1>රු {totalAmount}</h1>
         </div>
         <div className="placeorder-bottom-button" onClick={handleClickPayment}>
           Place an order
