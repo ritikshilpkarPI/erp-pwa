@@ -17,7 +17,7 @@ const Invoice = () => {
 
   const handlePrintClick = () => {
     window.print();
-  };
+  };  
 
   return (
     <>

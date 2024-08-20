@@ -10,6 +10,7 @@ export const appGlobalState: any = {
   selectedCustomer: {},
   currentTransaction: {},
   transactionHistory: [],
+  chequeList: [],
   isOpen: false,
   loggedInUser: decodeJwtToken(localStorage.getItem("token")) ?? null,
   isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem("token"))),
@@ -67,9 +68,9 @@ export const appStateReducer = (state: any, action: any) => {
       const newCustomers = action?.payload ?? [];
       return { ...state, customers: newCustomers };
 
-      case "SET_CATEGORIES_LIST":
-        const newCategories = action?.payload ?? [];
-        return { ...state, categories: newCategories };
+    case "SET_CATEGORIES_LIST":
+      const newCategories = action?.payload ?? [];
+      return { ...state, categories: newCategories };
 
     case "SELECTED_CUSTOMER":
       const newCustomer = action.payload ?? {};
@@ -93,6 +94,16 @@ export const appStateReducer = (state: any, action: any) => {
         ...state,
         cartItems: action.payload,
       };
+    case "SET_CHEQUE_LIST":
+      const updateChequeList = action.payload ?? {};
+      return { ...state, chequeList: updateChequeList };
+
+    case "ADD_CHEQUE_LIST":
+      const newChequeList = [...state.chequeList];
+      newChequeList.push(action.payload);
+      return { ...state, chequeList: newChequeList };
+
+
 
     default:
       return state;
