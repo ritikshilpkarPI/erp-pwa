@@ -12,14 +12,14 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
   const [chequeNumber, setChequeNumber] = useState("");
   const [chequeAmount, setChequeAmount] = useState("");
   const [chequeDate, setChequeDate] = useState("");
-  const [inputCost, setInputCost] = useState(0); 
-  
+  const [inputCost, setInputCost] = useState(0);
+
 
   const navigate = useNavigate();
 
   const submitHandler = (event) => {
     event.preventDefault();
-  
+
     const newCheque = {
       bank_name: chequeName,
       check_number: chequeNumber,
@@ -27,16 +27,16 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
       date: chequeDate,
     };
 
-    dispatch({ type: "ADD_CHEQUE_LIST", payload: newCheque });   
-  
+    dispatch({ type: "ADD_CHEQUE_LIST", payload: newCheque });
+
     setChequeName("");
     setChequeNumber("");
     setChequeAmount("");
     setChequeDate("");
-    
+
     setOpenForm(false);
   };
-  
+
   useEffect(() => {
     let totalInputCost = 0;
     globalState?.chequeList.forEach(cheque => {
@@ -61,11 +61,16 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
     setOpenForm(!openForm);
   };
 
-  
+
   const isChequeListEmpty = globalState?.chequeList?.length === 0;
   const buttonClassName = isChequeListEmpty
     ? "complete-payment-button-input-disabled"
     : "complete-payment-button-input-enabled";
+
+  const isFormValid = chequeName && chequeNumber && chequeAmount && chequeDate;
+  const submitButtonClass = !isFormValid
+    ? "cheque-submit-button-input-disabled"
+    : "cheque-submit-button-input-enabled"
 
   return (
     <div className="cheque-board">
@@ -111,18 +116,21 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
             value={chequeAmount}
             onChange={(e) => setChequeAmount(e.target.value)}
           />
-          <TextInput
-            className="cheque-page-input4"
-            type="date"
-            labelTitle="Cheque Date"
-            placeholder="Enter cheque date"
-            value={chequeDate}
-            onChange={(e) => setChequeDate(e.target.value)}
-          />
+          <div className="cheque-page-input4-laber-container">
+            <label className="cheque-page-input4-laber" >Cheque Date</label>
+
+            <input
+              className={`cheque-page-input4 ${Boolean(chequeDate) ? 'cheque-page-input4-filled' : 'cheque-page-input4-not-filled'}`}
+              type="date"
+              value={chequeDate}
+              onChange={(e) => setChequeDate(e.target.value)}
+            />
+          </div>
           <ButtonInput
             type="submit"
             title="Submit"
-            className="cheque-submit-button-input"
+            className={submitButtonClass}
+            disabled={!isFormValid}
           />
         </form>
       ) : (

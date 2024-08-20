@@ -20,6 +20,16 @@
         flex-direction: column;
         border-radius: 16px;
 
+        .cheque-page-input4-laber-container{
+            display: flex;
+            align-items: start;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            width: 327px;
+            margin-bottom: 10px;
+        }
+
         .cheque-page-input1,
         .cheque-page-input2,
         .cheque-page-input3,
@@ -34,20 +44,31 @@
             border: none;
         }
 
+        .cheque-page-input4-filled::before {
+            content: "";
+        }
+
+        .cheque-page-input4-not-filled::before {
+            content: "mm/dd/yyyy";
+            font-size: 16px;
+        }
+      
+
         .cheque-page-input1-label,
         .cheque-page-input2-laber,
         .cheque-page-input3-laber,
         .cheque-page-input4-laber {
             font-size: 16px;
             font-weight: 400;
+            text-align: left;
         }
 
-        .cheque-submit-button-input {
+        .cheque-submit-button-input-disabled,
+        .cheque-submit-button-input-enabled {
             margin-top: 5px;
             width: 327px;
             height: 59px;
             border-radius: 20px;
-            background-color: #1A72DD;
             color: #ffffff;
             border: none;
             outline: none;
@@ -55,10 +76,18 @@
             font-size: 16px;
             font-weight: 500;
             line-height: 18.96px;
+            flex-shrink: 0;
+        }
 
+        .cheque-submit-button-input-enabled {
+            background-color: #1A72DD;
+        }
+
+        .cheque-submit-button-input-disabled {
+            background-color: #cccccc;
         }
     }
-   
+
 
     >.add-cheque-button-input {
         width: 90vw;
@@ -80,6 +109,7 @@
         justify-content: flex-start;
         flex-direction: column;
         gap: 10px;
+
         >.cheque-card {
             width: 90vw;
             height: 90px;
@@ -92,7 +122,7 @@
             justify-content: space-between;
             overflow: hidden;
             border: 7px solid white;
-    
+
             .cheque-index {
                 height: 90px;
                 width: 85px;
@@ -101,12 +131,13 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                
+
             }
-    
+
             .cheque-text {
                 width: inherit;
                 padding: 0 10px;
+
                 p {
                     font-family: Rubik;
                     font-size: 16px;
@@ -114,22 +145,23 @@
                     line-height: 18.96px;
                 }
             }
-    
-    
+
+
         }
-    
+
     }
+
     .cheque-page-input4 {
         width: 325px;
-    
+
     }
 
     .complete-payment-button-input-disabled,
-    .complete-payment-button-input-enabled{
+    .complete-payment-button-input-enabled {
         width: 90vw;
         height: 57px;
         border-radius: 15px;
-        border:none;
+        border: none;
         outline: none;
         position: absolute;
         bottom: 20px;
@@ -138,21 +170,21 @@
         font-weight: 500;
         line-height: 18.96px;
         color: #ffffff;
-        
-        
-    }
-    .complete-payment-button-input-disabled{
-        background-color: #cccccc;      
+
 
     }
-    .complete-payment-button-input-enabled{
-        background-color: #1A72DD;  
+
+    .complete-payment-button-input-disabled {
+        background-color: #cccccc;
+
+    }
+
+    .complete-payment-button-input-enabled {
+        background-color: #1A72DD;
     }
 
 }
 
-.cheque-board::-webkit-scrollbar{
+.cheque-board::-webkit-scrollbar {
     display: none;
 }
-
-
