@@ -93,7 +93,7 @@ const TransactionSuccessfulScreen = () => {
   };
 
   return (
-    <div className="TransactionSuccessfull">
+    <div className="TransactionSuccessfull" >
       <div className="TransactionSuccessfull-main-container">
         <div className="TransactionSuccessfull-header">
           <img src={TransactionIcon} alt="" className="transaction-icon" />

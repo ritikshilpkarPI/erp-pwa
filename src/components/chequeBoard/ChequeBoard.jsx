@@ -61,6 +61,7 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
     setOpenForm(!openForm);
   };
 
+  
   const isChequeListEmpty = globalState?.chequeList?.length === 0;
   const buttonClassName = isChequeListEmpty
     ? "complete-payment-button-input-disabled"

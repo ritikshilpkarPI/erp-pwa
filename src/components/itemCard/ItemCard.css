@@ -10,22 +10,7 @@
     overflow: hidden;
     flex-shrink: 0;
 
-    >.item-card-image-container {
-        height: 100%;
-        width: 150px;
-        background-color: #dadada;
-        overflow: hidden;
-        border: 6px solid #ffffff;
-        border-radius: 20px 0 0 20px;
-        overflow: hidden;
-
-
-        >.item-card-image {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-        }
-    }
+   
 
     >.item-card-text-container {
         height: 100%;
@@ -129,5 +114,22 @@
         color: #FFFFFF;
     }
 
+
+}
+
+.item-card-image-container {
+    height: 100%;
+    width: 150px;
+    background-color: #dadada;
+    overflow: hidden;
+    border: 6px solid #ffffff;
+    border-radius: 20px 0 0 20px;
+    overflow: hidden;
+
+    .item-card-image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 
 }

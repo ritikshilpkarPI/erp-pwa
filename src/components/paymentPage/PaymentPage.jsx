@@ -15,18 +15,18 @@ const PaymentPage = () => {
   const [loading, setLoading] = useState();
   const [totalAmount, setTotalAmount] = useState(0);
 
-  const navigate = useNavigate();   
+  const navigate = useNavigate();
 
 
   useEffect(() => {
     let sum = 0;
     globalState?.cartItems.forEach(item => {
-        const price = item.price;
-        const count = item.count;
-        sum += price * count;
+      const price = item.price;
+      const count = item.count;
+      sum += price * count;
     });
     setTotalAmount(sum);
-}, [globalState?.cartItems]);
+  }, [globalState?.cartItems]);
 
   const backFunc = () => {
     navigate(-1);
@@ -39,24 +39,6 @@ const PaymentPage = () => {
   const createSale = async () => {
     const cashPaymentId = "60d5f9e9a60b2f1b4c3c1c84";
     const chequePaymentId = "60d5f9e9a60b2f1b4c3c1c85";
-    console.log(globalState?.chequeList);
-    
-
-    // const saleData = {
-    //   customer_id: globalState?.selectedCustomer?._id,
-    //   items: globalState?.cartItems?.map((item) => {
-    //     return { _id: item._id, _count: item.count };
-    //   }),
-    //   employee_id: globalState?.loggedInUser?.user?._id,
-    //   date_of_sale: new Date().toISOString(),
-    //   payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
-    //   totalAmount: totalAmount.toFixed(2),
-    //   chequeList: globalState?.chequeList?.map((cheque)=>{
-    //     return{bank_name:cheque?.bank_name, check_number:cheque?.check_number, amount:cheque?.amount, date:cheque?.date}
-    //   })
-    // };
-
-    console.log(globalState?.chequeList);
     const saleData = {
       customer_id: globalState?.selectedCustomer?._id,
       items: globalState?.cartItems?.map((item) => {
@@ -66,7 +48,7 @@ const PaymentPage = () => {
       date_of_sale: new Date().toISOString(),
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
       totalAmount: totalAmount.toFixed(2),
-      
+
       cheques: globalState?.chequeList?.map((cheque) => ({
         bank_name: cheque?.bank_name,
         check_number: cheque?.check_number,
@@ -78,8 +60,7 @@ const PaymentPage = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${
-          process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
+        `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
         }/sales`,
         {
           method: "POST",
@@ -112,37 +93,39 @@ const PaymentPage = () => {
 
   return (
     <div className="payment-page">
-      <NavigationHeader
-        title="Payment Method"
-        titleClassName="navigation-header-payment"
-        NavigationHeaderImage={backIconImage}
-        NavigationHeaderImageClassName="back-btn-image-icon"
-        onClick={backFunc}
-      />
-      <div className="payment-page-total-invoice">
-        <div className="payment-page-total-left">
-          <h4 className="payment-page-total-heading">Total invoice</h4>
+      <div className="payment-page-header-container" >
+        <NavigationHeader
+          title="Payment Method"
+          titleClassName="navigation-header-payment"
+          NavigationHeaderImage={backIconImage}
+          NavigationHeaderImageClassName="back-btn-image-icon"
+          onClick={backFunc}
+        />
+        <div className="payment-page-total-invoice">
+          <div className="payment-page-total-left">
+            <h4 className="payment-page-total-heading">Total invoice</h4>
+          </div>
+          <div className="payment-page-total-right">
+            <h4 className="payment-page-price-heading">LKR : {totalAmount}</h4>
+          </div>
         </div>
-        <div className="payment-page-total-right">
-          <h4 className="payment-page-price-heading">LKR : {totalAmount}</h4>
-        </div>
-      </div>
-      <div className="payment-page-tabs">
-        <div
-          className={
-            activeTab === "tab1" ? "payment-cheque-tab" : "payment-cash-tab"
-          }
-          onClick={() => handleTabClick("tab1")}
-        >
-          <h4 className="payment-cash-heading">Cash</h4>
-        </div>
-        <div
-          className={
-            activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"
-          }
-          onClick={() => handleTabClick("tab2")}
-        >
-          <h4 className="payment-cash-heading">Cheque</h4>
+        <div className="payment-page-tabs">
+          <div
+            className={
+              activeTab === "tab1" ? "payment-cheque-tab" : "payment-cash-tab"
+            }
+            onClick={() => handleTabClick("tab1")}
+          >
+            <h4 className="payment-cash-heading">Cash</h4>
+          </div>
+          <div
+            className={
+              activeTab === "tab2" ? "payment-cheque-tab" : "payment-cash-tab"
+            }
+            onClick={() => handleTabClick("tab2")}
+          >
+            <h4 className="payment-cash-heading">Cheque</h4>
+          </div>
         </div>
       </div>
 
