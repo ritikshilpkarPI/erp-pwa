@@ -11,7 +11,7 @@ import { enqueueSnackbar } from "notistack";
 const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const { globalState, dispatch } = useContext(AppStateContext);
-  const [isCheckAvailable] = useState(false);
+  const [isCheckAvailable] = useState(true);
   const [loading, setLoading] = useState();
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -39,7 +39,24 @@ const PaymentPage = () => {
   const createSale = async () => {
     const cashPaymentId = "60d5f9e9a60b2f1b4c3c1c84";
     const chequePaymentId = "60d5f9e9a60b2f1b4c3c1c85";
+    console.log(globalState?.chequeList);
+    
 
+    // const saleData = {
+    //   customer_id: globalState?.selectedCustomer?._id,
+    //   items: globalState?.cartItems?.map((item) => {
+    //     return { _id: item._id, _count: item.count };
+    //   }),
+    //   employee_id: globalState?.loggedInUser?.user?._id,
+    //   date_of_sale: new Date().toISOString(),
+    //   payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
+    //   totalAmount: totalAmount.toFixed(2),
+    //   chequeList: globalState?.chequeList?.map((cheque)=>{
+    //     return{bank_name:cheque?.bank_name, check_number:cheque?.check_number, amount:cheque?.amount, date:cheque?.date}
+    //   })
+    // };
+
+    console.log(globalState?.chequeList);
     const saleData = {
       customer_id: globalState?.selectedCustomer?._id,
       items: globalState?.cartItems?.map((item) => {
@@ -49,6 +66,13 @@ const PaymentPage = () => {
       date_of_sale: new Date().toISOString(),
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
       totalAmount: totalAmount.toFixed(2),
+      
+      cheques: globalState?.chequeList?.map((cheque) => ({
+        bank_name: cheque?.bank_name,
+        check_number: cheque?.check_number,
+        amount: cheque?.amount,
+        date: cheque?.date,
+      })),
     };
 
     try {

@@ -63,6 +63,7 @@ export function TransactionHistory() {
         setLoading(false);
       });
   }, [dispatch, API]);
+  
 
   const transactionHistory = globalState?.transactionHistory || [];
 

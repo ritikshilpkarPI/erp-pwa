@@ -20,6 +20,7 @@ const TransactionSuccessfulScreen = () => {
   const onClick = () => {
     navigate("/landing");
     dispatch({ type: "CURRENT_TRANSACTION", payload: {} });
+    dispatch({ type: "SET_CHEQUE_LIST", payload: [] }); 
   };
 
   const handleEmailSendBtn = async () => {
