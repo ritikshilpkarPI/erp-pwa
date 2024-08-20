@@ -116,7 +116,7 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
             value={chequeAmount}
             onChange={(e) => setChequeAmount(e.target.value)}
           />
-          <div className="cheque-page-input4-laber-container">
+          <div className="cheque-page-input4-container">
             <label className="cheque-page-input4-laber" >Cheque Date</label>
 
             <input
