@@ -1,5 +1,13 @@
 .payment-page {
   height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+
+}
+.payment-page-header-container{
+  width: 100vw;
 }
 
 .navigation-header-container {
@@ -79,8 +87,8 @@
 
 
 .payment-page-body{
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: inherit;
   background-color: whitesmoke;
   display: flex;
   align-items: start;

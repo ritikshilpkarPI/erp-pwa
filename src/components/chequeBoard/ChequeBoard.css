@@ -1,11 +1,11 @@
 .cheque-board {
     font-size: 1rem;
-    /* background-color: white; */
-    padding: 10px 0 150px;
+    height: 100%;
+    padding: 10px 0 300px;
     overflow-y: scroll;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     flex-direction: column;
     gap: 10px;
 
