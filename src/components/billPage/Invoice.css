@@ -67,6 +67,7 @@
   position: fixed;
   bottom: 20px;
   display: flex;
+  gap: 15px;
   align-items: center;
   justify-content: center;
 }
@@ -75,7 +76,7 @@
   padding: 20px 60px;
   background-color: #1a72dd;
   color: white;
-  border-radius: 16px;
+  border-radius: 13px;
   border: 0.2px solid gray;
   font-size: 16px;
 }
