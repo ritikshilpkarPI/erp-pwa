@@ -3,10 +3,12 @@ import "./Invoice.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIconImage from "../../image/BackIcon.svg";
+import { enqueueSnackbar } from "notistack";
 
 const Invoice = () => {
   const location = useLocation();
-  const data = location?.state;
+  const data = location?.state?.data;
+  const transactionId = location?.state?.transactionId;
   const navigate = useNavigate();
   console.log(location);
   console.log(data);
@@ -17,7 +19,38 @@ const Invoice = () => {
 
   const handlePrintClick = () => {
     window.print();
-  };  
+  };
+
+  const handleWhatsAppShare = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/whatsApp-invoice`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: transactionId,
+          countryCode: '+91',
+          phoneNumber: "9425372430",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+
+      // Redirect to the WhatsApp URL received in the response
+      window.location.href = responseData.whatsappUrl;
+      enqueueSnackbar("Invoice sent successfully", { variant: "success" });
+    } catch (error) {
+      console.error("Error sending invoice:", error);
+      enqueueSnackbar("Failed to send invoice", { variant: "error" });
+    }
+  };
+
+
 
   return (
     <>
@@ -33,36 +66,36 @@ const Invoice = () => {
           <h2 className="invoice-header-text">BILL INVOICE</h2>
           <div className="invoice-header-body">
 
-          <div className="invoice-header-left">
+            <div className="invoice-header-left">
 
-            <p>
-              <strong>Customer Name:</strong> {data?.customer?.name}
-            </p>
+              <p>
+                <strong>Customer Name:</strong> {data?.customer?.name}
+              </p>
 
-            <p>
-              <strong>Total Amount:</strong> {data?.transaction?.totalAmount}
-            </p>
-            <p>
-              <strong>Total Items:</strong> {data?.items?.length}
-            </p>
+              <p>
+                <strong>Total Amount:</strong> {data?.transaction?.totalAmount}
+              </p>
+              <p>
+                <strong>Total Items:</strong> {data?.items?.length}
+              </p>
 
-          </div>
-          <div className="invoice-header-right">
-            <p>
-              <strong>Business Name:</strong> {data?.employeData?.business_name}
-            </p>
+            </div>
+            <div className="invoice-header-right">
+              <p>
+                <strong>Business Name:</strong> {data?.employeData?.business_name}
+              </p>
 
-            <p>
-              <strong>Address:</strong> {data?.employeData?.address}
-            </p>
-            <p>
-              <strong>Number:</strong> {data?.employeData?.phone_number}
-            </p>
+              <p>
+                <strong>Address:</strong> {data?.employeData?.address}
+              </p>
+              <p>
+                <strong>Number:</strong> {data?.employeData?.phone_number}
+              </p>
 
-            <h1 className="invoice-header-heading">
+              <h1 className="invoice-header-heading">
 
-            </h1>
-          </div>
+              </h1>
+            </div>
           </div>
 
         </div>
@@ -105,6 +138,9 @@ const Invoice = () => {
         <div className="print-btn-outer">
           <button onClick={handlePrintClick} className="print-button">
             Print Invoice
+          </button>
+          <button onClick={handleWhatsAppShare} className="print-button">
+          Send via WhatsApp
           </button>
         </div>
       </div>
