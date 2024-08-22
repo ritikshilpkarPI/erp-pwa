@@ -13,7 +13,7 @@ const Invoice = () => {
   const transactionId = location?.state?.transaction._id;
   // const customerNumber = location?.state?.customer?.telephone;
   // const formattedNumber = customerNumber.replace(/-/g, "");
-  
+
   const navigate = useNavigate();
   // const [countryCode, setCountryCode] = useState(94)
   // const [phoneNumber, setPhoneNumber] = useState(formattedNumber)
@@ -34,7 +34,7 @@ const Invoice = () => {
     window.print();
   };
   const copyAndShareLink = () => {
-    const baseUrl = process.env.REACT_APP_FRONTEND_URL; 
+    const baseUrl = process.env.REACT_APP_FRONTEND_URL ?? ''; 
     const invoiceUrl = `${baseUrl}/invoice-public/${transactionId}`;
 
     navigator.clipboard.writeText(invoiceUrl)
