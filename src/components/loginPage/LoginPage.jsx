@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { AppStateContext } from "../../appState/appStateContext";
 import { auth, setUpRecaptcha } from "../../utils";
-import { RecaptchaVerifier } from "firebase/auth";
+// import { RecaptchaVerifier } from "firebase/auth";
 
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
