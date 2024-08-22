@@ -8,14 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { AppStateContext } from "../../appState/appStateContext";
-import { auth, setUpRecaptcha } from "../../utils";
-// import { RecaptchaVerifier } from "firebase/auth";
 
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
-  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const { dispatch } = useContext(AppStateContext);
   const navigate = useNavigate();
@@ -31,36 +27,32 @@ const LoginPage = () => {
     navigate(-1);
   };
 
-  console.log({result})
-
   const logInHandle = async () => {
     try {
       const emailOrPhoneTrimmed = emailOrPhone.trim();
-      
-      if (!emailOrPhoneTrimmed) {
+
+      if (!emailOrPhoneTrimmed || !password) {
         enqueueSnackbar("Please fill all the fields", { variant: "error" });
         return;
       }
-      
+
       setLoading(true);
-      const responseResult = await setUpRecaptcha(emailOrPhone);
-      setResult(responseResult);
 
-      // const response = await fetch(
-      //   `${process.env.REACT_APP_SIGNUP_URL}/signin`,
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       email: emailOrPhoneTrimmed,
-      //       password: password,
-      //     }),
-      //   }
-      // );
+      const response = await fetch(
+        `${process.env.REACT_APP_SIGNUP_URL}/signin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: emailOrPhoneTrimmed,
+            password: password,
+          }),
+        }
+      );
 
-      // const result = await response.json();
+      const result = await response.json();
 
       setLoading(false);
 
@@ -96,30 +88,6 @@ const LoginPage = () => {
     }
   };
 
-  const verifyOtp = async () => {
-    try {
-      await result.confirm(otp);
-      const idToken = await auth.currentUser.getIdToken(true);
-      enqueueSnackbar("OTP verified successfully", { variant:"success" });
-      console.log({idToken});
-    } catch (error) {
-      enqueueSnackbar("OTP verification failed", { variant:"error" });
-      console.log(error);
-    }
-  }
-  // const recaptchaRef = useRef(null);
-
-  // useEffect(() => {
-  //   if (!recaptchaRef.current) {
-  //     recaptchaRef.current = new RecaptchaVerifier('recaptcha-container', {
-  //       'size': 'invisible', // or 'normal' if you want it visible
-  //       'callback': (response) => {
-  //         // reCAPTCHA solved, allow signInWithPhoneNumber.
-  //       }
-  //     }, auth);
-  //   }
-  // }, []);
-
   return (
     <div className="login-page-container">
       <NavigationHeader
@@ -141,22 +109,6 @@ const LoginPage = () => {
             onChange={(e) => setEmailOrPhone(e.target.value)}
           />
 
-          { result &&
-            <TextInput
-              className="login-user-password-input"
-              type="number"
-              labelTitle="Enter OTP"
-              placeholder="OTP"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-            />
-          }
-          {
-            otp &&
-            <button onClick={verifyOtp} type="button">
-              Verify OTP
-            </button>
-          }
           <TextInput
             className="login-user-password-input"
             type="password"
@@ -189,7 +141,7 @@ const LoginPage = () => {
             Privacy Policy
           </Link>
         </div>
-        <div id="recaptcha-container"></div>
+        
       </div>
     </div>
   );
