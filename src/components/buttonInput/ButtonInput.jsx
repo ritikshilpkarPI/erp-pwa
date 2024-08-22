@@ -16,7 +16,7 @@ const ButtonInput = (props) => {
       disabled={disabled}
       type={type}
       className={`${className} ${disabled ? "button-disabled" : ""}`}
-      onClick={onClick}
+      onClick={disabled ? ()=>{} : onClick}
     >
       {!isLoading ? title : <div className="spinner"></div>}
     </button>

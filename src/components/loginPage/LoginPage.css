@@ -151,3 +151,37 @@
 .privacy-policy-link:hover {
   text-decoration: underline;
 }
+.login-options-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  height: 60%;
+}
+.login-option-button{
+  width: 327px;
+  height: 57px;
+  border-radius: 15px;
+  font-family: Rubik;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18.96px;
+  background: #1a72dd;
+  border: none;
+  color: #fff;
+}
+
+.login-user-id-input {
+  width: 327px;
+  height: 56px;
+  border-radius: 16px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
+  padding: 0 15px;
+  font-family: Rubik;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14.22px;
+  outline: none;
+}

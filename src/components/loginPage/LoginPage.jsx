@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import "./LoginPage.css";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import ButtonInput from "../buttonInput/ButtonInput";
@@ -8,15 +8,24 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { AppStateContext } from "../../appState/appStateContext";
+import { setUpRecaptcha } from "../../utils";
 
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [loginOption, setLoginOption] = useState();
+  const [result, setResult] = useState("");
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const { dispatch } = useContext(AppStateContext);
   const navigate = useNavigate();
   const lastRequestTimeRef = useRef(0);
   const [canCall, setCanCall] = useState(true);
+
+  const loginOptions = {
+    EMAIL: 'EMAIL',
+    PHONE: 'PHONE'
+  }
 
   const loginUserFormFunc = (event) => {
     event.preventDefault();
@@ -24,7 +33,7 @@ const LoginPage = () => {
   };
 
   const handleBackClick = () => {
-    navigate(-1);
+    Boolean(loginOption)? setLoginOption("") : navigate(-1);
   };
 
   const logInHandle = async () => {
@@ -88,6 +97,39 @@ const LoginPage = () => {
     }
   };
 
+  const sendOtpToPhone = async() => {
+    try {
+      setLoading(true);
+      const responseResult = await setUpRecaptcha(`+${emailOrPhone}`);
+      setResult(responseResult);
+      enqueueSnackbar("OTP sent successfully", { variant:"success" });
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("error while sending otp", { variant: "error" });
+    } finally{
+      setLoading(false);
+    }
+  }
+
+  const verifyOtp = async () => {
+    try {
+      setLoading(true);
+      await result.confirm(otp);
+      enqueueSnackbar("OTP verified successfully", { variant:"success" });
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("OTP verification failed", { variant:"error" });
+    } finally{
+      setLoading(false);
+    }
+  }
+
+  useEffect(()=>{
+    setEmailOrPhone("");
+    setResult("");
+    setOtp("");
+  },[loginOption])
+
   return (
     <div className="login-page-container">
       <NavigationHeader
@@ -98,7 +140,30 @@ const LoginPage = () => {
         onClick={handleBackClick}
       />
 
+      {
+        !Boolean(loginOption) &&  
+        <div className="login-options-wrapper">
+          <button 
+            onClick={()=>setLoginOption(loginOptions.PHONE)} 
+            type="button"
+            className="login-option-button"
+          >
+            Log In with Phone Number
+          </button>
+          <h3>Or</h3>
+          <button 
+            onClick={()=>setLoginOption(loginOptions.EMAIL)} 
+            type="button"
+            className="login-option-button"
+          >
+            Log In with Email & password
+          </button>
+        </div>
+      }
+
       <div className="login-form-container">
+      {loginOption === loginOptions.EMAIL && 
+        <>
         <form className="login-form" onSubmit={loginUserFormFunc}>
           <TextInput
             className="login-user-id-input"
@@ -128,6 +193,40 @@ const LoginPage = () => {
         <Link to="/forgotpassword" className="forgot-password">
           Forgot Password?
         </Link>
+        </>
+      }
+      {
+        loginOption === loginOptions.PHONE && 
+        <div className="login-form">
+          <TextInput
+            className="login-user-id-input"
+            type="number"
+            labelTitle="Enter Phone number"
+            placeholder="phone"
+            value={emailOrPhone}
+            onChange={(e) => setEmailOrPhone(e.target.value)}
+          />
+          <ButtonInput
+            type="button"
+            className="login-submit-button-input"
+            title={result ? "Verify OTP" : "Send OTP"}
+            isLoading={loading}
+            disabled={result ? !Boolean(otp) : !Boolean(emailOrPhone)}
+            onClick={result ? verifyOtp : sendOtpToPhone}
+          />
+          { result &&
+            <TextInput
+              className="login-user-id-input"
+              type="number"
+              labelTitle="Enter OTP"
+              placeholder="OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+          }
+          <div style={{display:"none"}} id="recaptcha-container"></div>
+        </div>
+      }
         <div>
           <span>Don't have an account? </span>
           <Link to="/signup" className="signup-link">
