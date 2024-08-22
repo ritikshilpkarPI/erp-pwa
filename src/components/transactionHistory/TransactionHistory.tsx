@@ -55,7 +55,7 @@ export function TransactionHistory() {
     fetch(API)
       .then((res) => res.json())
       .then((res) => {
-        dispatch({ type: "SET_TRANSACTION_HISTORY", payload: res });
+        dispatch({ type: "SET_TRANSACTION_HISTORY", payload: res });                
         setLoading(false);
       })
       .catch((error) => {

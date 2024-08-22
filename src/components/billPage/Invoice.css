@@ -10,22 +10,28 @@
   padding: 20px;
   max-width: 800px;
 }
-.invoice-header{
+
+.invoice-header {
   width: 100%;
 }
-.invoice-header-text{
+
+.invoice-header-text {
   margin-bottom: 20px;
 }
-.invoice-header-body{
+
+.invoice-header-body {
   width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 }
-.invoice-header-left,.invoice-body-right{
+
+.invoice-header-left,
+.invoice-body-right {
   width: 50%;
   text-align: left;
 }
+
 .invoice-header,
 .invoice-body {
   text-align: left;
@@ -63,6 +69,7 @@
 }
 
 .print-btn-outer {
+  z-index: 1;
   width: 100%;
   position: fixed;
   bottom: 20px;
@@ -106,6 +113,7 @@
 /* Other styles */
 
 @media print {
+
   .navigation-header,
   .print-btn-outer {
     display: none;
@@ -116,6 +124,7 @@
     padding: 0;
     width: 100%;
   }
+
   .navigation-invoice-login,
   .navigation-header-container {
     display: none;
@@ -134,4 +143,92 @@
   cursor: pointer;
 }
 
+.whatsapp-number-popup {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.16);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.2px);
+  -webkit-backdrop-filter: blur(2.2px);
 
+
+  .whatsapp-number-form-container {
+    position: relative;
+    width: 90vw;
+    padding: 60px 30px 30px;
+    border-radius: 16px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+
+    .close-popup-button{
+      
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      background-color: transparent;
+      color: #000;
+
+    }
+
+    .whatsapp-number-input-container {
+      height: 55px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 16px;
+      overflow: hidden;
+      background-color: #0000000D;
+
+
+      padding: 5px 15px;
+
+      select {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        height: 100%;
+        width: 20%;
+        flex-shrink: 0;
+      }
+
+      input {
+        background-color: transparent;
+        height: 100%;
+        width: inherit;
+        border: none;
+        outline: none;
+        padding: 0 15px;
+      }
+    }
+
+    .submit-number-button-disabled,
+    .submit-number-button-enable {
+      width: 40vw;
+      height: 45px;
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+    }
+    .submit-number-button-disabled{
+      background-color: #cccccc;
+      
+    }
+    .submit-number-button-enable{
+      background-color: #1a72dd;
+      
+    }
+
+  }
+
+}
