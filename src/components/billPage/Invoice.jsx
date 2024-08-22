@@ -236,7 +236,7 @@ const Invoice = () => {
             Print Invoice
           </button>
           <button onClick={copyAndShareLink} className="print-button">
-            Send
+            Share Invoice
           </button>
         </div>
       </div>
