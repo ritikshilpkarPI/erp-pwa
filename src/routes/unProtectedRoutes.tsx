@@ -7,6 +7,7 @@ import Signup from "../pages/Signup";
 import EmailVerification from "../components/emailVerification/EmailVerification";
 import OtpVerification from "../components/otpVerification/OtpVerification";
 import ChangePassword from "../components/changePassword/ChangePassword";
+import InvoicePublic from "../pages/InvoicePublic";
 
 const unProtectedRouteMap = Object.freeze({
   "/": <Splash />,
@@ -17,6 +18,7 @@ const unProtectedRouteMap = Object.freeze({
   "/otpverification": <OtpVerification />,
   "/emailverification": <EmailVerification />,
   "/changepassword": <ChangePassword />,
+  "/invoice-public/:id" :<InvoicePublic/>
 })
 
 
