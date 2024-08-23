@@ -6,7 +6,7 @@
   justify-content: space-between;
   flex-direction: column;
 
-  > .navigation-header-container {
+  >.navigation-header-container {
     padding-bottom: 20px;
 
     .navigation-header-signup {
@@ -16,13 +16,15 @@
       line-height: 37.92px;
       color: #1a72dd;
     }
+
     .back-button-image-full {
       height: 100%;
       width: 100%;
       object-fit: cover;
     }
   }
-  > .signup-form-container {
+
+  >.signup-form-container {
     padding: 25px 0;
     display: flex;
     flex-direction: column;
@@ -31,19 +33,19 @@
     overflow-y: scroll;
     height: inherit;
 
-    > .signup-form {
+    >.signup-form {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 30px;
 
-      > .text-input-container {
+      >.text-input-container {
         display: flex;
         flex-direction: column;
         align-items: start;
         gap: 10px;
 
-        > .signup-user-email-input-label,
+        >.signup-user-email-input-label,
         .signup-user-phone-number-input-label,
         .signup-user-password-input-label,
         .signup-user-bussiness-name-input-label,
@@ -55,7 +57,7 @@
           line-height: 18.96px;
         }
 
-        > .signup-user-email-input,
+        >.signup-user-email-input,
         .signup-user-phone-number-input,
         .signup-user-otp-input,
         .signup-user-phone-input,
@@ -73,7 +75,8 @@
           line-height: 14.22px;
           outline: none;
         }
-        > .signup-user-password-input-container {
+
+        >.signup-user-password-input-container {
           width: 327px;
           height: 56px;
           border-radius: 16px;
@@ -84,7 +87,7 @@
           align-items: center;
           justify-content: space-between;
 
-          > .signup-user-password-input {
+          >.signup-user-password-input {
             font-family: Rubik;
             font-size: 14px;
             font-weight: 400;
@@ -95,7 +98,8 @@
             height: 100%;
             background: transparent;
           }
-          > .signup-user-password-input-toggle-button {
+
+          >.signup-user-password-input-toggle-button {
             background-color: transparent;
             border: none;
             outline: none;
@@ -105,7 +109,7 @@
         }
       }
 
-      > .signup-submit-button-input {
+      >.signup-submit-button-input {
         width: 327px;
         height: 56px;
         border-radius: 16px;
@@ -119,7 +123,7 @@
       }
     }
 
-    > .login-page-information-container {
+    >.login-page-information-container {
       width: 327px;
       height: 93px;
       border-radius: 16px;
@@ -131,10 +135,12 @@
       padding: 10px;
     }
   }
-  > .signup-form-container::-webkit-scrollbar {
+
+  >.signup-form-container::-webkit-scrollbar {
     display: none;
   }
 }
+
 .signup-login-link {
   font-family: Rubik;
   font-size: 16px;
@@ -152,4 +158,51 @@
   color: #1a72dd;
   font-size: 14px;
   font-weight: 400;
+}
+
+
+.signup-number-container {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+
+  >.number-input-label {
+    font-family: Rubik;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18.96px;
+  }
+
+  >.number-input-container {
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #0000000D;
+    padding: 5px 15px;
+
+    >.number-country-code {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      height: 100%;
+      width: 20%;
+      flex-shrink: 0;
+    }
+
+    >.number-input {
+      background-color: transparent;
+      height: 100%;
+      width: inherit;
+      border: none;
+      outline: none;
+      padding: 0 15px;
+    }
+  }
 }

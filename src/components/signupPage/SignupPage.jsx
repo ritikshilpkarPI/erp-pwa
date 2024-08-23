@@ -12,6 +12,7 @@ const SignupPage = () => {
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPhone, setnewPhone] = useState("");
+  const [countryCode, setCountryCode] = useState('+91')
   const [newBussinessName, setnewBussinessName] = useState("");
   const [newAddress, setnewAddress] = useState("");
 
@@ -153,7 +154,7 @@ const SignupPage = () => {
             name: usernameTrimmed,
             email: emailTrimmed,
             password: passwordTrimmed,
-            phone_number: phoneTrimmed,
+            phone_number: `${countryCode}${phoneTrimmed}`,
             business_name: bussinessnameTrimmed,
             address: addressTrimmed,
           }),
@@ -179,6 +180,13 @@ const SignupPage = () => {
   const signupHandler = throttle(signupHandle, 5000);
   const verifyEmail = throttle(verifyEmailHandler, 10000);
 
+  const handlePhoneNumberChange = (e) => {
+    const input = e.target.value;
+    if (/^\d{0,10}$/.test(input)) {
+      setnewPhone(input);
+    }
+  }
+
   return (
     <div className="signup-page-container">
       <NavigationHeader
@@ -188,7 +196,6 @@ const SignupPage = () => {
         NavigationHeaderImageClassName="back-button-image-full"
         onClick={handleBackClick}
       />
-
       <div className="signup-form-container">
         <form action="/signup" onSubmit={submitHandler} className="signup-form">
           <TextInput
@@ -199,21 +206,32 @@ const SignupPage = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-
-          <TextInput
-            className="signup-user-phone-input"
-            type="number"
-            labelTitle="Phone Number"
-            placeholder="Enter your number"
-            value={newPhone}
-            onChange={(e) => setnewPhone(e.target.value)}
-            isPhoneNumber = 'true'
-          />
+          <div className="signup-number-container">
+            <label className="number-input-label" htmlFor="number-input">Phone Number</label>
+            <div className="number-input-container" >
+              <select
+                className="number-country-code"
+                id="countryCode"
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+              >
+                <option value="+91">IND</option>
+                <option value="+94">LKA</option>
+              </select>
+              <input
+                className="number-input"
+                type="number"
+                placeholder="Enter your number"
+                value={newPhone}
+                onChange={(e) => handlePhoneNumberChange(e)}
+              />
+            </div>
+          </div>
           <TextInput
             className="signup-user-bussiness-name-input"
             type="text"
             labelTitle="Bussiness Name"
-            placeholder="Enter your email"
+            placeholder="Enter your bussiness name"
             value={newBussinessName}
             onChange={(e) => setnewBussinessName(e.target.value)}
           />
@@ -248,7 +266,6 @@ const SignupPage = () => {
               </h4>
             )}
           </div>
-
           <TextInput
             className="signup-user-password-input"
             type="password"
@@ -257,7 +274,6 @@ const SignupPage = () => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
-
           {isOtpSent && (
             <TextInput
               className="signup-user-otp-input"
@@ -268,7 +284,6 @@ const SignupPage = () => {
               onChange={(e) => setOtp(e.target.value)}
             />
           )}
-
           <ButtonInput
             type="submit"
             className="signup-submit-button-input"

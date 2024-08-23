@@ -12,6 +12,7 @@ import { setUpRecaptcha } from "../../utils";
 
 const LoginPage = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
   const [password, setPassword] = useState("");
   const [loginOption, setLoginOption] = useState();
   const [result, setResult] = useState("");
@@ -21,6 +22,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const lastRequestTimeRef = useRef(0);
   const [canCall, setCanCall] = useState(true);
+  const [userResponse, setUserResponse] = useState();
 
   const loginOptions = {
     EMAIL: 'EMAIL',
@@ -99,8 +101,26 @@ const LoginPage = () => {
 
   const sendOtpToPhone = async() => {
     try {
+      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/signin-number`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            phone_number: `${countryCode}${emailOrPhone}`
+          }),
+        }
+      )
+
+      const result = await response.json();
+      if (!result.exist) {
+        enqueueSnackbar(result.error?.message, { variant: "error" });
+        return;
+      }
+      setUserResponse(result)
       setLoading(true);
-      const responseResult = await setUpRecaptcha(`+${emailOrPhone}`);
+      const responseResult = await setUpRecaptcha(`${countryCode}${emailOrPhone}`);
       setResult(responseResult);
       enqueueSnackbar("OTP sent successfully", { variant:"success" });
     } catch (error) {
@@ -115,10 +135,15 @@ const LoginPage = () => {
     try {
       setLoading(true);
       await result.confirm(otp);
-      enqueueSnackbar("OTP verified successfully", { variant:"success" });
+      enqueueSnackbar("OTP verified successfully", { variant: "success" });
+      dispatch({ type: "SET_USER", payload: userResponse });
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("token", userResponse.token);
+      }
+      navigate("/landing");
     } catch (error) {
       console.error(error);
-      enqueueSnackbar("OTP verification failed", { variant:"error" });
+      enqueueSnackbar("OTP verification failed", { variant: "error" });
     } finally{
       setLoading(false);
     }
@@ -129,6 +154,17 @@ const LoginPage = () => {
     setResult("");
     setOtp("");
   },[loginOption])
+
+  const handlePhoneNumberChange = (e) => {
+    const input = e.target.value;
+    if (loginOption === loginOptions.PHONE) {
+      if (/^\d{0,10}$/.test(input)) {
+        setEmailOrPhone(input);
+      }
+    } else {
+      setEmailOrPhone(input);
+    }
+  }
 
   return (
     <div className="login-page-container">
@@ -141,18 +177,18 @@ const LoginPage = () => {
       />
 
       {
-        !Boolean(loginOption) &&  
+        !Boolean(loginOption) &&
         <div className="login-options-wrapper">
-          <button 
-            onClick={()=>setLoginOption(loginOptions.PHONE)} 
+          <button
+            onClick={() => setLoginOption(loginOptions.PHONE)}
             type="button"
             className="login-option-button"
           >
             Log In with Phone Number
           </button>
           <h3>Or</h3>
-          <button 
-            onClick={()=>setLoginOption(loginOptions.EMAIL)} 
+          <button
+            onClick={() => setLoginOption(loginOptions.EMAIL)}
             type="button"
             className="login-option-button"
           >
@@ -162,71 +198,85 @@ const LoginPage = () => {
       }
 
       <div className="login-form-container">
-      {loginOption === loginOptions.EMAIL && 
-        <>
-        <form className="login-form" onSubmit={loginUserFormFunc}>
-          <TextInput
-            className="login-user-id-input"
-            type="text"
-            labelTitle="Email"
-            placeholder="Email"
-            value={emailOrPhone}
-            onChange={(e) => setEmailOrPhone(e.target.value)}
-          />
+        {loginOption === loginOptions.EMAIL &&
+          <>
+            <form className="login-form" onSubmit={loginUserFormFunc}>
+              <TextInput
+                className="login-user-id-input"
+                type="text"
+                labelTitle="Email"
+                placeholder="Email"
+                value={emailOrPhone}
+                onChange={(e) =>  handlePhoneNumberChange(e)}
+              />
 
-          <TextInput
-            className="login-user-password-input"
-            type="password"
-            labelTitle="Password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+              <TextInput
+                className="login-user-password-input"
+                type="password"
+                labelTitle="Password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-          <ButtonInput
-            type="submit"
-            className="login-submit-button-input"
-            title="Log In"
-            isLoading={loading}
-          />
-        </form>
-        <Link to="/forgotpassword" className="forgot-password">
-          Forgot Password?
-        </Link>
-        </>
-      }
-      {
-        loginOption === loginOptions.PHONE && 
-        <div className="login-form">
-          <TextInput
-            className="login-user-id-input"
-            type="number"
-            labelTitle="Enter Phone number"
-            placeholder="phone"
-            value={emailOrPhone}
-            onChange={(e) => setEmailOrPhone(e.target.value)}
-          />
-          <ButtonInput
-            type="button"
-            className="login-submit-button-input"
-            title={result ? "Verify OTP" : "Send OTP"}
-            isLoading={loading}
-            disabled={result ? !Boolean(otp) : !Boolean(emailOrPhone)}
-            onClick={result ? verifyOtp : sendOtpToPhone}
-          />
-          { result &&
-            <TextInput
-              className="login-user-id-input"
-              type="number"
-              labelTitle="Enter OTP"
-              placeholder="OTP"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
+              <ButtonInput
+                type="submit"
+                className="login-submit-button-input"
+                title="Log In"
+                isLoading={loading}
+              />
+            </form>
+            <Link to="/forgotpassword" className="forgot-password">
+              Forgot Password?
+            </Link>
+          </>
+        }
+        {
+          loginOption === loginOptions.PHONE &&
+          <div className="login-form">
+            <div className="login-number-container">
+              <label className="number-input-label" htmlFor="number-input">Enter Phone number</label>
+              <div className="number-input-container" >
+                <select
+                  className="number-country-code"
+                  id="countryCode"
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                >
+                  <option value="+91">IND</option>
+                  <option value="+94">LKA</option>
+                </select>
+                <input
+                  className="number-input"
+                  type="number"
+                  placeholder="Phone number"
+                  value={emailOrPhone}
+                  onChange={(e) => handlePhoneNumberChange(e)}
+                />
+              </div>
+            </div>
+
+            <ButtonInput
+              type="button"
+              className="login-submit-button-input"
+              title={result ? "Verify OTP" : "Send OTP"}
+              isLoading={loading}
+              disabled={result ? !Boolean(otp) : !Boolean(emailOrPhone)}
+              onClick={result ? verifyOtp : sendOtpToPhone}
             />
-          }
-          <div style={{display:"none"}} id="recaptcha-container"></div>
-        </div>
-      }
+            { result &&
+              <TextInput
+                className="login-user-id-input"
+                type="number"
+                labelTitle="Enter OTP"
+                placeholder="OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+            }
+            <div style={{ display: "none" }} id="recaptcha-container"></div>
+          </div>
+        }
         <div>
           <span>Don't have an account? </span>
           <Link to="/signup" className="signup-link">
@@ -240,7 +290,7 @@ const LoginPage = () => {
             Privacy Policy
           </Link>
         </div>
-        
+
       </div>
     </div>
   );
