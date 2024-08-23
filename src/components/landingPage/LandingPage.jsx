@@ -38,22 +38,29 @@ const LandingPage = () => {
     }, []);
 
     const addToCart = (_id, name, count, price, pricePer) => {
-        const itemIndex = globalState?.cartItems.findIndex(item => item._id === _id && item.pricePer === pricePer);
+        const itemIndex = globalState?.cartItems.findIndex(item => item._id === _id);
         const updatedCart = [...globalState?.cartItems];
-
+    
         if (itemIndex !== -1) {
-            updatedCart[itemIndex].count = count;
+            if (updatedCart[itemIndex].pricePer !== pricePer) {
+                updatedCart[itemIndex].count = 0;
+                updatedCart[itemIndex].pricePer = pricePer;
+                updatedCart[itemIndex].price = price;
+            }else{
+                updatedCart[itemIndex].count = count;
+            }    
+            if (count > 0) {
+                updatedCart[itemIndex].count = count;
+            }
+    
             if (updatedCart[itemIndex].count <= 0) {
                 updatedCart.splice(itemIndex, 1);
             }
         } else if (count > 0) {
             updatedCart.push({ _id, name, count, price, pricePer });
-        }
-
+        }    
         dispatch({ type: "ADD_ITEM_TO_CART", payload: updatedCart });
-
-
-    };
+    };    
 
     const clickHandler = () => {
         navigate("/placeorder");

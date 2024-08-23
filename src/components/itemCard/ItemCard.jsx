@@ -13,6 +13,7 @@ const ItemCard = ({
     addToCart,
     count,
     _pricePer
+    
 }) => {
     const [pricePer, setPricePer] = useState(_pricePer || 'price_per_unit');
     const [itemCount, setItemCount] = useState(count || 0);
