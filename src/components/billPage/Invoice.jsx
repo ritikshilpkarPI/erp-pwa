@@ -219,15 +219,15 @@ const Invoice = () => {
               ))}
             </tbody>
           </table>
-          <p>
-            <strong>SUB TOTAL:</strong> {data?.transaction?.totalAmount}
+          <p style={{fontSize:'18px' }}>
+            <strong>Sub Total: {data?.transaction?.totalAmount}</strong>
           </p>
-          <p>
-            <strong>ORDER TIME:</strong>
+          <p style={{fontSize:'12px'}}>
+            <strong>Order Time: </strong>
             {new Date(data?.transaction?.date_of_sale).toLocaleTimeString()}
           </p>
-          <p>
-            <strong>ORDER DATE:</strong>
+          <p style={{fontSize:'12px'}}>
+            <strong>Order Date: </strong>
             {new Date(data?.transaction?.date_of_sale).toLocaleDateString()}
           </p>
         </div>
