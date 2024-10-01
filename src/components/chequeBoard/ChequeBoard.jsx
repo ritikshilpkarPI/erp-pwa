@@ -14,7 +14,6 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
   const [chequeDate, setChequeDate] = useState("");
   const [inputCost, setInputCost] = useState(0);
 
-
   const navigate = useNavigate();
 
   const submitHandler = (event) => {
@@ -39,11 +38,13 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
 
   useEffect(() => {
     let totalInputCost = 0;
-    globalState?.chequeList.forEach(cheque => {
+    globalState?.chequeList.forEach((cheque) => {
       totalInputCost += Number(cheque.amount);
     });
     setInputCost(totalInputCost || 0);
   }, [globalState?.chequeList]);
+
+
 
   const completePaymentHandler = async () => {
     const response = await onClick();
@@ -61,8 +62,7 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
     setOpenForm(!openForm);
   };
 
-
-  const isChequeListEmpty = globalState?.chequeList?.length === 0;
+  const isChequeListEmpty = globalState?.chequeList?.length === 0 ||inputCost < totalPrice ;
   const buttonClassName = isChequeListEmpty
     ? "complete-payment-button-input-disabled"
     : "complete-payment-button-input-enabled";
@@ -70,7 +70,7 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
   const isFormValid = chequeName && chequeNumber && chequeAmount && chequeDate;
   const submitButtonClass = !isFormValid
     ? "cheque-submit-button-input-disabled"
-    : "cheque-submit-button-input-enabled"
+    : "cheque-submit-button-input-enabled";
 
   return (
     <div className="cheque-board">
@@ -117,10 +117,14 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
             onChange={(e) => setChequeAmount(e.target.value)}
           />
           <div className="cheque-page-input4-container">
-            <label className="cheque-page-input4-laber" >Cheque Date</label>
+            <label className="cheque-page-input4-laber">Cheque Date</label>
 
             <input
-              className={`cheque-page-input4 ${Boolean(chequeDate) ? 'cheque-page-input4-filled' : 'cheque-page-input4-not-filled'}`}
+              className={`cheque-page-input4 ${
+                Boolean(chequeDate)
+                  ? "cheque-page-input4-filled"
+                  : "cheque-page-input4-not-filled"
+              }`}
               type="date"
               value={chequeDate}
               onChange={(e) => setChequeDate(e.target.value)}
