@@ -87,32 +87,102 @@
     padding: 0px 10px;
 
     >.placeorder-list-content {
-      >.placeorder-content-div {
+
+      .placeorder-content-container {
+        width: 100%;
+        overflow: scroll;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 50px;
+        height: 55px;
         border-bottom: 1px solid #ccc;
-        padding: 15px 20px;
 
-        >button {
-          padding: 5px 10px;
-          border-radius: 5px;
-          border: none;
-          color: white;
-          background-color: #1a72dd;
+        &::-webkit-scrollbar {
+          display: none;
         }
 
-        >div {
-          font-size: 15px;
-        }
-
-        >.placeorder-price {
-          font-weight: 600;
-        }
-
-        >.placeorder-menu {
+        .placeorder-content-main {
+          padding: 0 5px;
+          flex-shrink: 0;
+          height: 100%;
           width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .placeorder-content-main-left {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            .placeorder-content-button-container{
+              min-width:50px;
+              .placeorder-content-button {
+                height: 30px;
+                width: fit-content;
+                min-width: 30px;
+                background-color: #1a72dd;
+                border-radius: 5px;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px;
+              }
+            }
+
+
+            >.placeorder-menu {
+              .placeorder-menu-h5 {
+                font-size: 16px;
+              }
+
+              .placeorder-menu-p {
+                font-size: 12px;
+              }
+            }
+          }
+
+          >.placeorder-price {
+            font-weight: 600;
+
+            .placeorder-input-box {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 5px;
+              width: 100px;
+              border: .5px solid #ccc;
+              padding: 5px;
+              border-radius: 5px;
+              font-family: Rubik;
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 16.59px;
+
+
+              >.placeorder-input-box-input {
+                border: none;
+                outline: none;
+                background-color: transparent;
+                min-width: 50px;
+
+              }
+            }
+          }
+        }
+
+        .placeorder-content-delete-button {
+          width: 30px;
+          height: 30px;
+          margin-left: 20px;
+          border: 1px solid #f4261a;
+          padding: 5px;
+          border-radius: 5px;
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
@@ -197,29 +267,5 @@
       background-color: #1a72dd;
       border-radius: 15px;
     }
-  }
-}
-
-.placeorder-input-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-  width: 100px;
-  border: .5px solid #ccc;
-  padding: 5px;
-  border-radius: 5px;
-  font-family: Rubik;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 16.59px;
-
-
-  >.placeorder-input-box-input {
-    border: none;
-    outline: none;
-    background-color: transparent;
-    min-width: 50px;
-
   }
 }
