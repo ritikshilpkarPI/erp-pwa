@@ -44,11 +44,7 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
     setInputCost(totalInputCost || 0);
   }, [globalState?.chequeList]);
 
-  useEffect(() => {
-    console.log("Cheque List:", globalState?.chequeList);
-    console.log("Total Input Cost:", inputCost);
-    console.log("Total Price:", totalPrice);
-  }, [globalState?.chequeList, inputCost, totalPrice]);
+
 
   const completePaymentHandler = async () => {
     const response = await onClick();
