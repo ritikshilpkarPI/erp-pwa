@@ -12,27 +12,27 @@ const PlaceOrderScreen = () => {
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-      let sum = 0;
-      globalState?.cartItems.forEach(item => {
-          const price = item.price;
-          const count = item.count;                
-          sum += price * count;
-      });
-      setTotalAmount(sum);
+    let sum = 0;
+    globalState?.cartItems.forEach(item => {
+      const price = item.price;
+      const count = item.count;
+      sum += price * count;
+    });
+    setTotalAmount(sum);
   }, [globalState?.cartItems]);
 
   const getPriceBy = (pricePer) => {
     switch (pricePer) {
-        case 'price_per_unit':
-            return "Unit";
-        case 'price_per_dozen':
-            return 'Dozen';
-        case 'price_per_carton':
-            return 'Carton';
-        default:
-            return 0;
+      case 'price_per_unit':
+        return "Unit";
+      case 'price_per_dozen':
+        return 'Dozen';
+      case 'price_per_carton':
+        return 'Carton';
+      default:
+        return 0;
     }
-};
+  };
 
   const handleClickBack = () => {
     navigate(-1);
@@ -46,9 +46,6 @@ const PlaceOrderScreen = () => {
     navigate("/payment");
   };
 
-
-
-
   const handlePriceChange = (index, newPrice) => {
     const updatedCartItems = globalState?.cartItems?.map((item, i) => {
       const price = newPrice === "" ? "" : parseFloat(newPrice);
@@ -57,6 +54,10 @@ const PlaceOrderScreen = () => {
     dispatch({ type: "UPDATE_CART_ITEMS", payload: updatedCartItems });
   };
 
+  const handleDeleteItem = (index) => {
+    const updatedCartItems = globalState?.cartItems?.filter((_, i) => i !== index);
+    dispatch({ type: "UPDATE_CART_ITEMS", payload: updatedCartItems });
+  };
 
 
   return (
@@ -78,26 +79,39 @@ const PlaceOrderScreen = () => {
           onClick={handleClickCustomer}
         />
       </div>
-     
       <div className="placeorder-content">
         <div className="placeorder-list-content">
           {globalState?.cartItems?.map((cartItem, index) => (
-            <div className="placeorder-content-div" key={index}>
-              <button>{cartItem.count}</button>
-              <div className="placeorder-menu">
-                <h5>{cartItem.name}</h5>
-                <p>{getPriceBy(cartItem?.pricePer)}</p>
-              </div>
-              <div className="placeorder-price">
-                <div className="placeorder-input-box">
-                  <h5 className="placeorder-input-box-heading">රු</h5>
-                  <input
-                    className="placeorder-input-box-input"
-                    type="number"
-                    value={cartItem.price === "" ? "" : cartItem.price}
-                    onChange={(e) => handlePriceChange(index, e.target.value)}
-                  />
+            <div className="placeorder-content-container">
+              <div className="placeorder-content-main">
+                <div className="placeorder-content-main-left">
+
+                  <div className="placeorder-content-button-container">
+                    <div className="placeorder-content-button">{cartItem.count}</div>
+                  </div>
+                  <div className="placeorder-menu">
+                    <h5 className="placeorder-menu-h5">{cartItem.name}</h5>
+                    <p className="placeorder-menu-p">{getPriceBy(cartItem?.pricePer)}</p>
+                  </div>
                 </div>
+
+                <div className="placeorder-price">
+                  <div className="placeorder-input-box">
+                    <h5 className="placeorder-input-box-heading">රු</h5>
+                    <input
+                      className="placeorder-input-box-input"
+                      type="number"
+                      value={cartItem.price === "" ? "" : cartItem.price}
+                      onChange={(e) => handlePriceChange(index, e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                className="placeorder-content-delete-button"
+                onClick={() => handleDeleteItem(index)}
+              >
+                <DeleteIcon />
               </div>
             </div>
           ))}
