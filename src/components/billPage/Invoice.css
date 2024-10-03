@@ -1,3 +1,5 @@
+
+
 .navigation-invoice-login {
   font-family: Rubik;
   font-size: 28px;
@@ -27,9 +29,14 @@
 }
 
 .invoice-header-left,
-.invoice-body-right {
+.invoice-header-right {
   width: 50%;
   text-align: left;
+
+  .invoice-header-left-p,
+  .invoice-header-right-p {
+    font-size: 14px;
+  }
 }
 
 .invoice-header,
@@ -64,8 +71,26 @@
   background-color: #f2f2f2;
 }
 
-.invoice-body p {
-  margin: 5px 0;
+.invoice-body {
+  .invoice-body-bottom {
+    margin-top: 10px;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+
+    .invoice-body-bottom-left {
+      width: 50%;
+
+      .invoice-body-bottom-left-p {
+        font-size: 16px;
+      }
+    }
+
+    .invoice-body-bottom-right {
+      width: 50%;
+
+    }
+  }
 }
 
 .print-btn-outer {
@@ -110,7 +135,6 @@
   }
 }
 
-/* Other styles */
 
 @media print {
 
@@ -170,8 +194,8 @@
     flex-direction: column;
     gap: 30px;
 
-    .close-popup-button{
-      
+    .close-popup-button {
+
       position: absolute;
       right: 15px;
       top: 15px;
@@ -220,15 +244,15 @@
       border-radius: 12px;
       color: #ffffff;
     }
-    .submit-number-button-disabled{
+
+    .submit-number-button-disabled {
       background-color: #cccccc;
-      
+
     }
-    .submit-number-button-enable{
+
+    .submit-number-button-enable {
       background-color: #1a72dd;
-      
+
     }
-
   }
-
 }
