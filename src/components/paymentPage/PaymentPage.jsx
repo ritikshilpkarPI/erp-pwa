@@ -14,6 +14,9 @@ const PaymentPage = () => {
   const [isCheckAvailable] = useState(true);
   const [loading, setLoading] = useState();
   const [totalAmount, setTotalAmount] = useState(0);
+  const [remainingAmount, setRemainingAmount] = useState(0);
+  const [inputCostCash, setInputCostCash] = useState(0);
+  const [inputCostCheque, setInputCostCheque] = useState(0);
 
   const navigate = useNavigate();
 
@@ -26,7 +29,21 @@ const PaymentPage = () => {
       sum += price * count;
     });
     setTotalAmount(sum);
+    setRemainingAmount(sum);
   }, [globalState?.cartItems]);
+
+
+  
+  const remainingAmountHandler = () => {
+    const amountPaid = inputCostCash + inputCostCheque;    
+    const amountRemaining = totalAmount - amountPaid;
+    setRemainingAmount(amountRemaining);
+  };
+
+  useEffect(() => {
+    remainingAmountHandler();
+  }, [inputCostCash, inputCostCheque,totalAmount ]);
+  
 
   const backFunc = () => {
     navigate(-1);
@@ -91,6 +108,7 @@ const PaymentPage = () => {
     }
   };
 
+
   return (
     <div className="payment-page">
       <div className="payment-page-header-container" >
@@ -103,7 +121,7 @@ const PaymentPage = () => {
         />
         <div className="payment-page-total-invoice">
           <div className="payment-page-total-left">
-            <h4 className="payment-page-total-heading">Total invoice</h4>
+            <h4 className={remainingAmount<=0?"payment-page-total-heading":"payment-page-total-heading-red"}>{remainingAmount<=0?"Return":"Due"}: <span>{Math.abs(remainingAmount)}</span></h4>
           </div>
           <div className="payment-page-total-right">
             <h4 className="payment-page-price-heading">LKR : {totalAmount}</h4>
@@ -132,10 +150,13 @@ const PaymentPage = () => {
       <div className="payment-page-body">
         {activeTab === "tab1" && (
           <CashBoard
-            totalPrice={totalAmount}
-            onClick={createSale}
-            isLoading={loading}
-          />
+          totalPrice={totalAmount}
+          onClick={createSale}
+          isLoading={loading}
+          remainingAmount={remainingAmount}
+          inputCost={inputCostCash}
+          setInputCost={setInputCostCash}
+        />
         )}
         {activeTab === "tab2" &&
           (isCheckAvailable ? (
@@ -143,6 +164,9 @@ const PaymentPage = () => {
               totalPrice={totalAmount}
               onClick={createSale}
               isLoading={loading}
+              inputCost={inputCostCheque}
+              setInputCost={setInputCostCheque}
+              remainingAmount={remainingAmount}
             />
           ) : (
             <div className="service-message">

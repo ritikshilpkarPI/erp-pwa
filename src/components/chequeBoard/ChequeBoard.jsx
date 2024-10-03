@@ -5,14 +5,14 @@ import ButtonInput from "../buttonInput/ButtonInput";
 import { useNavigate } from "react-router-dom";
 import { AppStateContext } from "../../appState/appStateContext";
 
-const ChequeBoard = ({ totalPrice, onClick }) => {
+const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAmount }) => {
   const { globalState, dispatch } = useContext(AppStateContext);
   const [openForm, setOpenForm] = useState(false);
   const [chequeName, setChequeName] = useState("");
   const [chequeNumber, setChequeNumber] = useState("");
   const [chequeAmount, setChequeAmount] = useState("");
   const [chequeDate, setChequeDate] = useState("");
-  const [inputCost, setInputCost] = useState(0);
+  // const [inputCost, setInputCost] = useState(0);
 
   const navigate = useNavigate();
 
@@ -62,7 +62,7 @@ const ChequeBoard = ({ totalPrice, onClick }) => {
     setOpenForm(!openForm);
   };
 
-  const isChequeListEmpty = globalState?.chequeList?.length === 0 ||inputCost < totalPrice ;
+  const isChequeListEmpty = globalState?.chequeList?.length === 0 || remainingAmount>0 ;
   const buttonClassName = isChequeListEmpty
     ? "complete-payment-button-input-disabled"
     : "complete-payment-button-input-enabled";

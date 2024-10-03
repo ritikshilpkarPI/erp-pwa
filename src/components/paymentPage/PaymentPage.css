@@ -43,9 +43,21 @@
 
 .payment-page-total-heading {
   font-weight: 400;
-  font-size: 16px;
-  color: #2a3256;
+  font-size: 22px;
+  color: #1a72dd;
+  
+
 }
+.payment-page-total-heading-red {
+  font-weight: 400;
+  font-size: 22px;
+  color: #1a72dd;
+  span{
+    color: red;
+  }
+
+}
+
 .payment-page-price-heading {
   font-weight: 500;
   font-size: 22px;
