@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
 
-const CashBoard = ({ totalPrice, onClick, isLoading }) => {
-  const [inputCost, setInputCost] = useState("");
+const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost }) => {
   const navigate = useNavigate();
 
   const handleExtractAmount = () => {
@@ -40,22 +39,22 @@ const CashBoard = ({ totalPrice, onClick, isLoading }) => {
           placeholder="LKR 0"
           value={inputCost}
           onChange={(e) => {
-            setInputCost(parseInt(e.target.value, 10) || "");
+            setInputCost(parseInt(e.target.value, 10) || 0);
           }}
         />
         <TextInput
           className="cash-page-input1"
           type="number"
-          labelTitle={inputCost >= totalPrice ? "Amount Return" : "Amount Due"}
+          labelTitle={remainingAmount<0 ? "Amount Return" : "Amount Due"}
           placeholder="LKR 0"
-          value={(inputCost - totalPrice)?.toFixed(2)}
+          value={Math.abs(remainingAmount)?.toFixed(2)}
           readOnly
         />
         <ButtonInput
           type="submit"
           className="login-submit-button-input"
           title="Complete Payment"
-          disabled={inputCost === "" || inputCost < totalPrice}
+          disabled={remainingAmount > 0}
           isLoading={isLoading}
         />
       </form>
