@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
@@ -6,7 +6,6 @@ import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
 
 const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost }) => {
-  // const [inputCost, setInputCost] = useState("");
   const navigate = useNavigate();
 
   const handleExtractAmount = () => {

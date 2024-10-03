@@ -12,8 +12,6 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
   const [chequeNumber, setChequeNumber] = useState("");
   const [chequeAmount, setChequeAmount] = useState("");
   const [chequeDate, setChequeDate] = useState("");
-  // const [inputCost, setInputCost] = useState(0);
-
   const navigate = useNavigate();
 
   const submitHandler = (event) => {
@@ -42,9 +40,8 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
       totalInputCost += Number(cheque.amount);
     });
     setInputCost(totalInputCost || 0);
+    // eslint-disable-next-line
   }, [globalState?.chequeList]);
-
-
 
   const completePaymentHandler = async () => {
     const response = await onClick();

@@ -42,7 +42,8 @@ const PaymentPage = () => {
 
   useEffect(() => {
     remainingAmountHandler();
-  }, [inputCostCash, inputCostCheque,totalAmount ]);
+    // eslint-disable-next-line
+  }, [inputCostCash, inputCostCheque, totalAmount ]);
   
 
   const backFunc = () => {
