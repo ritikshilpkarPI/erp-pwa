@@ -44,6 +44,7 @@ const SideMenu = () => {
             {" Hey 👋   "} {"   "}
             <span className="user-name-text">{globalState?.loggedInUser?.user?.name ?? "User"}</span>
           </div>
+          <span className="user-name-text device-name-text">{globalState?.loggedInUser?.user?.deviceName ?? ""}</span>
           {/* <DropDown options={options} /> */}
           <div className="line"></div>
           <div className="sidemenu-items">
@@ -60,14 +61,14 @@ const SideMenu = () => {
               </div>
             ))}
           </div>
-          <div className="login-history">
+          {/* <div className="login-history">
             
             <div className="content">
               <p>Last Login</p>
               <p>Monday, July 1, 2020</p>
               <p>(12:00 AM)</p>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="sidemenu-footer-btn">
           <ButtonInput
