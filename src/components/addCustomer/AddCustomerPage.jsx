@@ -15,12 +15,15 @@ const AddCustomerPage = () => {
   const [address, setAddress] = useState("");
   const [creditLimit, setCreditLimit] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const { dispatch } = useContext(AppStateContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true)
 
     try {
       const response = await fetch(
@@ -51,6 +54,9 @@ const AddCustomerPage = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+    }
+    finally{
+      setIsLoading(false)
     }
   };
 
@@ -133,10 +139,11 @@ const AddCustomerPage = () => {
             address &&
             isEmailValid &&
             creditLimit
-              ? "login-submit-button-input"
-              : "login-submit-button-input-def"
+            ? "login-submit-button-input"
+            : "login-submit-button-input-def"
           }
           title="Submit"
+          isLoading={isLoading}
         />
       </form>
     </div>
