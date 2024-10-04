@@ -53,7 +53,7 @@ const LoginPage = () => {
       let deviceID = localStorage.getItem(deviceIdKey);
       if(!deviceID){
        const { userAgent, platform } = window.navigator;
-        deviceID = `${userAgent}-${platform}-${Date.now()}`;
+        deviceID = `${userAgent}-${platform}`;
         localStorage.setItem(deviceIdKey,deviceID);
       }
 
