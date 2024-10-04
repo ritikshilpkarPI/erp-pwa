@@ -49,6 +49,14 @@ const LoginPage = () => {
 
       setLoading(true);
 
+      const deviceIdKey = 'invoicify-device-id';
+      let deviceID = localStorage.getItem(deviceIdKey);
+      if(!deviceID){
+       const { userAgent, platform } = window.navigator;
+        deviceID = `${userAgent}-${platform}-${Date.now()}`;
+        localStorage.setItem(deviceIdKey,deviceID);
+      }
+
       const response = await fetch(
         `${process.env.REACT_APP_SIGNUP_URL}/signin`,
         {
@@ -59,6 +67,7 @@ const LoginPage = () => {
           body: JSON.stringify({
             email: emailOrPhoneTrimmed,
             password: password,
+            deviceID
           }),
         }
       );
