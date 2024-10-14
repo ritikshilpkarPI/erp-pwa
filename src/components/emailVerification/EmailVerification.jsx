@@ -8,6 +8,7 @@ import backbtnsvg from "../../image/BackButton.svg";
 import "./EmailVerification.css";
 
 const EmailVerification = () => {
+  const [isDisabled,setIsDisabled] = useState(false)
   const [input, setInput] = useState("");
   const [isValid, setIsValid] = useState(true);
   const [validationMessage, setValidationMessage] = useState("");
@@ -53,6 +54,7 @@ const EmailVerification = () => {
   };
 
   const sendOtp = async () => {
+    setIsDisabled(true)
     try {
       // Ensure input is valid
       if (!validateInput(input)) {
@@ -82,6 +84,8 @@ const EmailVerification = () => {
       // Handle errors
       setIsValid(false);
       setValidationMessage(error.message || "Error sending OTP. Please try again.");
+    }finally{
+    setIsDisabled(false)
     }
   };
 
@@ -93,7 +97,7 @@ const EmailVerification = () => {
   };
 
   // Disable button if input is empty
-  const disabled = input === "";
+  // const disabled = input === "";
 
   return (
     <div className="email-verification">
@@ -130,10 +134,10 @@ const EmailVerification = () => {
       <div className="email-verification-bottom-nav">
         <ButtonInput
           className={`email-verification-bottom-btn ${
-            disabled ? "button-disabled" : ""
+            isDisabled || !input  ? "button-disabled" : ""
           }`}
           title="Get OTP"
-          disable={disabled}
+          disable={isDisabled || !input}
           onClick={handleButtonClick}
         />
       </div>
