@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
@@ -7,7 +7,7 @@ import ButtonInput from "../buttonInput/ButtonInput";
 
 const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost }) => {
   const navigate = useNavigate();
-
+  const [hasEdited, setHasEdited] = useState(false);
   const handleExtractAmount = () => {
     setInputCost(totalPrice);
   };
@@ -25,6 +25,14 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
       });
     }
   };
+  const handleInputChange = (e) => {
+    let value = e.target.value;
+    if (!hasEdited) {
+      value = value.replace(/^0+/, "");
+      setHasEdited(true);
+    }
+    setInputCost(value === "" ? "" : parseInt(value, 10));
+  };
 
   return (
     <div className="cash-board">
@@ -37,9 +45,8 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
           type="number"
           labelTitle="Input costs"
           placeholder="LKR 0"
-          onChange={(e) => {
-            setInputCost(parseInt(e.target.value, 10) || 0);
-          }}
+          value={inputCost === 0 && !hasEdited ? "" : inputCost}
+          onChange={handleInputChange}
         />
         <TextInput
           className="cash-page-input1"
