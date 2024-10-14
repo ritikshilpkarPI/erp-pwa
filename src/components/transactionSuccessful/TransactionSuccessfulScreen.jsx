@@ -8,7 +8,7 @@ import { enqueueSnackbar } from "notistack";
 
 const TransactionSuccessfulScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
-  const [transaction, setTransaction] = useState (globalState?.currentTransaction)
+  const [transaction] = useState (globalState?.currentTransaction)
   const [useremail, setUseremail] = useState(
     globalState.selectedCustomer?.email || ""
   );
