@@ -98,7 +98,6 @@ const PaymentPage = () => {
       const result = await response.json();
       if (result) {
         dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
-        console.log(saleData);        
         dispatch({ type: "CURRENT_TRANSACTION", payload: saleData });
         setLoading(false);
         return true; 
@@ -109,10 +108,6 @@ const PaymentPage = () => {
       return false; 
     }
   };
-
-  console.log(globalState);
-  
-
 
   return (
     <div className="payment-page">
