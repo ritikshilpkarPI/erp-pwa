@@ -10,6 +10,7 @@ interface TransactionCardProps {
   amount: string;
   time: string;
   transactionId: string;
+  customerName: string;
   onClick: (transactionId: string) => void;
 }
 
@@ -17,12 +18,14 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
   amount,
   time,
   transactionId,
+  customerName,
   onClick,
 }) => (
   <article className="transaction-card" onClick={() => onClick(transactionId)}>
     <div className="transaction-details">
       <div className="transaction-amount">{amount}</div>
       <div className="transaction-info">{time}</div>
+      <div className="transaction-info">Customer- {customerName}</div>
       <div className="transaction-info">
         Trans Id - {transactionId.slice(-6)}
       </div>
@@ -70,10 +73,9 @@ export function TransactionHistory() {
   const formatTransactionHistory = (data: any[]) => {
     const sortedData = data.sort(
       (a, b) =>
-        new Date(b?.date_of_sale).getTime() -
-        new Date(a?.date_of_sale).getTime()
+        new Date(b?.date_of_sale).getTime() - new Date(a?.date_of_sale).getTime()
     );
-
+  
     const groupedTransactions = sortedData.reduce(
       (acc: any, transaction: any) => {
         const date = new Date(transaction?.date_of_sale).toLocaleDateString(
@@ -92,26 +94,27 @@ export function TransactionHistory() {
             minute: "2-digit",
           }
         );
-
+  
         if (!acc[date]) {
           acc[date] = {
             totalAmount: 0,
             items: [],
           };
         }
-
+  
         acc[date].totalAmount += transaction?.totalAmount;
         acc[date].items.push({
           amount: `LKR ${transaction?.totalAmount?.toFixed(2)}`,
           time,
           transactionId: transaction?._id,
+          customerName: transaction?.customer_id?.name || "Unknown", // Extract the customer name
         });
-
+  
         return acc;
       },
       {}
     );
-
+  
     return Object.entries(groupedTransactions).map(
       ([date, { totalAmount, items }]: any) => ({
         date,
@@ -205,15 +208,17 @@ export function TransactionHistory() {
 
                       return (
                         <TransactionCard
-                          key={itemIndex}
-                          amount={
-                            !transactionItem.amount.includes("undefined")
-                              ? transactionItem.amount
-                              : "LKR NA"
-                          }
-                          time={transactionItem.time}
-                          transactionId={sixDigit}
-                          onClick={GetSaleById}
+                        key={itemIndex}
+                        amount={
+                          !transactionItem.amount.includes("undefined")
+                          ? transactionItem.amount
+                          : "LKR NA"
+                        }
+                        time={transactionItem.time}
+                        transactionId={sixDigit}
+                        onClick={GetSaleById}
+                        customerName={transactionItem.customerName}
+                          
                         />
                       );
                     }

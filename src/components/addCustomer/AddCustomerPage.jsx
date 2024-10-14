@@ -15,12 +15,15 @@ const AddCustomerPage = () => {
   const [address, setAddress] = useState("");
   const [creditLimit, setCreditLimit] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const { dispatch } = useContext(AppStateContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true)
 
     try {
       const response = await fetch(
@@ -52,6 +55,9 @@ const AddCustomerPage = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
     }
+    finally{
+      setIsLoading(false)
+    }
   };
 
   const backFunc = () => {
@@ -77,7 +83,7 @@ const AddCustomerPage = () => {
           className="login-user-id-input"
           type="text"
           labelTitle="Name"
-          placeholder="Enter your Name"
+          placeholder="Enter Customer Name"
           value={username}
           onChange={(e) => setUsername(e.target.value.replace(/^\s+/, ""))}
         />
@@ -85,7 +91,7 @@ const AddCustomerPage = () => {
           className="login-user-telephone-input"
           type="number"
           labelTitle="Telephone"
-          placeholder="Enter your Phone Number"
+          placeholder="Enter Customer Phone Number"
           value={telephone}
           onChange={(e) => setTelephone(e.target.value.replace(/^\s+/, ""))}
           isPhoneNumber = 'true'
@@ -94,7 +100,7 @@ const AddCustomerPage = () => {
           className="login-user-email-input"
           type="email"
           labelTitle="Email"
-          placeholder="Enter your email address"
+          placeholder="Enter Customer email address"
           value={email}
           onBlur={handleBlur}
           onChange={(e) => setEmail(e.target.value.replace(/^\s+/, ""))}
@@ -110,7 +116,7 @@ const AddCustomerPage = () => {
         <TextArea
           className="login-user-id-input-area"
           type="text"
-          placeholder="Enter your Address"
+          placeholder="Enter Customer Address"
           labelTitle="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value.replace(/^\s+/, ""))}
@@ -120,23 +126,25 @@ const AddCustomerPage = () => {
           disabled={
             !username ||
             !telephone ||
-            !email ||
-            !address ||
+            // !email ||
+            // !address ||
             !creditLimit ||
-            !isEmailValid
+            isLoading
+            // !isEmailValid
           }
           type="submit"
           className={
             username &&
             telephone &&
-            email &&
-            address &&
-            isEmailValid &&
-            creditLimit
-              ? "login-submit-button-input"
-              : "login-submit-button-input-def"
+            // email &&
+            // address &&
+            isEmailValid
+            // creditLimit
+            ? "login-submit-button-input"
+            : "login-submit-button-input-def"
           }
           title="Submit"
+          isLoading={isLoading}
         />
       </form>
     </div>
