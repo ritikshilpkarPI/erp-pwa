@@ -37,7 +37,6 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
           type="number"
           labelTitle="Input costs"
           placeholder="LKR 0"
-          value={inputCost}
           onChange={(e) => {
             setInputCost(parseInt(e.target.value, 10) || 0);
           }}
