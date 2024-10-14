@@ -96,18 +96,22 @@ const PaymentPage = () => {
       }
 
       const result = await response.json();
-
       if (result) {
         dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
+        console.log(saleData);        
         dispatch({ type: "CURRENT_TRANSACTION", payload: saleData });
         setLoading(false);
-        return true; // Return success status
+        return true; 
       }
+
     } catch (error) {
       console.error("Error creating sale:", error);
-      return false; // Return failure status
+      return false; 
     }
   };
+
+  console.log(globalState);
+  
 
 
   return (

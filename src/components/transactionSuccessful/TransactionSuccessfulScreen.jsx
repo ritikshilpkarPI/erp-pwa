@@ -8,6 +8,7 @@ import { enqueueSnackbar } from "notistack";
 
 const TransactionSuccessfulScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
+  const [transaction, setTransaction] = useState (globalState?.currentTransaction)
   const [useremail, setUseremail] = useState(
     globalState.selectedCustomer?.email || ""
   );
@@ -19,8 +20,8 @@ const TransactionSuccessfulScreen = () => {
 
   const onClick = () => {
     navigate("/landing");
-    dispatch({ type: "CURRENT_TRANSACTION", payload: {} });
     dispatch({ type: "SET_CHEQUE_LIST", payload: [] }); 
+    dispatch({ type: "CURRENT_TRANSACTION", payload: {} });
   };
 
   const handleEmailSendBtn = async () => {
@@ -33,7 +34,7 @@ const TransactionSuccessfulScreen = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(globalState?.currentTransaction),
+          body: JSON.stringify(transaction),
         }
       );
 

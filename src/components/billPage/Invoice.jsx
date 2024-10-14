@@ -80,7 +80,7 @@ const Invoice = () => {
 
             <div className="invoice-header-right">
               <p className="invoice-header-right-p">
-                <strong>Customer Name:</strong> {data?.customer?.name}
+                <strong>{data?.customer?.name ? "Customer Name:":"Type"}</strong> {data?.customer?.name? data?.customer?.name : "Cash"}
               </p>
               <p className="invoice-header-right-p">
                 <strong>Total Amount:</strong> {data?.transaction?.totalAmount}

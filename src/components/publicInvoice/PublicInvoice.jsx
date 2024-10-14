@@ -74,7 +74,7 @@ const PublicInvoice = () => {
                                 <p className="public-invoice-header-left-p"><strong>Number:</strong> {invoice.employee?.phone_number || 'N/A'}</p>
                             </div>
                             <div className="public-invoice-header-right">
-                                <p className="public-invoice-header-right-p"><strong>Customer Name:</strong> {invoice.customer?.name || 'N/A'}</p>
+                                <p className="public-invoice-header-right-p"><strong>{invoice.customer?.name ?"Customer Name:" : "Type"}</strong> {invoice.customer?.name || 'Cash'}</p>
                                 <p className="public-invoice-header-right-p"><strong>Total Amount:</strong> {invoice.totalAmount || 'N/A'}</p>
                             </div>
                         </div>
