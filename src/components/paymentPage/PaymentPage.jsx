@@ -59,7 +59,6 @@ const PaymentPage = () => {
     try {
       if (remainingAmount <= creditLimit) {
         const newCreditLimit = creditLimit - remainingAmount;
-        console.log({ newCreditLimit });
   
         const response = await fetch(
           `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
@@ -68,7 +67,7 @@ const PaymentPage = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ creditLimit: newCreditLimit }),
+            body: JSON.stringify({ credit_limit: newCreditLimit }),
           }
         );
   
