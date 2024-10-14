@@ -44,7 +44,13 @@ const SideMenu = () => {
             {" Hey 👋   "} {"   "}
             <span className="user-name-text">{globalState?.loggedInUser?.user?.name ?? "User"}</span>
           </div>
+<<<<<<< Updated upstream
           <span className="user-name-text device-name-text">{globalState?.loggedInUser?.user?.deviceName ?? ""}</span>
+=======
+          <div>
+          <span className="user-name-text">{globalState?.loggedInUser?.user?.deviceName ?? "User"}</span>
+          </div>
+>>>>>>> Stashed changes
           {/* <DropDown options={options} /> */}
           <div className="line"></div>
           <div className="sidemenu-items">
