@@ -33,19 +33,19 @@ const PaymentPage = () => {
   }, [globalState?.cartItems]);
 
 
-  
+
   const remainingAmountHandler = () => {
-    const amountPaid = inputCostCash + inputCostCheque;    
+    const amountPaid = inputCostCash + inputCostCheque;
     const amountRemaining = totalAmount - amountPaid;
     setRemainingAmount(amountRemaining);
   };
 
   useEffect(() => {
     remainingAmountHandler();
-   
+
     // eslint-disable-next-line
-  }, [inputCostCash, inputCostCheque, totalAmount ]);
-  
+  }, [inputCostCash, inputCostCheque, totalAmount]);
+
 
   const backFunc = () => {
     navigate(-1);
@@ -58,32 +58,29 @@ const PaymentPage = () => {
     try {
       if (remainingAmount <= creditLimit) {
         const newCreditLimit = creditLimit - remainingAmount;
-  
+
         const response = await fetch(
           `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
           {
-            method: "PATCH", 
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ credit_limit: newCreditLimit }),
           }
         );
-  
+
         if (!response.ok) {
+          enqueueSnackbar("Failed to update credit limit.", { variant: "error" });
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-  
-        console.log("Credit limit updated successfully.");
-      } else {
-        console.log("Remaining amount exceeds credit limit.");
       }
     } catch (error) {
       console.error("Error updating credit limit:", error);
       enqueueSnackbar("Failed to update credit limit.", { variant: "error" });
     }
   };
-  
+
   const createSale = async () => {
     const cashPaymentId = "60d5f9e9a60b2f1b4c3c1c84";
     const chequePaymentId = "60d5f9e9a60b2f1b4c3c1c85";
@@ -104,7 +101,7 @@ const PaymentPage = () => {
         date: cheque?.date,
       })),
     };
-   
+
     try {
       setLoading(true);
       const response = await fetch(
@@ -119,25 +116,25 @@ const PaymentPage = () => {
         }
       );
 
-      
-   if(response.ok){
-    handleCreditLimit()
-   }else{
-    setLoading(false);
-    enqueueSnackbar("Something went wrong", { variant: "error" });
-    throw new Error(`HTTP error! status: ${response.status}`);
-   }
+
+      if (response.ok) {
+        handleCreditLimit()
+      } else {
+        setLoading(false);
+        enqueueSnackbar("Something went wrong", { variant: "error" });
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const result = await response.json();
       if (result) {
         dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
         dispatch({ type: "CURRENT_TRANSACTION", payload: saleData });
         setLoading(false);
-        return true; 
+        return true;
       }
 
     } catch (error) {
       console.error("Error creating sale:", error);
-      return false; 
+      return false;
     }
   };
 
@@ -156,7 +153,7 @@ const PaymentPage = () => {
         />
         <div className="payment-page-total-invoice">
           <div className="payment-page-total-left">
-            <h4 className={remainingAmount<=0?"payment-page-total-heading":"payment-page-total-heading-red"}>{remainingAmount<=0?"Return":"Due"}: <span>{Math.abs(remainingAmount)}</span></h4>
+            <h4 className={remainingAmount <= 0 ? "payment-page-total-heading" : "payment-page-total-heading-red"}>{remainingAmount <= 0 ? "Return" : "Due"}: <span>{Math.abs(remainingAmount)}</span></h4>
           </div>
           <div className="payment-page-total-right">
             <h4 className="payment-page-price-heading">LKR : {totalAmount}</h4>
@@ -185,14 +182,14 @@ const PaymentPage = () => {
       <div className="payment-page-body">
         {activeTab === "tab1" && (
           <CashBoard
-          totalPrice={totalAmount}
-          onClick={createSale}
-          isLoading={loading}
-          remainingAmount={remainingAmount}
-          inputCost={inputCostCash}
-          setInputCost={setInputCostCash}
-          creditLimit={creditLimit}
-        />
+            totalPrice={totalAmount}
+            onClick={createSale}
+            isLoading={loading}
+            remainingAmount={remainingAmount}
+            inputCost={inputCostCash}
+            setInputCost={setInputCostCash}
+            creditLimit={creditLimit}
+          />
         )}
         {activeTab === "tab2" &&
           (isCheckAvailable ? (
