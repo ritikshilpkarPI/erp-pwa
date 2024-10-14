@@ -43,7 +43,6 @@ const PaymentPage = () => {
   useEffect(() => {
     remainingAmountHandler();
    
-    // createSale()
     // eslint-disable-next-line
   }, [inputCostCash, inputCostCheque, totalAmount ]);
   
