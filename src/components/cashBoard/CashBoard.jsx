@@ -16,7 +16,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
     e.preventDefault();
     const response = await onClick();
 
-    if (response && inputCost > 0) {
+    if (response) {
       navigate("/transactionSuccessfull", {
         state: {
           mode: "CASH",
