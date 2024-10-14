@@ -17,8 +17,8 @@ const PaymentPage = () => {
   const [remainingAmount, setRemainingAmount] = useState(0);
   const [inputCostCash, setInputCostCash] = useState(0);
   const [inputCostCheque, setInputCostCheque] = useState(0);
-
   const navigate = useNavigate();
+  const creditLimit = globalState?.selectedCustomer?.credit_limit;
 
 
   useEffect(() => {
@@ -33,18 +33,19 @@ const PaymentPage = () => {
   }, [globalState?.cartItems]);
 
 
-  
+
   const remainingAmountHandler = () => {
-    const amountPaid = inputCostCash + inputCostCheque;    
+    const amountPaid = inputCostCash + inputCostCheque;
     const amountRemaining = totalAmount - amountPaid;
     setRemainingAmount(amountRemaining);
   };
 
   useEffect(() => {
     remainingAmountHandler();
+
     // eslint-disable-next-line
-  }, [inputCostCash, inputCostCheque, totalAmount ]);
-  
+  }, [inputCostCash, inputCostCheque, totalAmount]);
+
 
   const backFunc = () => {
     navigate(-1);
@@ -52,6 +53,32 @@ const PaymentPage = () => {
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+  const handleCreditLimit = async () => {
+    try {
+      if (remainingAmount <= creditLimit) {
+        const newCreditLimit = creditLimit - remainingAmount;
+
+        const response = await fetch(
+          `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ credit_limit: newCreditLimit }),
+          }
+        );
+
+        if (!response.ok) {
+          enqueueSnackbar("Failed to update credit limit.", { variant: "error" });
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      }
+    } catch (error) {
+      console.error("Error updating credit limit:", error);
+      enqueueSnackbar("Failed to update credit limit.", { variant: "error" });
+    }
   };
 
   const createSale = async () => {
@@ -89,25 +116,30 @@ const PaymentPage = () => {
         }
       );
 
-      if (!response.ok) {
+
+      if (response.ok) {
+        handleCreditLimit()
+      } else {
         setLoading(false);
         enqueueSnackbar("Something went wrong", { variant: "error" });
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
       const result = await response.json();
       if (result) {
         dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
         dispatch({ type: "CURRENT_TRANSACTION", payload: saleData });
         setLoading(false);
-        return true; 
+        return true;
       }
 
     } catch (error) {
       console.error("Error creating sale:", error);
-      return false; 
+      return false;
     }
   };
+
+
+
 
   return (
     <div className="payment-page">
@@ -121,7 +153,7 @@ const PaymentPage = () => {
         />
         <div className="payment-page-total-invoice">
           <div className="payment-page-total-left">
-            <h4 className={remainingAmount<=0?"payment-page-total-heading":"payment-page-total-heading-red"}>{remainingAmount<=0?"Return":"Due"}: <span>{Math.abs(remainingAmount)}</span></h4>
+            <h4 className={remainingAmount <= 0 ? "payment-page-total-heading" : "payment-page-total-heading-red"}>{remainingAmount <= 0 ? "Return" : "Due"}: <span>{Math.abs(remainingAmount)}</span></h4>
           </div>
           <div className="payment-page-total-right">
             <h4 className="payment-page-price-heading">LKR : {totalAmount}</h4>
@@ -150,13 +182,14 @@ const PaymentPage = () => {
       <div className="payment-page-body">
         {activeTab === "tab1" && (
           <CashBoard
-          totalPrice={totalAmount}
-          onClick={createSale}
-          isLoading={loading}
-          remainingAmount={remainingAmount}
-          inputCost={inputCostCash}
-          setInputCost={setInputCostCash}
-        />
+            totalPrice={totalAmount}
+            onClick={createSale}
+            isLoading={loading}
+            remainingAmount={remainingAmount}
+            inputCost={inputCostCash}
+            setInputCost={setInputCostCash}
+            creditLimit={creditLimit}
+          />
         )}
         {activeTab === "tab2" &&
           (isCheckAvailable ? (

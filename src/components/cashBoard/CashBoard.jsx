@@ -5,7 +5,7 @@ import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
 
-const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost }) => {
+const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost,creditLimit }) => {
   const navigate = useNavigate();
   const [hasEdited, setHasEdited] = useState(false);
   const handleExtractAmount = () => {
@@ -16,7 +16,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
     e.preventDefault();
     const response = await onClick();
 
-    if (response && inputCost > 0) {
+    if (response) {
       navigate("/transactionSuccessfull", {
         state: {
           mode: "CASH",
@@ -60,7 +60,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
           type="submit"
           className="login-submit-button-input"
           title="Complete Payment"
-          disabled={remainingAmount > 0}
+          disabled={creditLimit < remainingAmount}
           isLoading={isLoading}
         />
       </form>

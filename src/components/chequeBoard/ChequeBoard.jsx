@@ -45,7 +45,7 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
 
   const completePaymentHandler = async () => {
     const response = await onClick();
-    if (response && inputCost > 0) {
+    if (response) {
       navigate("/transactionSuccessfull", {
         state: {
           mode: "CHEQUE",
