@@ -17,8 +17,8 @@ const PaymentPage = () => {
   const [remainingAmount, setRemainingAmount] = useState(0);
   const [inputCostCash, setInputCostCash] = useState(0);
   const [inputCostCheque, setInputCostCheque] = useState(0);
-
   const navigate = useNavigate();
+  const creditLimit = globalState?.selectedCustomer?.credit_limit;
 
 
   useEffect(() => {
@@ -42,6 +42,8 @@ const PaymentPage = () => {
 
   useEffect(() => {
     remainingAmountHandler();
+   
+    // createSale()
     // eslint-disable-next-line
   }, [inputCostCash, inputCostCheque, totalAmount ]);
   
@@ -53,7 +55,37 @@ const PaymentPage = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-
+  const handleCreditLimit = async () => {
+    try {
+      if (remainingAmount <= creditLimit) {
+        const newCreditLimit = creditLimit - remainingAmount;
+        console.log({ newCreditLimit });
+  
+        const response = await fetch(
+          `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
+          {
+            method: "PATCH", 
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ creditLimit: newCreditLimit }),
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        console.log("Credit limit updated successfully.");
+      } else {
+        console.log("Remaining amount exceeds credit limit.");
+      }
+    } catch (error) {
+      console.error("Error updating credit limit:", error);
+      enqueueSnackbar("Failed to update credit limit.", { variant: "error" });
+    }
+  };
+  
   const createSale = async () => {
     const cashPaymentId = "60d5f9e9a60b2f1b4c3c1c84";
     const chequePaymentId = "60d5f9e9a60b2f1b4c3c1c85";
@@ -74,7 +106,7 @@ const PaymentPage = () => {
         date: cheque?.date,
       })),
     };
-
+   
     try {
       setLoading(true);
       const response = await fetch(
@@ -89,12 +121,14 @@ const PaymentPage = () => {
         }
       );
 
-      if (!response.ok) {
-        setLoading(false);
-        enqueueSnackbar("Something went wrong", { variant: "error" });
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
+      
+   if(response.ok){
+    handleCreditLimit()
+   }else{
+    setLoading(false);
+    enqueueSnackbar("Something went wrong", { variant: "error" });
+    throw new Error(`HTTP error! status: ${response.status}`);
+   }
       const result = await response.json();
       if (result) {
         dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
@@ -108,6 +142,9 @@ const PaymentPage = () => {
       return false; 
     }
   };
+
+
+
 
   return (
     <div className="payment-page">
@@ -156,6 +193,7 @@ const PaymentPage = () => {
           remainingAmount={remainingAmount}
           inputCost={inputCostCash}
           setInputCost={setInputCostCash}
+          creditLimit={creditLimit}
         />
         )}
         {activeTab === "tab2" &&
