@@ -69,7 +69,6 @@ const LoginPage = () => {
             password: password,
             deviceID
           }),
-          credentials: "include"
         }
       );
 

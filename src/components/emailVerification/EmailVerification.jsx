@@ -68,7 +68,6 @@ const EmailVerification = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email: input }), // Send 'email' instead of 'input'
-        credentials: "include"
       });
 
       // Parse response

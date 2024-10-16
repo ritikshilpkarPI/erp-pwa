@@ -39,7 +39,6 @@ const ChangePassword = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ tempToken, newPassword }),
-            credentials: "include"
           }
         );
 
