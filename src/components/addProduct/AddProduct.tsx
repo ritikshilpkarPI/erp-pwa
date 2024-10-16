@@ -57,7 +57,7 @@ export const AddProduct = () => {
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SIGNUP_URL}/categories`)
+    fetch(`${process.env.REACT_APP_BASE_URL}/categories`,{credentials: "include"})
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
@@ -87,11 +87,11 @@ export const AddProduct = () => {
       formDataa.append("barcode", randomNumber);
 
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/item/additem`,
+        `${process.env.REACT_APP_BASE_URL}/item/additem`,
         {
           method: "POST",
           body: formDataa,
-         
+          credentials: "include"
         }
       );
       const res = await response.json();
@@ -166,6 +166,7 @@ export const AddProduct = () => {
               Choose a photo
               <input
                 type="file"
+                accept="image/*"
                 onChange={handlePhotoChange}
                 style={{ display: "none" }}
               />

@@ -27,7 +27,7 @@ const NavigationMenu = ({ onClick, setItemsList }) => {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/categories`);
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/categories`, {credentials: "include"});
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

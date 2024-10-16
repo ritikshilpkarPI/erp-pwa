@@ -24,10 +24,11 @@ const AddCategoryPage = () => {
       formData.append("category_color", addColor);
       formData.append("category_image", addImage);
 
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/categories`,
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/categories`,
         {
           method: "POST",
-          body: formData
+          body: formData,
+          credentials: "include"
         }
       );
 

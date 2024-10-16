@@ -58,7 +58,7 @@ const LoginPage = () => {
       }
 
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/signin`,
+        `${process.env.REACT_APP_BASE_URL}/signin`,
         {
           method: "POST",
           headers: {
@@ -69,6 +69,7 @@ const LoginPage = () => {
             password: password,
             deviceID
           }),
+          credentials: "include"
         }
       );
 
@@ -84,6 +85,7 @@ const LoginPage = () => {
         dispatch({ type: "SET_USER", payload: result.user });
         if (typeof window !== "undefined") {
           window.localStorage.setItem("token", result.token);
+          document.cookie = `token=${result.token};`;
         }
         navigate("/landing");
       }
@@ -110,7 +112,7 @@ const LoginPage = () => {
 
   const sendOtpToPhone = async() => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/signin-number`,
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/signin-number`,
         {
           method: "POST",
           headers: {

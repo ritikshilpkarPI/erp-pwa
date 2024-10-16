@@ -56,6 +56,7 @@ export const appStateReducer = (state: any, action: any) => {
 
     case "LOGOUT":
       localStorage.removeItem("token");
+      document.cookie = '';
       return {
         ...state,
         loggedInUser: null,

@@ -32,13 +32,14 @@ const ChangePassword = () => {
     if (validatePassword()) {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_SIGNUP_URL}/change-password`,
+          `${process.env.REACT_APP_BASE_URL}/change-password`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ tempToken, newPassword }),
+            credentials: "include"
           }
         );
 

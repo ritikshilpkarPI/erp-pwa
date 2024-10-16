@@ -62,12 +62,13 @@ const EmailVerification = () => {
       }
 
       // Send POST request to backend endpoint for OTP generation
-      const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/generate-otp`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/generate-otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email: input }), // Send 'email' instead of 'input'
+        credentials: "include"
       });
 
       // Parse response

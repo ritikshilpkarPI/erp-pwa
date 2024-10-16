@@ -18,7 +18,7 @@ const LandingPage = () => {
 
     const fetchItem = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/items`);
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/items`,{credentials: "include"});
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

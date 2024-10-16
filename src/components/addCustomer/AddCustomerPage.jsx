@@ -27,7 +27,7 @@ const AddCustomerPage = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/customers`,
+        `${process.env.REACT_APP_BASE_URL}/customers`,
         {
           method: "POST",
           headers: {
@@ -41,6 +41,7 @@ const AddCustomerPage = () => {
             telephone: telephone.replace(/^\s+/, ""),
             is_deleted: false,
           }),
+          credentials: "include"
         }
       );
 

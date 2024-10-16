@@ -28,7 +28,7 @@ const TransactionSuccessfulScreen = () => {
     setIsEmailLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/email-invoice?email=${useremail}`,
+        `${process.env.REACT_APP_BASE_URL}/email-invoice?email=${useremail}`,
         {
           method: "POST",
           headers: {
@@ -53,7 +53,7 @@ const TransactionSuccessfulScreen = () => {
     setIsDownloadLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/download-invoice`,
+        `${process.env.REACT_APP_BASE_URL}/download-invoice`,
         {
           method: "POST",
           headers: {

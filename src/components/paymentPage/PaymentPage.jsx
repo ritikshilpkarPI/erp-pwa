@@ -60,7 +60,7 @@ const PaymentPage = () => {
         const newCreditLimit = creditLimit - remainingAmount;
 
         const response = await fetch(
-          `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
+          `${process.env.REACT_APP_BASE_URL ?? "http://localhost:5467/api/v1"}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
           {
             method: "PATCH",
             headers: {
@@ -105,7 +105,7 @@ const PaymentPage = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
+        `${process.env.REACT_APP_BASE_URL ?? "http://localhost:5467/api/v1"
         }/sales`,
         {
           method: "POST",
@@ -113,6 +113,7 @@ const PaymentPage = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(saleData),
+          credentials: "include"
         }
       );
 

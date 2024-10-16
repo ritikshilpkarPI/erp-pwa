@@ -49,13 +49,13 @@ const DateSummary: React.FC<DateSummaryProps> = ({ date, totalAmount }) => (
 export function TransactionHistory() {
   const navigate = useNavigate();
   const { globalState, dispatch } = useContext(AppStateContext);
-  const API = `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"}/sales`;
+  const API = `${process.env.REACT_APP_BASE_URL ?? "http://localhost:5467/api/v1"}/sales`;
   const [selectedDate, setSelectedDate] = useState("");
   const [loading, setLoading] = useState(true);
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {
-    fetch(API)
+    fetch(API, {credentials: "include"})
       .then((res) => res.json())
       .then((res) => {
         dispatch({ type: "SET_TRANSACTION_HISTORY", payload: res });                
@@ -128,7 +128,7 @@ export function TransactionHistory() {
     try {
       setLoadingDetail(true);
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/transaction-history`,
+        `${process.env.REACT_APP_BASE_URL}/transaction-history`,
         {
           method: "POST",
           headers: {

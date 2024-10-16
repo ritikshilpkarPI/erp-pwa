@@ -20,13 +20,12 @@ const CustomerScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
   const [getError, setGetError] = useState(false); 
 
-  const API = `${process.env.REACT_APP_SIGNUP_URL ?? "http://localhost:5467/api/v1"
-    }/customers`;
+  const API = `${process.env.REACT_APP_BASE_URL}/customers`;
 
 
 
   useEffect(() => {
-    fetch(API)
+    fetch(API,{credentials: "include"})
       .then((res) => res.json())
       .then((res) => {
         dispatch({ type: "SET_CUSTOMERS_LIST", payload: res });

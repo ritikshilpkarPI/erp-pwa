@@ -20,7 +20,7 @@ const PublicInvoice = () => {
 
     const fetchTransaction = async (id) => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_SIGNUP_URL}/share-invoice`, {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/share-invoice`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
