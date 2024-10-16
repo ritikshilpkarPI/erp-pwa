@@ -60,13 +60,14 @@ const PaymentPage = () => {
         const newCreditLimit = creditLimit - remainingAmount;
 
         const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL ?? "http://localhost:5467/api/v1"}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
+          `${process.env.REACT_APP_BASE_URL}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
           {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ credit_limit: newCreditLimit }),
+            credentials: "include"
           }
         );
 
@@ -105,8 +106,7 @@ const PaymentPage = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL ?? "http://localhost:5467/api/v1"
-        }/sales`,
+        `${process.env.REACT_APP_BASE_URL}/sales`,
         {
           method: "POST",
           headers: {
@@ -129,13 +129,14 @@ const PaymentPage = () => {
       if (result) {
         dispatch({ type: "ADD_ITEM_TO_CART", payload: [] });
         dispatch({ type: "CURRENT_TRANSACTION", payload: saleData });
-        setLoading(false);
         return true;
       }
 
     } catch (error) {
       console.error("Error creating sale:", error);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
