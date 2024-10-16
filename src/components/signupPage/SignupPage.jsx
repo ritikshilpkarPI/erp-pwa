@@ -87,7 +87,7 @@ const SignupPage = () => {
       }
 
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/send-otp`,
+        `${process.env.REACT_APP_BASE_URL}/send-otp`,
         {
           method: "POST",
           headers: {
@@ -144,7 +144,7 @@ const SignupPage = () => {
       setLoading(true);
 
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/signup`,
+        `${process.env.REACT_APP_BASE_URL}/signup`,
         {
           method: "POST",
           headers: {

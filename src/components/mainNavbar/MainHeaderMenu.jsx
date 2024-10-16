@@ -25,11 +25,11 @@ const MainHeaderMenu = () => {
     };
   };
 
-  const API = process.env.REACT_APP_SIGNUP_URL;
+  const API = process.env.REACT_APP_BASE_URL;
 
   const fetchCategories = useCallback(async () => {
     try {
-      const response = await fetch(`${API}/categories`);
+      const response = await fetch(`${API}/categories`, {credentials: "include"});
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -48,7 +48,7 @@ const MainHeaderMenu = () => {
         const url = `${API}/items?category_id=${
           categoryId || ""
         }&search_query=${query}`;
-        const response = await fetch(url, { method: "GET" });
+        const response = await fetch(url, { method: "GET", credentials: "include" });
 
         if (!response.ok) {
           if (response.status === 404) {

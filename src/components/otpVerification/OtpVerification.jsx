@@ -25,7 +25,7 @@ const OtpVerification = () => {
   const otpSubmit = async (otp) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/verify-otp`,
+        `${process.env.REACT_APP_BASE_URL}/verify-otp`,
         {
           method: "POST",
           headers: {
@@ -109,7 +109,7 @@ const OtpVerification = () => {
     setSuccessMessage("");
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/resend-otp`,
+        `${process.env.REACT_APP_BASE_URL}/resend-otp`,
         {
           method: "POST",
           headers: {
