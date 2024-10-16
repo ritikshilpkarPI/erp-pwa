@@ -35,6 +35,7 @@ const TransactionSuccessfulScreen = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(transaction),
+          credentials: "include"
         }
       );
 
@@ -60,6 +61,7 @@ const TransactionSuccessfulScreen = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(globalState?.currentTransaction),
+          credentials: "include"
         }
       );
 

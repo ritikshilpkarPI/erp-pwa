@@ -26,6 +26,7 @@ const PublicInvoice = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ id }),
+                credentials: "include"
             });
 
             if (!response.ok) {

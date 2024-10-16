@@ -135,6 +135,7 @@ export function TransactionHistory() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ id }),
+          credentials: "include"
         }
       );
       const data = await response.json();
