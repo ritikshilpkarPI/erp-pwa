@@ -55,10 +55,17 @@ export function TransactionHistory() {
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {
-    fetch(API, {credentials: "include"})
+    const token = localStorage.getItem('token');
+    fetch(API, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      credentials: "include"
+    })
       .then((res) => res.json())
       .then((res) => {
-        dispatch({ type: "SET_TRANSACTION_HISTORY", payload: res });                
+        dispatch({ type: "SET_TRANSACTION_HISTORY", payload: res });
         setLoading(false);
       })
       .catch((error) => {
@@ -66,7 +73,7 @@ export function TransactionHistory() {
         setLoading(false);
       });
   }, [dispatch, API]);
-  
+
 
   const transactionHistory = globalState?.transactionHistory || [];
 
@@ -75,7 +82,7 @@ export function TransactionHistory() {
       (a, b) =>
         new Date(b?.date_of_sale).getTime() - new Date(a?.date_of_sale).getTime()
     );
-  
+
     const groupedTransactions = sortedData.reduce(
       (acc: any, transaction: any) => {
         const date = new Date(transaction?.date_of_sale).toLocaleDateString(
@@ -94,14 +101,14 @@ export function TransactionHistory() {
             minute: "2-digit",
           }
         );
-  
+
         if (!acc[date]) {
           acc[date] = {
             totalAmount: 0,
             items: [],
           };
         }
-  
+
         acc[date].totalAmount += transaction?.totalAmount;
         acc[date].items.push({
           amount: `LKR ${transaction?.totalAmount?.toFixed(2)}`,
@@ -109,12 +116,12 @@ export function TransactionHistory() {
           transactionId: transaction?._id,
           customerName: transaction?.customer_id?.name || "Unknown", // Extract the customer name
         });
-  
+
         return acc;
       },
       {}
     );
-  
+
     return Object.entries(groupedTransactions).map(
       ([date, { totalAmount, items }]: any) => ({
         date,
@@ -126,6 +133,7 @@ export function TransactionHistory() {
 
   const GetSaleById = async (id: string) => {
     try {
+      const token = localStorage.getItem('token');
       setLoadingDetail(true);
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/transaction-history`,
@@ -133,6 +141,7 @@ export function TransactionHistory() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({ id }),
           credentials: "include"
@@ -155,10 +164,10 @@ export function TransactionHistory() {
 
   const filteredTransactionHistory = selectedDate
     ? transactionHistory.filter(
-        (transaction: any) =>
-          new Date(transaction.date_of_sale).toLocaleDateString("en-CA") ===
-          selectedDate
-      )
+      (transaction: any) =>
+        new Date(transaction.date_of_sale).toLocaleDateString("en-CA") ===
+        selectedDate
+    )
     : transactionHistory;
 
   const formattedTransactionHistory = formatTransactionHistory(
@@ -179,7 +188,7 @@ export function TransactionHistory() {
         <div className="filter-section">
           <div className="filter-label">
             <input
-              className={`filter-by-date ${ Boolean(selectedDate) ? 'filter-by-date-filled' : 'filter-by-date-not-filled' }`}
+              className={`filter-by-date ${Boolean(selectedDate) ? 'filter-by-date-filled' : 'filter-by-date-not-filled'}`}
               type="date"
               value={selectedDate}
               onChange={handleDateChange}
@@ -209,17 +218,17 @@ export function TransactionHistory() {
 
                       return (
                         <TransactionCard
-                        key={itemIndex}
-                        amount={
-                          !transactionItem.amount.includes("undefined")
-                          ? transactionItem.amount
-                          : "LKR NA"
-                        }
-                        time={transactionItem.time}
-                        transactionId={sixDigit}
-                        onClick={GetSaleById}
-                        customerName={transactionItem.customerName}
-                          
+                          key={itemIndex}
+                          amount={
+                            !transactionItem.amount.includes("undefined")
+                              ? transactionItem.amount
+                              : "LKR NA"
+                          }
+                          time={transactionItem.time}
+                          transactionId={sixDigit}
+                          onClick={GetSaleById}
+                          customerName={transactionItem.customerName}
+
                         />
                       );
                     }

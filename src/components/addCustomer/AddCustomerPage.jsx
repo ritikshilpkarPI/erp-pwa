@@ -26,12 +26,14 @@ const AddCustomerPage = () => {
     setIsLoading(true)
 
     try {
+      const token = localStorage.getItem('token'); 
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/customers`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}` 
           },
           body: JSON.stringify({
             name: username.replace(/^\s+/, ""),

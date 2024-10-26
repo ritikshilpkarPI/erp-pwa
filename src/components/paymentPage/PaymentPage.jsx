@@ -58,13 +58,14 @@ const PaymentPage = () => {
     try {
       if (remainingAmount <= creditLimit) {
         const newCreditLimit = creditLimit - remainingAmount;
-
+        const token = localStorage.getItem('token'); 
         const response = await fetch(
           `${process.env.REACT_APP_BASE_URL}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
           {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ credit_limit: newCreditLimit }),
             credentials: "include"
@@ -105,12 +106,14 @@ const PaymentPage = () => {
 
     try {
       setLoading(true);
+      const token = localStorage.getItem('token');
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/sales`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(saleData),
           credentials: "include"

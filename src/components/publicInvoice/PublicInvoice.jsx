@@ -20,10 +20,12 @@ const PublicInvoice = () => {
 
     const fetchTransaction = async (id) => {
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch(`${process.env.REACT_APP_BASE_URL}/share-invoice`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ id }),
                 credentials: "include"
@@ -75,7 +77,7 @@ const PublicInvoice = () => {
                                 <p className="public-invoice-header-left-p"><strong>Number:</strong> {invoice.employee?.phone_number || 'N/A'}</p>
                             </div>
                             <div className="public-invoice-header-right">
-                                <p className="public-invoice-header-right-p"><strong>{invoice.customer?.name ?"Customer Name:" : "Type"}</strong> {invoice.customer?.name || 'Cash'}</p>
+                                <p className="public-invoice-header-right-p"><strong>{invoice.customer?.name ? "Customer Name:" : "Type"}</strong> {invoice.customer?.name || 'Cash'}</p>
                                 <p className="public-invoice-header-right-p"><strong>Total Amount:</strong> {invoice.totalAmount || 'N/A'}</p>
                             </div>
                         </div>
@@ -116,8 +118,8 @@ const PublicInvoice = () => {
                                 <p className="public-invoice-body-bottom-left-p"><strong>SUB TOTAL: {invoice.totalAmount || 'N/A'}</strong></p>
                             </div>
                             <div className="public-invoice-body-bottom-right">
-                                <p  className="public-invoice-body-bottom-right-p"><strong>Order Time:</strong> {new Date(invoice.date_of_sale).toLocaleTimeString() || 'N/A'}</p>
-                                <p  className="public-invoice-body-bottom-right-p"><strong>Order Date:</strong> {new Date(invoice.date_of_sale).toLocaleDateString() || 'N/A'}</p>
+                                <p className="public-invoice-body-bottom-right-p"><strong>Order Time:</strong> {new Date(invoice.date_of_sale).toLocaleTimeString() || 'N/A'}</p>
+                                <p className="public-invoice-body-bottom-right-p"><strong>Order Date:</strong> {new Date(invoice.date_of_sale).toLocaleDateString() || 'N/A'}</p>
                             </div>
                         </div>
 
