@@ -18,7 +18,14 @@ const LandingPage = () => {
 
     const fetchItem = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/items`,{credentials: "include"});
+            const token = localStorage.getItem('token');            
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/items`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+                },
+                credentials: 'include'
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

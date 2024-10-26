@@ -23,10 +23,13 @@ const AddCategoryPage = () => {
       formData.append("category_name", addCategory);
       formData.append("category_color", addColor);
       formData.append("category_image", addImage);
-
+      const token = localStorage.getItem('token'); 
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/categories`,
         {
           method: "POST",
+          headers: {
+            'Authorization': `Bearer ${token}` 
+        },
           body: formData,
           credentials: "include"
         }

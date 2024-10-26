@@ -29,7 +29,14 @@ const MainHeaderMenu = () => {
 
   const fetchCategories = useCallback(async () => {
     try {
-      const response = await fetch(`${API}/categories`, {credentials: "include"});
+      const token = localStorage.getItem('token'); 
+      const response = await fetch(`${API}/categories`, {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        credentials: "include"
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -45,9 +52,8 @@ const MainHeaderMenu = () => {
       dispatch({ type: "SET_LOADING", payload: true });
 
       try {
-        const url = `${API}/items?category_id=${
-          categoryId || ""
-        }&search_query=${query}`;
+        const url = `${API}/items?category_id=${categoryId || ""
+          }&search_query=${query}`;
         const response = await fetch(url, { method: "GET", credentials: "include" });
 
         if (!response.ok) {

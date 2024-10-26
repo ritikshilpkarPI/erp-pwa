@@ -57,7 +57,14 @@ export const AddProduct = () => {
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BASE_URL}/categories`,{credentials: "include"})
+    const token = localStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_BASE_URL}/categories`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      credentials: "include"
+    })
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
@@ -85,21 +92,25 @@ export const AddProduct = () => {
       formDataa.append("price_per_carton", prizeByCarton);
       formDataa.append("sku", storeKeepingUnit);
       formDataa.append("barcode", randomNumber);
+      const token = localStorage.getItem('token');
 
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/item/additem`,
         {
           method: "POST",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
           body: formDataa,
           credentials: "include"
         }
       );
       const res = await response.json();
-      
-      if (!res) { 
+
+      if (!res) {
         enqueueSnackbar("Something went wrong", { variant: "error" });
-        
-      }else{
+
+      } else {
 
         navigate("/landing");
         enqueueSnackbar("Add Product Successfully", { variant: "success" });
@@ -247,18 +258,18 @@ export const AddProduct = () => {
                 productSelling &&
                 categories &&
                 barcode
-                ) ||
-              (productName &&
-                productSelling &&
-                categories &&
-                randomNumber
+              ) ||
+                (productName &&
+                  productSelling &&
+                  categories &&
+                  randomNumber
                 )
                 ? "add-product-button"
                 : "add-product-button1"
             }
             title="Add a new product"
             disabled={
-              !productName || !productSelling || !selectedValue || !(barcode || randomNumber)
+              !productName || !productSelling || !selectedValue || !(barcode || randomNumber) || isLoading
             }
             isLoading={isLoading}
           />

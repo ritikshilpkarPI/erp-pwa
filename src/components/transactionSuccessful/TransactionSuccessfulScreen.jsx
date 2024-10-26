@@ -8,7 +8,7 @@ import { enqueueSnackbar } from "notistack";
 
 const TransactionSuccessfulScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
-  const [transaction] = useState (globalState?.currentTransaction)
+  const [transaction] = useState(globalState?.currentTransaction)
   const [useremail, setUseremail] = useState(
     globalState.selectedCustomer?.email || ""
   );
@@ -20,19 +20,21 @@ const TransactionSuccessfulScreen = () => {
 
   const onClick = () => {
     navigate("/landing");
-    dispatch({ type: "SET_CHEQUE_LIST", payload: [] }); 
+    dispatch({ type: "SET_CHEQUE_LIST", payload: [] });
     dispatch({ type: "CURRENT_TRANSACTION", payload: {} });
   };
 
   const handleEmailSendBtn = async () => {
     setIsEmailLoading(true);
     try {
+      const token = localStorage.getItem('token'); 
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/email-invoice?email=${useremail}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+             'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(transaction),
           credentials: "include"
@@ -53,11 +55,13 @@ const TransactionSuccessfulScreen = () => {
   const handleSendBtn = async () => {
     setIsDownloadLoading(true);
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/download-invoice`,
         {
           method: "POST",
           headers: {
+            'Authorization': `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(globalState?.currentTransaction),
