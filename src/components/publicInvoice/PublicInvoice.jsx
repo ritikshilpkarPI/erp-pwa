@@ -20,15 +20,12 @@ const PublicInvoice = () => {
 
     const fetchTransaction = async (id) => {
         try {
-            const token = localStorage.getItem('token');
             const response = await fetch(`${process.env.REACT_APP_BASE_URL}/share-invoice`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ id }),
-                credentials: "include"
             });
 
             if (!response.ok) {

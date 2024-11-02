@@ -18,27 +18,34 @@ const CustomerScreen = () => {
 
 
   const { globalState, dispatch } = useContext(AppStateContext);
-  const [getError, setGetError] = useState(false); 
+  const [getError, setGetError] = useState(false);
 
   const API = `${process.env.REACT_APP_BASE_URL}/customers`;
 
 
 
   useEffect(() => {
-    fetch(API,{credentials: "include"})
+    const token = localStorage.getItem('token'); 
+    fetch(API, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      credentials: "include"
+    })
       .then((res) => res.json())
       .then((res) => {
         dispatch({ type: "SET_CUSTOMERS_LIST", payload: res });
         setLoading(false);
 
       })
-      .catch((error) => {        
+      .catch((error) => {
         console.error("Error fetching customer data:", error)
         setLoading(false);
 
         setGetError(true)
       }
-    );
+      );
   }, [dispatch, API]);
 
   const navigate = useNavigate();
@@ -57,8 +64,8 @@ const CustomerScreen = () => {
     }
   }, [searchQuery, globalState?.customers]);
   const selectedCustomerFunction = (customerId) => {
-    if (globalState?.cartItems?.length>0) {
-      
+    if (globalState?.cartItems?.length > 0) {
+
       const selectedCustomer = globalState.customers.find(
         (customer) => customer._id === customerId
       );
@@ -73,7 +80,7 @@ const CustomerScreen = () => {
   return (
     <div className="customer-screen-container">
       <div className="customer-header">
-          <NavigationHeader
+        <NavigationHeader
           title="Customers"
           titleClassName="navigation-header-customer"
           NavigationHeaderImage={backButtonIcon}
@@ -93,49 +100,49 @@ const CustomerScreen = () => {
         </div>
       </div>
       <div className="customer-content">
-        {loading ?( <LoadingCircle />):
-        (!getError || filteredCustomers.length>0 ? (
-          filteredCustomers.map((customer) => (
-            <div
-              key={customer._id}
-              className="customer-content-div"
-              onClick={() => selectedCustomerFunction(customer._id)}
-            >
-              <label
-                className="customer-content-heading"
-                htmlFor={customer._id}
+        {loading ? (<LoadingCircle />) :
+          (!getError || filteredCustomers.length > 0 ? (
+            filteredCustomers.map((customer) => (
+              <div
+                key={customer._id}
+                className="customer-content-div"
+                onClick={() => selectedCustomerFunction(customer._id)}
               >
-                {customer.name}
-              </label>
-              <input
-                type="radio"
-                name="customer"
-                id={customer._id}
-                value={customer._id}
-                checked={globalState.selectedCustomer?._id === customer._id}
+                <label
+                  className="customer-content-heading"
+                  htmlFor={customer._id}
+                >
+                  {customer.name}
+                </label>
+                <input
+                  type="radio"
+                  name="customer"
+                  id={customer._id}
+                  value={customer._id}
+                  checked={globalState.selectedCustomer?._id === customer._id}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="no-data-animation">
+              <Player
+                autoplay
+                loop
+                src={noDataAnimation}
+                style={{
+                  height: "300px",
+                  width: "300px",
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+
+                  transform: "translate(-50%, -50%)",
+                }}
               />
+              <p>No data</p>
             </div>
           ))
-        ) : (
-          <div className="no-data-animation">
-            <Player
-              autoplay
-              loop
-              src={noDataAnimation}
-              style={{
-                height: "300px",
-                width: "300px",
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-
-                transform: "translate(-50%, -50%)",
-              }}
-            />
-            <p>No data</p>
-          </div>
-        ))
-      }
+        }
       </div>
       {Boolean(globalState?.customers) && (
         <div

@@ -26,7 +26,13 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/categories`,{credentials: "include"});
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/categories`, {
+          credentials: "include",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
