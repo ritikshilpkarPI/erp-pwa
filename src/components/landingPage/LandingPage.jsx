@@ -18,6 +18,7 @@ const LandingPage = () => {
 
     const fetchItem = async () => {
         try {
+            dispatch({ type: "SET_ITEMS", payload: [] });
             const token = localStorage.getItem('token');
             const response = await fetch(`${process.env.REACT_APP_BASE_URL}/items`, {
                 method: 'GET',
@@ -42,7 +43,7 @@ const LandingPage = () => {
     useEffect(() => {
         fetchItem();
         // eslint-disable-next-line
-    }, []);
+    },[]);
 
     const addToCart = (_id, name, count, price, pricePer) => {
         const itemIndex = globalState?.cartItems.findIndex(item => item._id === _id);
