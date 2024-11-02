@@ -18,11 +18,11 @@ const LandingPage = () => {
 
     const fetchItem = async () => {
         try {
-            const token = localStorage.getItem('token');            
+            const token = localStorage.getItem('token');
             const response = await fetch(`${process.env.REACT_APP_BASE_URL}/items`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}` 
+                    'Authorization': `Bearer ${token}`
                 },
                 credentials: 'include'
             });
@@ -47,27 +47,27 @@ const LandingPage = () => {
     const addToCart = (_id, name, count, price, pricePer) => {
         const itemIndex = globalState?.cartItems.findIndex(item => item._id === _id);
         const updatedCart = [...globalState?.cartItems];
-    
+
         if (itemIndex !== -1) {
             if (updatedCart[itemIndex].pricePer !== pricePer) {
                 updatedCart[itemIndex].count = 0;
                 updatedCart[itemIndex].pricePer = pricePer;
                 updatedCart[itemIndex].price = price;
-            }else{
+            } else {
                 updatedCart[itemIndex].count = count;
-            }    
+            }
             if (count > 0) {
                 updatedCart[itemIndex].count = count;
             }
-    
+
             if (updatedCart[itemIndex].count <= 0) {
                 updatedCart.splice(itemIndex, 1);
             }
         } else if (count > 0) {
             updatedCart.push({ _id, name, count, price, pricePer });
-        }    
+        }
         dispatch({ type: "ADD_ITEM_TO_CART", payload: updatedCart });
-    };    
+    };
 
     const clickHandler = () => {
         navigate("/placeorder");
@@ -97,23 +97,25 @@ const LandingPage = () => {
             <div className='landing-page-item-card-container'>
                 {isLoading
                     ? (<LoadingCircle />)
-                    : (itemList.map(item => {
-                        const cartItem = globalState?.cartItems.find(cartItem => cartItem._id === item._id);
-                        return (
-                            <ItemCard
-                                key={item._id}
-                                _id={item._id}
-                                name={item.name}
-                                img_url={item.img_url}
-                                price_per_carton={item.price_per_carton}
-                                price_per_dozen={item.price_per_dozen}
-                                price_per_unit={item.price_per_unit}
-                                addToCart={addToCart}
-                                count={cartItem?.count}
-                                _pricePer={cartItem?.pricePer}
-                            />
-                        );
-                    })
+                    : (itemList.length < 1
+                        ? <p>No items available.</p>
+                        : itemList.map(item => {
+                            const cartItem = globalState?.cartItems.find(cartItem => cartItem._id === item._id);
+                            return (
+                                <ItemCard
+                                    key={item._id}
+                                    _id={item._id}
+                                    name={item.name}
+                                    img_url={item.img_url}
+                                    price_per_carton={item.price_per_carton}
+                                    price_per_dozen={item.price_per_dozen}
+                                    price_per_unit={item.price_per_unit}
+                                    addToCart={addToCart}
+                                    count={cartItem?.count}
+                                    _pricePer={cartItem?.pricePer}
+                                />
+                            );
+                        })
                     )
                 }
                 {globalState?.cartItems.length > 0 && (
