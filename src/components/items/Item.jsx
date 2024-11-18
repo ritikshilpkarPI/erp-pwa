@@ -12,6 +12,7 @@ const Items = (props) => {
         <h3 className='item-name'>{itemName}</h3>
         <h3 className='item-amount'>Rs{amount}</h3>
       </div>
+      
     </div>
   )
 }

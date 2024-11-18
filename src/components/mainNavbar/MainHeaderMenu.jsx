@@ -1,64 +1,92 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import "./MainNav.css";
 import SearchIcon from "../../icons/SearchIcon";
-import BarCodeIcon from "../../icons/BarCodeIcon";
-import ListIcon from "../../icons/ListIcon";
 import SearchInput from "../../pages/searchInput/SearchInput";
 import CloseIcon from "../../icons/CloseIcon";
-import { AppStateContext, useAppContext } from "../../appState/appStateContext";
+import { useAppContext } from "../../appState/appStateContext";
+import AddIcon from "../../icons/AddIcon";
+import { useNavigate } from "react-router-dom";
 
 const MainHeaderMenu = () => {
-  const { dispatch } = useAppContext(AppStateContext);
+  const navigate = useNavigate();
+  const { dispatch } = useAppContext();
   const [openSearchBox, setOpenSearchBox] = useState(false);
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearch = () => {
-    setOpenSearchBox(!openSearchBox);
+  const debounceRef = useRef(null);
+
+  const debounce = (func, delay) => {
+    return (...args) => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
   };
+
+  const API = process.env.REACT_APP_BASE_URL;
 
   const fetchCategories = useCallback(async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_SIGNUP_URL}/categories`
-      );
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API}/categories`, {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        credentials: "include"
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
       setOptions(data);
-
-      dispatch({ type: "SET_LOADING" });
     } catch (error) {
       console.error("Error fetching categories:", error);
-      dispatch({ type: "SET_LOADING" });
     }
-  }, [dispatch]);
+  }, [API]);
 
   const fetchItems = useCallback(
     async (categoryId = null, query = "") => {
+      dispatch({ type: "SET_LOADING", payload: true });
+
       try {
-        const url = `${process.env.REACT_APP_SIGNUP_URL}/items`;
+
+        const url = `${API}/items?category_id=${categoryId || ""
+          }&search_query=${query}`;
+        const token = localStorage.getItem('token');
         const response = await fetch(url, {
-          method: "POST",
+          method: "GET",
           headers: {
-            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({
-            category_id: categoryId,
-            search_query: query,
-          }),
+          credentials: "include"
         });
+
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          if (response.status === 404) {
+            const data = await response.json();
+            if (data.message === "No items found") {
+              dispatch({ type: "CLEAR_ITEMS" });
+              dispatch({ type: "SET_MESSAGE", payload: "No items found" });
+            }
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        } else {
+          const data = await response.json();
+          dispatch({ type: "SET_ITEMS", payload: data });
+          dispatch({ type: "SET_MESSAGE", payload: "" });
         }
-        const data = await response.json();
-        dispatch({ type: "SET_ITEMS", payload: data });
       } catch (error) {
         console.error("Error fetching items:", error);
+        dispatch({ type: "SET_MESSAGE", payload: "Error fetching items" });
+      } finally {
+        dispatch({ type: "SET_LOADING", payload: false });
       }
     },
-    [dispatch]
+    [API, dispatch]
   );
 
   useEffect(() => {
@@ -73,21 +101,19 @@ const MainHeaderMenu = () => {
     const categoryId = e.target.value;
     fetchItems(categoryId, searchQuery);
   };
-  function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-      const context = this;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(context, args), wait);
-    };
-  }
 
-  const handleSearchInputChange = debounce((e) => {
+  const handleSearchInputChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    console.log(query);
-    fetchItems(null, query);
-  }, 500);
+    debounce(fetchItems, 400)(null, query);
+  };
+
+  const handleSearch = () => {
+    setOpenSearchBox(!openSearchBox);
+    if (openSearchBox) {
+      fetchItems();
+    }
+  };
 
   return (
     <div className="main-header-menu">
@@ -96,6 +122,7 @@ const MainHeaderMenu = () => {
           className="menu-header-search"
           isOpen={openSearchBox}
           onChange={handleSearchInputChange}
+          value={searchQuery}
         />
       ) : (
         <select
@@ -113,11 +140,12 @@ const MainHeaderMenu = () => {
       <div className="search-icon-outer" onClick={handleSearch}>
         {openSearchBox ? <CloseIcon /> : <SearchIcon />}
       </div>
-      <div className="search-icon-outer">
-        <BarCodeIcon />
-      </div>
-      <div className="search-icon-outer">
-        <ListIcon />
+      <div className="search-icon-outer search-icon-outer1">
+        <AddIcon
+          onClick={() => {
+            navigate("/addproduct");
+          }}
+        />
       </div>
     </div>
   );

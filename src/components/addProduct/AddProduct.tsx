@@ -1,43 +1,39 @@
-import React, { useState } from "react";
-import "./AddProduct.css";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import NavigationHeader from "../navigationHeader/NavigationHeader";
+import backIcon from "../../image/BackIcon.svg";
+import TextInput from "../textInput/TextInput";
+import "../addProduct/AddProduct.css";
+import { enqueueSnackbar } from "notistack";
+import ButtonInput from "../buttonInput/ButtonInput";
 
-const InputField = ({ label, value, onChange, name }: any) => (
-  <div className="input-container">
-    <label className="input-label">{label}</label>
-    <input className="input-field" type="text" value={value} onChange={onChange} name={name} />
-  </div>
-);
+interface FormData {
+  categories: string;
+  capitalPrice: string;
+  sku: string;
+  barcode: string;
+  photo: File | null;
+  photoPreview: string | null;
+}
 
-const PriceType = ({ type, price, onChange, checked }: any) => (
-  <>
-    <h3 className="price-type">{type}</h3>
-    <div className="price-value">
-      <input type="checkbox" checked={checked} onChange={onChange} />
-      {price}
-    </div>
-  </>
-);
-
-const DropdownField = ({ label, value, onChange, name, options }: any) => (
-  <div className="input-container">
-    <label className="input-label">{label}</label>
-    <select className="input-field" value={value} onChange={onChange} name={name}>
-      {options.map((option: string, index: number) => (
-        <option key={index} value={option}>{option}</option>
-      ))}
-    </select>
-  </div>
-);
+interface Category {
+  _id: string;
+  category_name: string;
+}
 
 export const AddProduct = () => {
-  const [formData, setFormData] = useState<any>({
-    productName: "Wagyu",
-    sellingPrice: "GNF 3420.99",
-    priceTypes: [
-      { type: "Dine-in", price: "GNF 420.99", checked: false },
-      { type: "Takeaway", price: "GNF 420.99", checked: false },
-      { type: "Delivery", price: "GNF 520.99", checked: false },
-    ],
+  const [productName, setProductName] = useState<string>("");
+  const [productSelling, setProductSelling] = useState<string>("");
+  const [prizeByUnit, setPrizeByUnit] = useState<string>("");
+  const [prizeByDozen, setPrizeByDozen] = useState<string>("");
+  const [prizeByCarton, setPrizeByCarton] = useState<string>("");
+  const [storeKeepingUnit, setStoreKeepingUnit] = useState<string>("");
+  const [barcode, setBarcode] = useState<string>("");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedValue, setSelectedValue] = useState<string>("Choose a category");
+  const [randomNumber, setRandomNumber] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormData>({
     categories: "Choose a category",
     capitalPrice: "GNF 3410.99",
     sku: "P6516484",
@@ -46,83 +42,251 @@ export const AddProduct = () => {
     photoPreview: null,
   });
 
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const navigate = useNavigate();
+
+  const generateRandomNumber = () => {
+    let number = "";
+    for (let i = 0; i < 10; i++) {
+      number += Math.floor(Math.random() * 10);
+    }
+    setRandomNumber(number);
   };
 
-  const handlePriceTypeChange = (index: number) => {
-    const updatedPriceTypes = formData.priceTypes.map((item: any, i: any) =>
-      i === index ? { ...item, checked: !item.checked } : item
-    );
-    setFormData({ ...formData, priceTypes: updatedPriceTypes });
+  const handleSelectedValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(e.target.value);
   };
 
-  const handlePhotoChange = (e: any) => {
-    const file = e.target.files[0];
-    setFormData({ ...formData, photo: file, photoPreview: URL.createObjectURL(file) });
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_BASE_URL}/categories`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      credentials: "include"
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const addProductHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!formData.photo) {
+      alert("Please select a file first!");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const formDataa = new FormData();
+      formDataa.append("name", productName);
+      formDataa.append("prize", productSelling);
+      formDataa.append("img_url", formData.photo);
+      formDataa.append("category", selectedValue);
+      formDataa.append("price_per_unit", prizeByUnit);
+      formDataa.append("price_per_dozen", prizeByDozen);
+      formDataa.append("price_per_carton", prizeByCarton);
+      formDataa.append("sku", storeKeepingUnit);
+      formDataa.append("barcode", randomNumber);
+      const token = localStorage.getItem('token');
+
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/item/additem`,
+        {
+          method: "POST",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formDataa,
+          credentials: "include"
+        }
+      );
+      const res = await response.json();
+
+      if (!res) {
+        enqueueSnackbar("Something went wrong", { variant: "error" });
+
+      } else {
+
+        navigate("/landing");
+        enqueueSnackbar("Add Product Successfully", { variant: "success" });
+      }
+    } catch (error) {
+      setIsLoading(false);
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+      console.log(error);
+    }
   };
 
-  const categoryOptions = ["Choose a category", "Category 1", "Category 2", "Category 3"];
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    setFormData({
+      ...formData,
+      photo: file,
+      photoPreview: file ? URL.createObjectURL(file) : null,
+    });
+  };
 
   return (
     <div className="product-page">
-      <header className="header">
-        <div className="header-content">
-          <div className="add-product">
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/415bbd33d4ef7c13cb8ce4d57ab932634d506a9087ec191dce9c4f20fab36a42?apiKey=d03ff6b018f84c75b88104249d2053b6&" alt="" className="add-icon" />
-            <h1 className="add-title">Add a product</h1>
-          </div>
-        </div>
-      </header>
-      <main className="main-content">
-        <h2 className="section-title">Product details</h2>
-        <InputField label="Product name" value={formData.productName} onChange={handleInputChange} name="productName" />
-        <InputField label="Selling price" value={formData.sellingPrice} onChange={handleInputChange} name="sellingPrice" />
-        <div className="price-type-toggle">
-          <span className="toggle-label">Add a price type</span>
-          <div className="toggle-switch">
-            <div className="toggle-button" />
-          </div>
-        </div>
-        <section className="price-types">
-          {formData.priceTypes.map((item: any, index: any) => (
-            <PriceType
-              key={index}
-              type={item.type}
-              price={item.price}
-              checked={item.checked}
-              onChange={() => handlePriceTypeChange(index)}
+      <NavigationHeader
+        title="Add a product"
+        titleClassName="navigation-header-addproduct"
+        NavigationHeaderImage={backIcon}
+        NavigationHeaderImageClassName="back-button-image-full"
+        onClick={() => navigate(-1)}
+      />
+
+      <form onSubmit={addProductHandler}>
+        <main className="main-content">
+          <h2 className="section-title">Product details</h2>
+
+          <TextInput
+            className="product-page-input"
+            type="text"
+            labelTitle="Product name"
+            placeholder="Enter product name"
+            value={productName}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductName(e.target.value)}
+          />
+
+          <TextInput
+            className="product-page-input1"
+            type="number"
+            labelTitle="Selling price"
+            placeholder="Enter selling price"
+            value={productSelling}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductSelling(e.target.value)}
+          />
+
+          <h2 className="section-title">More details (optional)</h2>
+          <div className="photo-upload">
+            <img
+              src={
+                formData.photoPreview ||
+                "https://cdn.builder.io/api/v1/image/assets/TEMP/4bb6243af55186b1cd1ebac4b200eeb8a7c4b4063d03380c52d037ffbcc583ca?apiKey=d03ff6b018f84c75b88104249d2053b6&"
+              }
+              alt=""
+              className="upload-preview"
             />
-          ))}
-        </section>
-        <h2 className="section-title">More details (optional)</h2>
-        <div className="photo-upload">
-          <img src={formData.photoPreview || "https://cdn.builder.io/api/v1/image/assets/TEMP/4bb6243af55186b1cd1ebac4b200eeb8a7c4b4063d03380c52d037ffbcc583ca?apiKey=d03ff6b018f84c75b88104249d2053b6&"} alt="" className="upload-preview" />
-          <label className="upload-button">
-            Choose a photo
-            <input type="file" onChange={handlePhotoChange} style={{ display: "none" }} />
-          </label>
-        </div>
-        <DropdownField
-          label="Categories"
-          value={formData.categories}
-          onChange={handleInputChange}
-          name="categories"
-          options={categoryOptions}
-        />
-        <InputField label="Capital price" value={formData.capitalPrice} onChange={handleInputChange} name="capitalPrice" />
-        <InputField label="SKU (Stock Keeping Unit)" value={formData.sku} onChange={handleInputChange} name="sku" />
-        <div className="barcode-input">
-          <input type="text" value={formData.barcode} className="barcode-field" onChange={handleInputChange} name="barcode" readOnly />
-          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/f49ceca8a5b8e0204a40b092222334f26b4eb227e997bea917064965e02deaf3?apiKey=d03ff6b018f84c75b88104249d2053b6&" alt="Scan barcode" className="barcode-icon" />
-        </div>
-        <button className="add-product-button">Add a new product</button>
-        <button className="delete-product-button">
-          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/302717b4ee4ab7d3462fc8605ada0ceaae8d5d7fbbd06287efa863058454024d?apiKey=d03ff6b018f84c75b88104249d2053b6&" alt="" className="delete-icon" />
-          <span>Delete product</span>
-        </button>
-      </main>
+            <label className="upload-button">
+              Choose a photo
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                style={{ display: "none" }}
+              />
+            </label>
+          </div>
+
+          <div className="add-product-categories">
+            <label htmlFor="add">Categories</label>
+            <select
+              id="add"
+              value={selectedValue}
+              onChange={handleSelectedValue}
+              className="add-product-select"
+            >
+              <option value="Choose a category">Choose a category</option>
+              {categories.map((option, index) => (
+                <option key={option._id || index} value={option.category_name.toLowerCase()}>
+                  {option.category_name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <TextInput
+            className="product-page-input3"
+            type="number"
+            labelTitle="Price per unit"
+            placeholder="Enter price per unit"
+            value={prizeByUnit}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByUnit(e.target.value)}
+          />
+          <TextInput
+            className="product-page-input3"
+            type="number"
+            labelTitle="Price per dozen"
+            placeholder="Enter price per dozen"
+            value={prizeByDozen}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByDozen(e.target.value)}
+          />
+          <TextInput
+            className="product-page-input3"
+            type="number"
+            labelTitle="Price per carton"
+            placeholder="Enter price per carton"
+            value={prizeByCarton}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrizeByCarton(e.target.value)}
+          />
+
+          <TextInput
+            className="product-page-input4"
+            type="text"
+            labelTitle="Stock Keeping Unit"
+            placeholder="Enter stock unit"
+            value={storeKeepingUnit}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStoreKeepingUnit(e.target.value)}
+          />
+          <h2 className="product-page-codebare">Barcode</h2>
+          <div className="barcode-input">
+            <input
+              type="text"
+              value={barcode || randomNumber}
+              className="barcode-field"
+              onChange={(e) => setBarcode(e.target.value)}
+              name="barcode"
+            />
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/f49ceca8a5b8e0204a40b092222334f26b4eb227e997bea917064965e02deaf3?apiKey=d03ff6b018f84c75b88104249d2053b6&"
+              alt="Scan barcode"
+              className="barcode-icon"
+              onClick={() => generateRandomNumber()}
+            />
+          </div>
+
+          <ButtonInput
+            type="submit"
+            className={
+              (productName &&
+                productSelling &&
+                categories &&
+                barcode
+              ) ||
+                (productName &&
+                  productSelling &&
+                  categories &&
+                  randomNumber
+                )
+                ? "add-product-button"
+                : "add-product-button1"
+            }
+            title="Add a new product"
+            disabled={
+              !productName || !productSelling || !selectedValue || !(barcode || randomNumber) || isLoading
+            }
+            isLoading={isLoading}
+          />
+
+          <button
+            className="delete-product-button"
+            onClick={() => navigate("/landing")}
+          >
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/302717b4ee4ab7d3462fc8605ada0ceaae8d5d7fbbd06287efa863058454024d?apiKey=d03ff6b018f84c75b88104249d2053b6&"
+              alt=""
+              className="delete-icon"
+            />
+            <span>Delete product</span>
+          </button>
+        </main>
+      </form>
     </div>
   );
 };

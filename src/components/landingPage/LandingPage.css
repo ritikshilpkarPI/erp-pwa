@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.landing-page-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100svh;
+    background: #0000000D;
+
+    >.landing-page-header-container {
+        box-shadow: 2px 2px 5px rgb(201, 201, 201);
+
+        >.navigation-header-container {
+            border: none;
+            box-shadow: none;
+
+            >.navigation-header-items {
+                font-family: Rubik;
+                font-size: 28px;
+                font-weight: 700;
+                line-height: 37.92px;
+                color: #1A72DD;
+            }
+        }
+    }
+
+    >.landing-page-item-card-container {
+        position: relative;
+        height: inherit;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 3px;
+        padding: 10px 10px 95px;
+        overflow-y: scroll;
+
+        >.sum-totalizer-footer-container {
+            position: fixed;
+            bottom: 100px;
+
+        }
+
+    }
+
+    >.landing-page-item-card-container::-webkit-scrollbar {
+        display: none;
+    }
+
+
+
+
+
+}
+
+.login-number-container {
+
+    width: 327px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    >.number-input-label{
+        font-family: Rubik;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 18.96px;
+      }
+    
+    >.number-input-container {
+        height: 55px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 16px;
+        overflow: hidden;
+        background-color: #0000000D;
+
+
+        padding: 5px 15px;
+
+        .number-country-code {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            height: 100%;
+            width: 20%;
+            flex-shrink: 0;
+        }
+
+        .number-input {
+            background-color: transparent;
+            height: 100%;
+            width: inherit;
+            border: none;
+            outline: none;
+            padding: 0 15px;
+        }
+    }
+}

@@ -1,17 +1,25 @@
 import React from "react";
-import './ButtonInput.css';
+import "./ButtonInput.css";
 
 const ButtonInput = (props) => {
-  const { className, title, onClick, type, disable, isLoading = false } = props;
+  const {
+    className,
+    title,
+    onClick,
+    type,
+    isLoading = false,
+    disabled,
+  } = props;
 
   return (
-    <>
-    
-    <button disabled={disable} type={type} className={className} onClick={onClick}>
-      
+    <button
+      disabled={disabled}
+      type={type}
+      className={`${className} ${disabled ? "button-disabled" : ""}`}
+      onClick={disabled ? ()=>{} : onClick}
+    >
       {!isLoading ? title : <div className="spinner"></div>}
     </button>
-    </>
   );
 };
 

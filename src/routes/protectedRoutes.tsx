@@ -9,6 +9,17 @@ import { TransactionHistory } from "../components/transactionHistory/Transaction
 import SideMenu from "../components/sideMenu/SideMenu";
 import AddCustomers from "../pages/AddCustomers";
 
+import PaymentPage from "../components/paymentPage/PaymentPage";
+import { AddProductForm } from "../pages/AddProduct";
+import { TransactionSuccessful } from "../pages/TransactionSuccessful";
+import Invoice from "../components/billPage/Invoice";
+import Landing from "../pages/Landing";
+import AddCategory from "../pages/AddCategory";
+import Category from "../pages/Category";
+import PolicyPage from "../components/policyPage/PolicyPage";
+import PlaceOrder from "../pages/PlaceOrder";
+import Customers from "../pages/Customers";
+
 const protectedRouteMap = Object.freeze({
   "/about": <About />,
   "/receipts": <ReceiptsPage />,
@@ -17,10 +28,24 @@ const protectedRouteMap = Object.freeze({
   "/cart": <CreateMenuPage />,
   "/history": <TransactionHistory />,
   "/addcustomer": <AddCustomers />,
+  "/payment": <PaymentPage />,
+  "/addproduct": <AddProductForm />,
+  "/transactionSuccessfull": <TransactionSuccessful />,
+  "/invoice": <Invoice />,
+  "/landing": <Landing />,
+  "/addCategory": <AddCategory />,
+  "/category": <Category />,
+  "/policy":<PolicyPage/>,
+  "/placeorder": <PlaceOrder />,
+  "/customers": <Customers />,
 });
 
 export const ProtectedRoute = () => {
+  
   const isLoggedIn = true;
+
+ 
+  
 
   return (
     <>

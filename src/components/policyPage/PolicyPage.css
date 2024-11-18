@@ -1,0 +1,47 @@
+.policy-container {
+    height: 100svh;
+    font-family: Arial, sans-serif;
+    font-family: Rubik;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+    >.navigation-header-container {
+        >.policy-header-categorys {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 37.92px;
+            text-align: left;
+            color: #1A72DD;
+        }
+    }
+
+    >.policy-text-container {
+        padding: 10px 0;
+        overflow-y: scroll;
+
+        >.policy-section {
+            margin-bottom: 30px;
+            padding: 0 20px;
+            h2 {
+                color: #333;
+                margin-bottom: 10px;
+            }
+            p {
+                color: #555;
+                margin-bottom: 15px;
+            }
+        }
+
+    }
+
+    >.policy-text-container::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+
+

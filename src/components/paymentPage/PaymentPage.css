@@ -1,0 +1,116 @@
+.payment-page {
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+
+}
+.payment-page-header-container{
+  width: 100vw;
+}
+
+.navigation-header-container {
+  border-bottom: 0.5px solid grey;
+}
+
+.payment-page-total-invoice {
+  height: 3.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 0.5px solid grey;
+}
+
+.navigation-header-payment {
+  color: #1a72dd;
+}
+
+.payment-page-total-left {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.payment-page-total-right {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-page-total-heading {
+  font-weight: 400;
+  font-size: 22px;
+  color: #1a72dd;
+  
+
+}
+.payment-page-total-heading-red {
+  font-weight: 400;
+  font-size: 22px;
+  color: #1a72dd;
+  span{
+    color: red;
+  }
+
+}
+
+.payment-page-price-heading {
+  font-weight: 500;
+  font-size: 22px;
+  color: #1a72dd;
+}
+
+.payment-page-tabs {
+  height: 3.5rem;
+  border-bottom: 0.5px solid grey;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-bottom 0.3s;
+}
+
+.payment-cash-tab {
+  width: 50%;
+  height: 100%;
+  color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-cheque-tab {
+  width: 50%;  
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid black;
+  transition: .2s;
+}
+
+.payment-cash-heading {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+
+.payment-page-body{
+  width: 100vw;
+  height: inherit;
+  background-color: whitesmoke;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  > .service-message{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    font-size: 16px;
+    color: #1a72dd;
+  }
+}

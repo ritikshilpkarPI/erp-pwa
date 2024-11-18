@@ -18,7 +18,7 @@
     background-color: #1369D1;
     transform: translateX(-100%);
     transition: transform 0.3s ease-out;
-    z-index: 2;
+    z-index: 10;
   }
 
   .overlay {
@@ -59,19 +59,27 @@
     .sidemenu-header-button {
       .sidemenu-header-btn {
         width: 70px;
-        padding: 3px;
+        padding: 6px;
+        border-radius: 9px;
+        border: none;
+        font-size: 12px;
+        font-weight: 500;
+        color: #1369D1;
       }
     }
   }
 
   .user-name {
-    width: 148px;
+    width: 90%;
     height: 26px;
     margin-top: 18px;
     font-size: 22px;
     font-weight: 500;
     line-height: 26.07px;
     text-align: left;
+    display: flex;
+    align-items: center;
+    
   }
 
   .line {
@@ -96,15 +104,6 @@
       width: 90%;
       border-radius: 8px;
       cursor: pointer;
-
-      &:hover {
-        background-color: rgb(203, 203, 203);
-        color: #357ace;
-      }
-
-      &.selected .item-logo svg {
-        color: blue;
-      }
 
       .item-label {
         font-size: 16px;
@@ -195,4 +194,17 @@
       }
     }
   }
+}
+
+.user-name-text {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 26.07px;
+  text-align: left;
+  margin-left: 5px;
+  text-transform: capitalize;
+
+}
+.device-name-text{
+  font-size: 18px;
 }

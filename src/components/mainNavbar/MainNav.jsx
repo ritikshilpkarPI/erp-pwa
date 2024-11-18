@@ -1,11 +1,25 @@
 import React from "react";
 import "./MainNav.css";
-import MainHeader from "./MainHeader";
 import MainHeaderMenu from "./MainHeaderMenu";
+import NavigationHeader from "../navigationHeader/NavigationHeader";
+import HamburgerIcon from "../../image/HamburgerIcon.svg";
+import { useAppContext } from "../../appState/appStateContext";
+
+
 const MainNav = () => {
+  const {  dispatch } = useAppContext();
+  const handleHamburger = () =>{
+    dispatch({ type: 'TOGGLE_DRAWER' });
+  }
   return (
     <div className="main-nav-bar">
-      <MainHeader />
+       <NavigationHeader
+        title="Items"
+        titleClassName="navigation-header-Items"
+        NavigationHeaderImage={HamburgerIcon}
+        NavigationHeaderImageClassName="back-button-image-full"
+        onClick={handleHamburger}
+      />
       <MainHeaderMenu />
     </div>
   );

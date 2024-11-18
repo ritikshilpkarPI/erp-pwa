@@ -1,0 +1,41 @@
+.category-pod-container {
+    width: 327px;
+    height: 73px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-shrink: 0;
+    gap: 20px;
+    box-shadow: 0px 2px 7px 0px #0000000F;
+
+    >.category-pod-image-container {
+        border: 5px solid #ffffff;
+        border-radius: 20px 0 0 20px;
+        overflow: hidden;
+        height: 73px;
+        width: 93px;
+        flex-shrink: 0;
+
+        >.category-pod-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    >.category-pod-text-container {
+        width: inherit;
+
+        >.category-pod-text {
+            font-family: Rubik;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 18.96px;
+
+        }
+    }
+}

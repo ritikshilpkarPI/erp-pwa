@@ -5,7 +5,12 @@ export const appGlobalState: any = {
   bills: {},
   cartItems: [],
   customers: [],
-  setCustomer: {},
+  categories: [],
+  pricingPerQuantity: "",
+  selectedCustomer: {},
+  currentTransaction: {},
+  transactionHistory: [],
+  chequeList: [],
   isOpen: false,
   loggedInUser: decodeJwtToken(localStorage.getItem("token")) ?? null,
   isLoggedIn: Boolean(decodeJwtToken(localStorage.getItem("token"))),
@@ -21,8 +26,14 @@ export const appStateReducer = (state: any, action: any) => {
       };
 
     case "ADD_ITEM_TO_CART":
-      const newCartItems = [...state.cartItems, action.payload];
+      const newCartItems = [...action.payload];
       return { ...state, cartItems: newCartItems };
+
+
+    case "SET_TRANSACTION_HISTORY":
+      const newTransactionHistory = action?.payload ?? [];
+      return { ...state, transactionHistory: newTransactionHistory };
+
     case "ADD_ITEM_TO_BILL":
       const newItems = [...state.items];
       newItems.push(action.payload);
@@ -35,26 +46,63 @@ export const appStateReducer = (state: any, action: any) => {
         ...state,
         items: action.payload,
       };
+    case "CLEAR_ITEMS":
+      return { ...state, items: [] };
     case "SET_LOADING":
       return {
         ...state,
-        isLoading: !state.isLoading,
+        isLoading: action.payload,
       };
-    
+
     case "LOGOUT":
-        localStorage.removeItem('token');
-        return { ...state, loggedInUser: null, isLoggedIn: false, isOpen: false, cartItems: [] };
+      localStorage.removeItem("token");
+      document.cookie = '';
+      return {
+        ...state,
+        loggedInUser: null,
+        isLoggedIn: false,
+        isOpen: false,
+        cartItems: [],
+      };
 
     case "SET_CUSTOMERS_LIST":
-      const newCustomers = action?.payload ?? []
+      const newCustomers = action?.payload ?? [];
       return { ...state, customers: newCustomers };
 
-    case "SET_CUSTOMER":
-      const newCustomer = action.payload ?? {}
-      console.log(newCustomer)
-      
-      return { ...state, setCustomer: newCustomer };
+    case "SET_CATEGORIES_LIST":
+      const newCategories = action?.payload ?? [];
+      return { ...state, categories: newCategories };
 
+    case "SELECTED_CUSTOMER":
+      const newCustomer = action.payload ?? {};
+      return { ...state, selectedCustomer: newCustomer };
+
+    case "PRICING_PER_QUANTITY":
+      const newPricingPerQuantity = action.payload ?? {};
+      return { ...state, pricingPerQuantity: newPricingPerQuantity };
+
+    case "CURRENT_TRANSACTION":
+      const newTransaction = action.payload ?? {};
+      return { ...state, currentTransaction: newTransaction };
+
+    case "SET_USER":
+      const loggedInUser =
+        decodeJwtToken(localStorage.getItem("token")) ?? null;
+      return { ...state, loggedInUser, isLoggedIn: Boolean(loggedInUser) };
+
+    case "UPDATE_CART_ITEMS":
+      return {
+        ...state,
+        cartItems: action.payload,
+      };
+    case "SET_CHEQUE_LIST":
+      const updateChequeList = action.payload ?? {};
+      return { ...state, chequeList: updateChequeList };
+
+    case "ADD_CHEQUE_LIST":
+      const newChequeList = [...state.chequeList];
+      newChequeList.push(action.payload);
+      return { ...state, chequeList: newChequeList };
 
 
 

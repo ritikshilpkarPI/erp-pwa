@@ -2,9 +2,7 @@ import { useState } from "react";
 import "./SideMenu.css";
 import SideBarLogo from "../../icons/SideBarLogo";
 import ButtonInput from "../buttonInput/ButtonInput";
-// import DropDown from "../dropDown/DropDown";
 import SideMenuItems from "./SideMenuItems";
-import EllipseIcon from "../../icons/EllipseIcon";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../appState/appStateContext";
 
@@ -12,15 +10,9 @@ const SideMenu = () => {
   const { globalState, dispatch } = useAppContext();
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  
-  // const options = [
-  //   { value: "option1", label: "Option 1" },
-  //   { value: "option2", label: "Option 2" },
-  //   { value: "option3", label: "Option 3" },
-  // ];
 
   const toggleOpen = () => {
-    dispatch({ type: 'TOGGLE_DRAWER' });
+    dispatch({ type: "TOGGLE_DRAWER" });
   };
 
   const navigate = useNavigate();
@@ -28,11 +20,13 @@ const SideMenu = () => {
   const handleItemClick = (route, index) => {
     navigate(route);
     setSelectedIndex(index);
-    dispatch({ type: 'TOGGLE_DRAWER' });
+    dispatch({ type: "TOGGLE_DRAWER" });
   };
 
   return (
-    <div className={`sidemenu-main-overlay ${globalState.isOpen ? 'open' : ''}`}>
+    <div
+      className={`sidemenu-main-overlay ${globalState.isOpen ? "open" : ""}`}
+    >
       <div className={`sidemenu-main `}>
         <div className="side-menu">
           <div className="sidemenu-header">
@@ -40,26 +34,23 @@ const SideMenu = () => {
               <div className="logo">
                 <SideBarLogo />
               </div>
-              <div className="app-name">{"AppName"}</div>
+              <div className="app-name">{"Invoicify"}</div>
             </div>
             <div className="sidemenu-header-button">
-              <ButtonInput className="sidemenu-header-btn" title="Log out" 
-              onClick={() => {
-                  dispatch({ type: 'LOGOUT' });
-                  navigate('/login');
-                }
-              } 
-              type="button"
-               />
+              
             </div>
           </div>
-          <div className="user-name"> {globalState?.loggedInUser?.name ?? "User"}</div>
+          <div className="user-name">
+            {" Hey 👋   "} {"   "}
+            <span className="user-name-text">{globalState?.loggedInUser?.user?.name ?? "User"}</span>
+          </div>
+          <span className="user-name-text device-name-text">{globalState?.loggedInUser?.user?.deviceName ?? ""}</span>
           {/* <DropDown options={options} /> */}
           <div className="line"></div>
           <div className="sidemenu-items">
             {SideMenuItems.map((item, index) => (
               <div
-                className={`item ${index === selectedIndex ? 'selected' : ''}`}
+                className={`item ${index === selectedIndex ? "selected" : ""}`}
                 key={index}
                 onClick={() => handleItemClick(item.route, index)}
                 role="button"
@@ -70,22 +61,25 @@ const SideMenu = () => {
               </div>
             ))}
           </div>
-          <div className="login-history">
-            <div className="ellipse-icon">
-              <EllipseIcon />
-            </div>
+          {/* <div className="login-history">
+            
             <div className="content">
-              <p>Dernière Connexion</p>
-              <p>Lundi, 01 juillet 2020</p>
+              <p>Last Login</p>
+              <p>Monday, July 1, 2020</p>
               <p>(12:00 AM)</p>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="sidemenu-footer-btn">
           <ButtonInput
-            className="sidemenu-footer-button"
-            title="UPGRADE TO PREMIUM"
-          />
+                className="sidemenu-header-btn sidemenu-footer-button"
+                title="Log out"
+                onClick={() => {
+                  dispatch({ type: "LOGOUT" });
+                  navigate("/login");
+                }}
+                type="button"
+              />
         </div>
       </div>
       <div className="overlay" onClick={toggleOpen}></div>
