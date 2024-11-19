@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "app.netlify.main__erp_pwa.twa",
+      "package_name": "app.netlify.erp_pwa.twa",
       "sha256_cert_fingerprints": [
         "0D:5D:0C:D6:7F:20:E0:32:8D:C6:FC:98:44:5E:89:18:13:8C:53:84:AD:D0:EF:57:99:C8:E1:AF:54:F3:6C:8C"
       ]
