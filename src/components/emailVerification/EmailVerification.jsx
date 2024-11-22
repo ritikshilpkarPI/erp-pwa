@@ -19,8 +19,16 @@ const EmailVerification = () => {
     navigate("/signup");
   };
 
+ const isValidEmail =  ()=> {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;   
+     return emailRegex.test(input)
+  }
+
+
   const handleInputChange = (e) => {
-    const value = e.target.value;
+   
+    const value = e.target.value.trim();
+    
     setInput(value);
     setIsValid(true);
     setValidationMessage("");
@@ -134,10 +142,10 @@ const EmailVerification = () => {
       <div className="email-verification-bottom-nav">
         <ButtonInput
           className={`email-verification-bottom-btn ${
-            isDisabled || !input  ? "button-disabled" : ""
+            isDisabled || !isValidEmail()  ? "button-disabled" : ""
           }`}
           title="Get OTP"
-          disable={isDisabled || !input}
+          disable={isDisabled || !isValidEmail()}
           onClick={handleButtonClick}
         />
       </div>
