@@ -8,6 +8,7 @@ import noDataAnimation from "../../animation/noDataAnimation.json";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backButtonIcon from "../../image/BackIcon.svg";
 import LoadingCircle from "../loadinCircule/LoadingCircle";
+import SearchInput from "../../pages/searchInput/SearchInput";
 
 
 
@@ -74,7 +75,7 @@ const CustomerScreen = () => {
     }
   };
   const handleChange = (e) => {
-    setSearchQuery(e.target.value);
+    setSearchQuery(e.target.value?.trim());
   };
 
   return (
@@ -89,7 +90,7 @@ const CustomerScreen = () => {
         />
         <div className="customer-header-bottom">
           <div className="customer-input">
-            <input
+            <SearchInput
               className="search-input"
               type="text"
               placeholder="Search for a name, a contact, or an email"

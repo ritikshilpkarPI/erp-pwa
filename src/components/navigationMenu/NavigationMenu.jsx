@@ -98,6 +98,7 @@ const NavigationMenu = ({ onClick, setItemsList }) => {
                         placeholder='Search'
                         value={searchTerm}
                         onChange={handleSearchChange}
+                        showCross={true}
                     />
                 ) : (
                     <select

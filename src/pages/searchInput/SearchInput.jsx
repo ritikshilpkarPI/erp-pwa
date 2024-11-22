@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import trimInvalidSpaces from "../../utils/trimInvalidSpaces";
 
-const SearchInput = ({ isOpen, className ,onChange}) => {
+const SearchInput = ({ isOpen, className ,onChange, showCross, placeholder }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -12,16 +11,11 @@ const SearchInput = ({ isOpen, className ,onChange}) => {
 
   return (
     <input 
-      type="search"
+      type={showCross ? "search" : "text"}
       className={className}
-      placeholder='Search items..'
+      placeholder={placeholder}
       ref={inputRef}
-      onChange={(e) => {
-        const validValue = trimInvalidSpaces(e.target.value);
-        console.log({ validValue })
-        e.target.value = validValue;
-        onChange(e);
-      }}
+      onChange={onChange}
     />
   );
 };
