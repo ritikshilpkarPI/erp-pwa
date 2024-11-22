@@ -4,6 +4,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { AppStateContext } from "../../appState/appStateContext";
 import DeleteIcon from "../../icons/DeleteIcon";
+import NumberInput from "../numberInput/NumberInput";
 
 const PlaceOrderScreen = () => {
   const { globalState, dispatch } = useContext(AppStateContext);
@@ -58,6 +59,11 @@ const PlaceOrderScreen = () => {
     const updatedCartItems = globalState?.cartItems?.filter((_, i) => i !== index);
     dispatch({ type: "UPDATE_CART_ITEMS", payload: updatedCartItems });
   };
+  useEffect(() => {
+    if (globalState?.cartItems.length === 0) {
+      navigate("/landing");
+    }
+  }, [globalState?.cartItems])
 
 
   return (
@@ -98,10 +104,9 @@ const PlaceOrderScreen = () => {
                 <div className="placeorder-price">
                   <div className="placeorder-input-box">
                     <h5 className="placeorder-input-box-heading">රු</h5>
-                    <input
+                    <NumberInput
                       className="placeorder-input-box-input"
-                      type="number"
-                      value={cartItem.price === "" ? "" : cartItem.price}
+                      value={cartItem.price}
                       onChange={(e) => handlePriceChange(index, e.target.value)}
                     />
                   </div>
