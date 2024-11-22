@@ -52,7 +52,7 @@ const OtpVerification = () => {
   };
 
   const handleInputChange = (e, index) => {
-    const value = e.target.value;
+    const value = e.target.value.trim();
     if (isNaN(value)) return;
 
     const newOtp = [...otpInput];
