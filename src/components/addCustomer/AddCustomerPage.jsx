@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIconImage from "../../image/BackIcon.svg";
 import { AppStateContext } from "../../appState/appStateContext";
+import getValidNumberWithoutExpo from "../../utils/getValidNumberWithoutExpo";
+import isPhoneNumberValid from "../../utils/isPhoneNumberValid";
 
 const AddCustomerPage = () => {
   const [username, setUsername] = useState("");
@@ -17,6 +19,8 @@ const AddCustomerPage = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const isValidTelephoneNumber = isPhoneNumberValid(telephone);
+  const trimmedUsername = username?.trim();
 
   const { dispatch } = useContext(AppStateContext);
 
@@ -38,7 +42,7 @@ const AddCustomerPage = () => {
           body: JSON.stringify({
             name: username.replace(/^\s+/, ""),
             address: address.replace(/^\s+/, ""),
-            email: email,
+            email: email.replace(/^\s+/, ""),
             credit_limit: parseFloat(creditLimit.replace(/^\s+/, "")),
             telephone: telephone.replace(/^\s+/, ""),
             is_deleted: false,
@@ -88,7 +92,7 @@ const AddCustomerPage = () => {
           labelTitle="Name"
           placeholder="Enter Customer Name"
           value={username}
-          onChange={(e) => setUsername(e.target.value.replace(/^\s+/, ""))}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <TextInput
           className="login-user-telephone-input"
@@ -96,8 +100,9 @@ const AddCustomerPage = () => {
           labelTitle="Telephone"
           placeholder="Enter Customer Phone Number"
           value={telephone}
-          onChange={(e) => setTelephone(e.target.value.replace(/^\s+/, ""))}
+          onChange={(e) => setTelephone(getValidNumberWithoutExpo(e.target.value))}
           isPhoneNumber = 'true'
+          min={0}
         />
         <TextInput
           className="login-user-email-input"
@@ -106,7 +111,7 @@ const AddCustomerPage = () => {
           placeholder="Enter Customer email address"
           value={email}
           onBlur={handleBlur}
-          onChange={(e) => setEmail(e.target.value.replace(/^\s+/, ""))}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextInput
           className="login-user-credit-limit-input"
@@ -114,7 +119,8 @@ const AddCustomerPage = () => {
           labelTitle="Credit limit"
           placeholder="Enter credit limit"
           value={creditLimit}
-          onChange={(e) => setCreditLimit(e.target.value.replace(/^\s+/, ""))}
+          onChange={(e) => setCreditLimit(getValidNumberWithoutExpo(e.target.value))}
+          min={0}
         />
         <TextArea
           className="login-user-id-input-area"
@@ -132,13 +138,15 @@ const AddCustomerPage = () => {
             // !email ||
             // !address ||
             !creditLimit ||
+            !isValidTelephoneNumber ||
+            !trimmedUsername ||
             isLoading
             // !isEmailValid
           }
           type="submit"
           className={
-            username &&
-            telephone &&
+            username?.trim() &&
+            trimmedUsername &&
             // email &&
             // address &&
             isEmailValid
