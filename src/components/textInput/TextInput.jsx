@@ -3,7 +3,7 @@ import EyeIcon from '../../image/EyeIcon.svg';
 import EyeOffIcon from '../../image/EyeOffIcon.svg';
 
 const TextInput = (props) => {
-    const { className, type, placeholder, labelTitle, value, onChange, accept, isPhoneNumber } = props;
+    const { className, type, placeholder, labelTitle, value, onChange, accept, isPhoneNumber, min } = props;
     const [inputType, setInputType] = useState(type);
 
     const togglePasswordVisibility = () => {
@@ -39,6 +39,7 @@ const TextInput = (props) => {
                         placeholder={placeholder}
                         value={value}
                         onChange={onChange}
+                        min={min}
                     />
                     <button
                         type="button"
