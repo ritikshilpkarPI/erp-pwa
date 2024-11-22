@@ -63,7 +63,7 @@ const PlaceOrderScreen = () => {
     if (globalState?.cartItems.length === 0) {
       navigate("/landing");
     }
-  }, [globalState?.cartItems])
+  }, [globalState?.cartItems, navigate])
 
 
   return (
