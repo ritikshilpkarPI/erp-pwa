@@ -234,6 +234,7 @@ const LoginPage = () => {
                 className="login-submit-button-input"
                 title="Log In"
                 isLoading={loading}
+                disabled={!password.trim() || !emailOrPhone.trim()}
               />
             </form>
             <Link to="/forgotpassword" className="forgot-password">
@@ -262,6 +263,8 @@ const LoginPage = () => {
                   placeholder="Phone number"
                   value={emailOrPhone}
                   onChange={(e) => handlePhoneNumberChange(e)}
+                  onKeyDown={(e)=> ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
+                  maxLength={10}
                 />
               </div>
             </div>
@@ -271,7 +274,7 @@ const LoginPage = () => {
               className="login-submit-button-input"
               title={result ? "Verify OTP" : "Send OTP"}
               isLoading={loading}
-              disabled={result ? !Boolean(otp) : !Boolean(emailOrPhone)}
+              disabled={result ? !Boolean(otp) : loginOption !== loginOption.PHONE && !Boolean(emailOrPhone.length === 10)}
               onClick={result ? verifyOtp : sendOtpToPhone}
             />
             { result &&
