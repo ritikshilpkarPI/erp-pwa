@@ -24,6 +24,7 @@ const SignupPage = () => {
   const [timer, setTimer] = useState(null);
   const [timeLeft, setTimeLeft] = useState(60);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
+  const [validationMessage, setValidationMessage] = useState("");
 
   useEffect(() => {
     let interval;
@@ -141,25 +142,26 @@ const SignupPage = () => {
         return;
       }
 
+      if (!validatePassword()) {
+        return;
+      }
+
       setLoading(true);
 
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/signup`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: usernameTrimmed,
-            email: emailTrimmed,
-            password: passwordTrimmed,
-            phone_number: `${countryCode}${phoneTrimmed}`,
-            business_name: bussinessnameTrimmed,
-            address: addressTrimmed,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: usernameTrimmed,
+          email: emailTrimmed,
+          password: passwordTrimmed,
+          phone_number: `${countryCode}${phoneTrimmed}`,
+          business_name: bussinessnameTrimmed,
+          address: addressTrimmed,
+        }),
+      });
 
       const result = await response.json();
 
@@ -185,7 +187,16 @@ const SignupPage = () => {
     if (/^\d{0,10}$/.test(input)) {
       setnewPhone(input);
     }
-  }
+  };
+
+  const validatePassword = () => {
+    if (newPassword.length < 6) {
+      setValidationMessage("Password must be at least 6 characters long");
+      return false;
+    }
+    setValidationMessage("");
+    return true;
+  };
 
   return (
     <div className="signup-page-container">
@@ -207,8 +218,10 @@ const SignupPage = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
           <div className="signup-number-container">
-            <label className="number-input-label" htmlFor="number-input">Phone Number</label>
-            <div className="number-input-container" >
+            <label className="number-input-label" htmlFor="number-input">
+              Phone Number
+            </label>
+            <div className="number-input-container">
               <select
                 className="number-country-code"
                 id="countryCode"
@@ -224,6 +237,7 @@ const SignupPage = () => {
                 placeholder="Enter your number"
                 value={newPhone}
                 onChange={(e) => handlePhoneNumberChange(e)}
+                maxLength={10}
               />
             </div>
           </div>
@@ -274,14 +288,20 @@ const SignupPage = () => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
+
+          {validationMessage && (
+            <div className="validation-message">{validationMessage}</div>
+          )}
+
           {isOtpSent && (
             <TextInput
               className="signup-user-otp-input"
-              type="text"
+              type="number"
               labelTitle="OTP"
               placeholder="Enter OTP"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
+              isOtp={true}
             />
           )}
           <ButtonInput
