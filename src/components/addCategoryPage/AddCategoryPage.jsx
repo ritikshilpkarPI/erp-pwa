@@ -10,18 +10,17 @@ const AddCategoryPage = () => {
   const navigate = useNavigate();
 
   const [addCategory, setAddCategory] = useState("");
-  const [addColor, setAddColor] = useState("");
+  const [addColor, setAddColor] = useState("#000000");
   const [addImage, setAddImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const formData = new FormData();
-      formData.append("category_name", addCategory);
-      formData.append("category_color", addColor);
+      formData.append("category_name", addCategory?.trim());
+      formData.append("category_color", addColor?.trim());
       formData.append("category_image", addImage);
       const token = localStorage.getItem('token'); 
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/categories`,
@@ -50,7 +49,7 @@ const AddCategoryPage = () => {
     }
   };
 
-  const isFormFilled = addCategory !== "" && addColor !== "";
+  const isFormFilled = addCategory?.trim() !== "" && addColor?.trim() !== "";
 
   return (
     <div className="add-category-page-container">
@@ -84,7 +83,7 @@ const AddCategoryPage = () => {
           labelTitle="Select category image"
           placeholder="Select category image"
           onChange={(e) => setAddImage(e.target.files[0])}
-          accept="image/png, image/jpeg"
+          accept="image/*"
         />
         <ButtonInput
           disabled={!isFormFilled || isLoading}
