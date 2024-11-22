@@ -5,7 +5,7 @@ import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
 
-const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost,creditLimit }) => {
+const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost, creditLimit }) => {
   const navigate = useNavigate();
   const [hasEdited, setHasEdited] = useState(false);
   const handleExtractAmount = () => {
@@ -27,6 +27,9 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
   };
   const handleInputChange = (e) => {
     let value = e.target.value;
+    if (value !== '' && parseFloat(value) < 0) {
+      return;
+    }
     if (!hasEdited) {
       value = value.replace(/^0+/, "");
       setHasEdited(true);
@@ -51,7 +54,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
         <TextInput
           className="cash-page-input1"
           type="number"
-          labelTitle={remainingAmount<0 ? "Amount Return" : "Amount Due"}
+          labelTitle={remainingAmount < 0 ? "Amount Return" : "Amount Due"}
           placeholder="LKR 0"
           value={Math.abs(remainingAmount)?.toFixed(2)}
           readOnly
