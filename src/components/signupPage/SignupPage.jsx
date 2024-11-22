@@ -224,6 +224,7 @@ const SignupPage = () => {
                 placeholder="Enter your number"
                 value={newPhone}
                 onChange={(e) => handlePhoneNumberChange(e)}
+                onKeyDown={(e)=> ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
               />
             </div>
           </div>
