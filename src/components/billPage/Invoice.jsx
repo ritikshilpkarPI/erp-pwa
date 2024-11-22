@@ -3,6 +3,7 @@ import "./Invoice.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIconImage from "../../image/BackIcon.svg";
+import onNativeShare from "../../utils/onNativeShare";
 
 const Invoice = () => {
   const location = useLocation();
@@ -12,7 +13,6 @@ const Invoice = () => {
 
   const navigate = useNavigate();
 
-
   const handleBackClick = () => {
     navigate(-1);
   };
@@ -20,40 +20,65 @@ const Invoice = () => {
   const handlePrintClick = () => {
     window.print();
   };
-  const copyAndShareLink = () => {
-    const baseUrl = process.env.REACT_APP_FRONTEND_URL ?? '';
+  const copyAndShareLink = async () => {
+    const baseUrl = process.env.REACT_APP_FRONTEND_URL ?? "";
     const invoiceUrl = `${baseUrl}/invoice-public/${transactionId}`;
-
-    navigator.clipboard.writeText(invoiceUrl)
-      .then(() => {
-        if (navigator.share) {
-          navigator.share({
-            title: 'Share Invoice',
-            text: 'Check out this invoice!',
-            url: invoiceUrl
-          })
-            .then(() => console.log('Thanks for sharing!'))
-            .catch((error) => console.log('Error sharing:', error));
-        } else {
-          const shareWindow = window.open('', '_blank');
-          shareWindow.document.write(`
-                    <h2>Share this invoice</h2>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(invoiceUrl)}" target="_blank">Share on Facebook</a><br>
-                    <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(invoiceUrl)}" target="_blank">Share on Twitter</a><br>
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(invoiceUrl)}" target="_blank">Share on LinkedIn</a><br>
-                    <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(invoiceUrl)}" target="_blank">Share on WhatsApp</a>
-                `);
-          shareWindow.document.close();
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to copy the link: ', err);
+    const invoiceName = `invoice-${Date.now()}`;
+    let invoiceImage;
+    try {
+      const response = await fetch(invoiceUrl);
+      const blob = await response.blob();
+      invoiceImage = new File([blob], `invoice-${Date.now()}`, {
+        type: blob.type,
       });
+    } catch (err) {}
+
+    if (
+      !onNativeShare({
+        title: invoiceName,
+        files: [invoiceImage],
+      })
+    ) {
+      navigator.clipboard
+        .writeText(invoiceUrl)
+        .then(() => {
+          if (navigator.share) {
+            navigator
+              .share({
+                title: "Share Invoice",
+                text: "Check out this invoice!",
+                url: invoiceUrl,
+              })
+              .then(() => console.log("Thanks for sharing!"))
+              .catch((error) => console.log("Error sharing:", error));
+          } else {
+            const shareWindow = window.open("", "_blank");
+            shareWindow.document.write(`
+                    <h2>Share this invoice</h2>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                      invoiceUrl
+                    )}" target="_blank">Share on Facebook</a><br>
+                    <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                      invoiceUrl
+                    )}" target="_blank">Share on Twitter</a><br>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+                      invoiceUrl
+                    )}" target="_blank">Share on LinkedIn</a><br>
+                    <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(
+                      invoiceUrl
+                    )}" target="_blank">Share on WhatsApp</a>
+                `);
+            shareWindow.document.close();
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to copy the link: ", err);
+        });
+    }
   };
 
   return (
     <div className="invoice">
-
       <NavigationHeader
         title="Invoice"
         titleClassName="navigation-invoice-login"
@@ -65,10 +90,10 @@ const Invoice = () => {
         <div className="invoice-header">
           <h2 className="invoice-header-text">INVOICE</h2>
           <div className="invoice-header-body">
-
             <div className="invoice-header-left">
               <p className="invoice-header-left-p">
-                <strong>Business Name:</strong> {data?.employeData?.business_name}
+                <strong>Business Name:</strong>{" "}
+                {data?.employeData?.business_name}
               </p>
               <p className="invoice-header-left-p">
                 <strong>Address:</strong> {data?.employeData?.address}
@@ -80,16 +105,16 @@ const Invoice = () => {
 
             <div className="invoice-header-right">
               <p className="invoice-header-right-p">
-                <strong>{data?.customer?.name ? "Customer Name:":"Type"}</strong> {data?.customer?.name? data?.customer?.name : "Cash"}
+                <strong>
+                  {data?.customer?.name ? "Customer Name:" : "Type"}
+                </strong>{" "}
+                {data?.customer?.name ? data?.customer?.name : "Cash"}
               </p>
               <p className="invoice-header-right-p">
                 <strong>Total Amount:</strong> {data?.transaction?.totalAmount}
               </p>
-
             </div>
-
           </div>
-
         </div>
         <div className="invoice-body">
           <table>
@@ -116,7 +141,6 @@ const Invoice = () => {
           </table>
 
           <div className="invoice-body-bottom">
-
             <div className="invoice-body-bottom-left">
               <p className="invoice-body-bottom-left-p">
                 <strong>Total Items: {data?.items?.length}</strong>
@@ -137,7 +161,6 @@ const Invoice = () => {
               </p>
             </div>
           </div>
-
         </div>
 
         <div className="print-btn-outer">
