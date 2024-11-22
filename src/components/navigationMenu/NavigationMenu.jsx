@@ -4,6 +4,7 @@ import Search from '../../icons/Search';
 import SearchClose from '../../icons/SearchClose';
 import AddIcon from '../../icons/AddIcon';
 import { useAppContext } from '../../appState/appStateContext';
+import SearchInput from '../../pages/searchInput/SearchInput';
 
 const NavigationMenu = ({ onClick, setItemsList }) => {
     const { globalState } = useAppContext();
@@ -60,7 +61,7 @@ const NavigationMenu = ({ onClick, setItemsList }) => {
     };
 
     const handleSearchChange = (event) => {
-        const searchValue = event.target.value.toLowerCase();
+        const searchValue = event.target.value.toLowerCase()?.trim();
         setSearchTerm(searchValue);
 
         const filteredItems = (selectedCategory ? categoryFilteredItems : fullItemsList).filter(item =>
@@ -91,7 +92,7 @@ const NavigationMenu = ({ onClick, setItemsList }) => {
         <div className='navigation-menu-container'>
             <div className='navigation-menu-search-select-container'>
                 {isSearchOpen ? (
-                    <input
+                    <SearchInput
                         className='navigation-menu-search'
                         type="search"
                         placeholder='Search'
