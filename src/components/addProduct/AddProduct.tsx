@@ -21,6 +21,9 @@ interface Category {
   category_name: string;
 }
 
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+const ALLOWED_FORMATS = ['image/jpeg', 'image/png', 'image/jpg'];
+
 export const AddProduct = () => {
   const [productName, setProductName] = useState<string>("");
   const [productSelling, setProductSelling] = useState<string>("");
@@ -49,7 +52,11 @@ export const AddProduct = () => {
     for (let i = 0; i < 10; i++) {
       number += Math.floor(Math.random() * 10);
     }
-    setRandomNumber(number);
+    setRandomNumber(number); 
+    
+    if (!barcode) {
+      setBarcode(number); 
+    }
   };
 
   const handleSelectedValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -124,10 +131,29 @@ export const AddProduct = () => {
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
+  
+    if (!file) {
+      enqueueSnackbar("No file selected.");
+      return;
+    }
+  
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      enqueueSnackbar("File size exceeds 2 MB. Please select a smaller file.", { variant: "error" });
+      return;
+    }
+  
+    // Validate file format
+    if (!ALLOWED_FORMATS.includes(file.type)) {
+      enqueueSnackbar("Invalid file format. Please select a JPEG, PNG, or JPG image.", { variant: "error" });
+      return;
+    }
+  
+   
     setFormData({
       ...formData,
       photo: file,
-      photoPreview: file ? URL.createObjectURL(file) : null,
+      photoPreview: URL.createObjectURL(file),
     });
   };
 
@@ -236,20 +262,20 @@ export const AddProduct = () => {
           />
           <h2 className="product-page-codebare">Barcode</h2>
           <div className="barcode-input">
-            <input
-              type="text"
-              value={barcode || randomNumber}
-              className="barcode-field"
-              onChange={(e) => setBarcode(e.target.value)}
-              name="barcode"
-            />
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/f49ceca8a5b8e0204a40b092222334f26b4eb227e997bea917064965e02deaf3?apiKey=d03ff6b018f84c75b88104249d2053b6&"
-              alt="Scan barcode"
-              className="barcode-icon"
-              onClick={() => generateRandomNumber()}
-            />
-          </div>
+  <input
+    type="text"
+    value={barcode || randomNumber} 
+    className="barcode-field"
+    onChange={(e) => setBarcode(e.target.value)}  
+    name="barcode"
+  />
+  <img
+    src="https://cdn.builder.io/api/v1/image/assets/TEMP/f49ceca8a5b8e0204a40b092222334f26b4eb227e997bea917064965e02deaf3?apiKey=d03ff6b018f84c75b88104249d2053b6&"
+    alt="Scan barcode"
+    className="barcode-icon"
+    onClick={() => generateRandomNumber()}  
+  />
+</div>
 
           <ButtonInput
             type="submit"
@@ -269,22 +295,11 @@ export const AddProduct = () => {
             }
             title="Add a new product"
             disabled={
-              !productName || !productSelling || !selectedValue || !(barcode || randomNumber) || isLoading
+              !productName.trim() || !productSelling.trim() || !selectedValue.trim() || !(barcode.trim() || randomNumber.trim()) || isLoading
             }
             isLoading={isLoading}
           />
 
-          <button
-            className="delete-product-button"
-            onClick={() => navigate("/landing")}
-          >
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/302717b4ee4ab7d3462fc8605ada0ceaae8d5d7fbbd06287efa863058454024d?apiKey=d03ff6b018f84c75b88104249d2053b6&"
-              alt=""
-              className="delete-icon"
-            />
-            <span>Delete product</span>
-          </button>
         </main>
       </form>
     </div>
