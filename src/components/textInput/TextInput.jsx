@@ -43,6 +43,7 @@ const TextInput = (props) => {
                         value={value}
                         onChange={onChange}
                         min={min}
+                        accept={accept}
                     />
                     <button
                         type="button"
