@@ -25,31 +25,89 @@ const PolicyPage = () => {
 
             <div className='policy-text-container'>
 
-                <section className="policy-section">
-                    <h2>Terms and Conditions</h2>
-                    <p>
-                        This app is for business purposes. Clients can log into the app and add a list of our items and categories.
-                        They can select the products they need and add them to their cart. They can also modify the cart,
-                        including changing the total price. Additionally, a customer can download the app and use it to manage
-                        their orders, which can be sent via email or WhatsApp.
-                    </p>
-                    <p>
-                        By using this app, you agree to adhere to our terms and conditions. Any misuse of the app, including
-                        but not limited to, fraudulent activities, unauthorized modifications, and data breaches, may result in
-                        the termination of your account and potential legal actions.
-                    </p>
-                </section>
+
 
                 <section className="policy-section">
                     <h2>Privacy Policy</h2>
                     <p>
-                        We are committed to protecting your privacy. Your personal information, including your name, contact details,
-                        and order history, will be used solely for the purpose of managing your orders and improving our services.
-                        We do not share your personal information with third parties without your consent, except as required by law.
+                        Effective Date: 02/08/2024 <br />
+                        Last Updated: 07/11/2024 
                     </p>
                     <p>
-                        Our app uses secure protocols to ensure the safety of your data. However, we recommend that you take appropriate
-                        measures to safeguard your personal information while using our app.
+                        Invoicify is committed to protecting your privacy.
+                        This Privacy Policy explains how we collect, use, and disclose your information when you use our app.
+                    </p>
+                    <p>
+                        1. Information We Collect <br />
+                        We may collect the following information: <br />
+                        Personal Information: Name, contact details, and order history for managing your orders. <br />
+                        Usage Data: Information about your interactions with the app, such as cart activities and order submissions.
+                    </p>
+                    <p>
+                        2. How We Use Your Information <br />
+                        We use your information to: <br />
+                        Manage and process your orders. <br />
+                        Improve app functionality and user experience. <br />
+                        Communicate order-related updates via email or WhatsApp.
+                    </p>
+
+                    <p>
+                        3. Sharing Your Information <br />
+                        We do not share your personal information with third parties without your consent, except: <br />
+                        Legal Requirements: To comply with legal obligations. <br />
+                        Service Providers: To facilitate app features like email or WhatsApp integrations.
+                    </p>
+                    <p>
+                        4. Security <br />
+                        We use secure protocols to protect your data. However, users are encouraged to take additional measures to ensure the safety of their personal information while using the app.
+                    </p>
+                    <p>
+                        5. Order Management <br />
+                        Customers can manage their orders through the app. Orders can be added, modified, and finalized before being sent via email or WhatsApp. Once submitted, orders cannot be modified within the app. For changes, please contact our support team.
+                    </p>
+                    <p>
+                        6. Changes to This Policy <br />
+                        We may update this Privacy Policy periodically. Any changes will be posted on this page.
+                    </p>
+                    <p>
+                        7. Contact Us <br />
+                        If you have any questions about this Privacy Policy, please contact us at:
+                        Email: contact@priyaminnovations.com
+
+                    </p>
+                </section>
+
+                <section className="policy-section">
+                    <h2>Terms and Conditions</h2>
+                    <p>By using Invoicify, you agree to the following terms and conditions:</p>
+
+                    <p>
+                        1. Usage of the App <br />
+                        The app is designed for business purposes, allowing clients to manage items, categories, and orders efficiently.
+                        Customers can add products to their cart, modify the cart (including total price changes), and finalize orders.
+                    </p>
+                    <p>
+                        2. User Responsibilities <br />
+                        Ensure the accuracy of order details before submission.
+                        Misuse of the app, including fraudulent activities or unauthorized modifications, may result in account termination and legal action.
+                    </p>
+                    <p>
+                        3. Order Policy <br />
+                        Once an order is submitted, it cannot be canceled or modified through the app. For changes, contact customer support. <br />
+                        Orders can be sent via email or WhatsApp as per customer preferences.
+                    </p>
+                    <p>
+                        4. Termination <br />
+                        We reserve the right to terminate accounts involved in activities that violate these terms.
+                    </p>
+                    <p>
+                        5. Changes to Terms <br />
+                        We may update these terms periodically. Continued use of the app signifies your acceptance of the updated terms.
+                    </p>
+                    <p>
+                        6. Contact Us <br />
+                        For questions or concerns regarding these terms, contact us at:
+                        Email: contact@priyaminnovations.com
                     </p>
                 </section>
 
