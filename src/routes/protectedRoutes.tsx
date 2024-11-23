@@ -35,7 +35,7 @@ const protectedRouteMap = Object.freeze({
   "/landing": <Landing />,
   "/addCategory": <AddCategory />,
   "/category": <Category />,
-  "/policy":<PolicyPage/>,
+  "/privacy-policy":<PolicyPage/>,
   "/placeorder": <PlaceOrder />,
   "/customers": <Customers />,
 });
