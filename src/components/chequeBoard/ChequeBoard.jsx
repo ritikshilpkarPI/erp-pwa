@@ -4,6 +4,8 @@ import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
 import { useNavigate } from "react-router-dom";
 import { AppStateContext } from "../../appState/appStateContext";
+import { enqueueSnackbar } from "notistack";
+
 
 const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAmount }) => {
   const { globalState, dispatch } = useContext(AppStateContext);
@@ -13,10 +15,11 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
   const [chequeAmount, setChequeAmount] = useState("");
   const [chequeDate, setChequeDate] = useState("");
   const navigate = useNavigate();
-
+  const selectedCustomer = globalState?.selectedCustomer;
+  
   const submitHandler = (event) => {
     event.preventDefault();
-
+   
     const newCheque = {
       bank_name: chequeName,
       check_number: chequeNumber,
@@ -33,7 +36,7 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
 
     setOpenForm(false);
   };
-
+ 
   useEffect(() => {
     let totalInputCost = 0;
     globalState?.chequeList.forEach((cheque) => {
@@ -44,6 +47,10 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
   }, [globalState?.chequeList]);
 
   const completePaymentHandler = async () => {
+    if (!selectedCustomer || Object.keys(selectedCustomer).length === 0) {
+      enqueueSnackbar("Please select a customer before completing the payment.", { variant: "error" });  
+      return; 
+    }
     const response = await onClick();
     if (response) {
       navigate("/transactionSuccessfull", {
@@ -54,7 +61,6 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
       });
     }
   };
-
   const addChequeHandler = () => {
     setOpenForm(!openForm);
   };
