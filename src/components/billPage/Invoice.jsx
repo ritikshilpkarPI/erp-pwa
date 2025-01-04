@@ -3,7 +3,7 @@ import "./Invoice.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIconImage from "../../image/BackIcon.svg";
-import onNativeShare from "../../utils/onNativeShare";
+// import onNativeShare from "../../utils/onNativeShare";
 
 const Invoice = () => {
   const location = useLocation();
@@ -33,19 +33,19 @@ const Invoice = () => {
       });
     } catch (err) {}
 
-    if (
-      !onNativeShare({
-        title: invoiceName,
-        files: [invoiceImage],
-      })
-    ) {
+    // if (
+    //   !onNativeShare({
+    //     title: invoiceName,
+    //     files: [invoiceImage],
+    //   })
+    // ) {
       navigator.clipboard
         .writeText(invoiceUrl)
         .then(() => {
-          if (navigator.share) {
+          if (navigator.share && navigator.canShare && navigator.canShare({ files: [invoiceImage] })) {
             navigator
               .share({
-                title: "Share Invoice",
+                title: invoiceName,
                 text: "Check out this invoice!",
                 url: invoiceUrl,
               })
@@ -74,7 +74,7 @@ const Invoice = () => {
         .catch((err) => {
           console.error("Failed to copy the link: ", err);
         });
-    }
+    // }
   };
 
   return (
