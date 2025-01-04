@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CashBoard.css";
 import WalletIcon from "../../icons/WalletIcon";
 import TextInput from "../textInput/TextInput";
 import ButtonInput from "../buttonInput/ButtonInput";
+import { AppStateContext } from "../../appState/appStateContext";
+import { enqueueSnackbar } from "notistack";
 
 const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost, creditLimit }) => {
   const navigate = useNavigate();
+  const { globalState } = useContext(AppStateContext);
+  const selectedCustomer = globalState?.selectedCustomer;
+  const chequeList=globalState?.chequeList
+
   const [hasEdited, setHasEdited] = useState(false);
   const handleExtractAmount = () => {
     setInputCost(totalPrice);
@@ -14,6 +20,14 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (
+      (chequeList && chequeList.length !== 0) && 
+      (!selectedCustomer || Object.keys(selectedCustomer).length === 0) 
+    ) {
+      enqueueSnackbar("Please select a customer before completing the payment.", { variant: "error" });
+      return; 
+    }
+    
     const response = await onClick();
 
     if (response) {
