@@ -89,7 +89,12 @@ const PaymentPage = () => {
     const saleData = {
       customer_id: globalState?.selectedCustomer?._id,
       items: globalState?.cartItems?.map((item) => {
-        return { _id: item._id, _count: item.count };
+        return { 
+          _id: item._id, 
+          _count: item.count, 
+          quantityType: item?.pricePer, 
+          price: item?.price 
+        };
       }),
       employee_id: globalState?.loggedInUser?.user?._id,
       date_of_sale: new Date().toISOString(),
