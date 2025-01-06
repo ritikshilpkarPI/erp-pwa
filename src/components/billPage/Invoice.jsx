@@ -77,6 +77,12 @@ const Invoice = () => {
     // }
   };
 
+  const quantityTypeConstant = {
+    "price_per_unit": "Unit",
+    "price_per_dozen": "Dozen",
+    "price_per_carton": "Carton",
+  };
+
   return (
     <div className="invoice">
       <NavigationHeader
@@ -124,6 +130,7 @@ const Invoice = () => {
                 <th>NAME</th>
                 <th>RATE (Rs.)</th>
                 <th>QTY</th>
+                <th>QTY TYPE</th>
                 <th>VALUE (Rs.)</th>
               </tr>
             </thead>
@@ -134,6 +141,7 @@ const Invoice = () => {
                   <td>{item._name}</td>
                   <td>{item._prize}</td>
                   <td>{item._count}</td>
+                  <td>{quantityTypeConstant[item.quantityType]}</td>
                   <td>{item._prize * item._count}</td>
                 </tr>
               ))}
@@ -143,7 +151,7 @@ const Invoice = () => {
           <div className="invoice-body-bottom">
             <div className="invoice-body-bottom-left">
               <p className="invoice-body-bottom-left-p">
-                <strong>Total Items: {data?.items?.length}</strong>
+                <strong>Total Items: {data?.totalQuantity}</strong>
               </p>
               <p className="invoice-body-bottom-left-p">
                 <strong>Sub Total: {data?.transaction?.totalAmount}</strong>
