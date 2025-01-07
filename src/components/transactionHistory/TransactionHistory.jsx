@@ -216,12 +216,14 @@ export function TransactionHistory() {
     const formattedTransaction = formatTransactionHistory(filteredTransactionHistory);
     const transFilter = filterData(formattedTransaction || [], activeTab);
     setFormattedTransactionHistory(transFilter);
+    // eslint-disable-next-line
   }, [filteredTransactionHistory]);
 
   useEffect(() => {
     const formattedTransaction = formatTransactionHistory(filteredTransactionHistory);
     const transFilter = filterData(formattedTransaction || [], activeTab);
     setFormattedTransactionHistory(transFilter);
+    // eslint-disable-next-line
   }, [activeTab]);
 
   return (

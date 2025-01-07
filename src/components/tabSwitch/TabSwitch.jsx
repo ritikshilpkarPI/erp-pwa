@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './TabSwitch.css';
 
 export const TabSwitch = ({activeTab, setActiveTab}) => {
