@@ -100,7 +100,7 @@ const PaymentPage = () => {
       date_of_sale: new Date().toISOString(),
       payment_id: activeTab === "tab1" ? cashPaymentId : chequePaymentId,
       totalAmount: totalAmount.toFixed(2),
-
+      cashAmount: inputCostCash,
       cheques: globalState?.chequeList?.map((cheque) => ({
         bank_name: cheque?.bank_name,
         check_number: cheque?.check_number,
