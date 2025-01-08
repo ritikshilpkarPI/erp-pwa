@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "./PaymentPage.css";
 import NavigationHeader from "../navigationHeader/NavigationHeader";
 import backIconImage from "../../image/BackIcon.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CashBoard from "../cashBoard/CashBoard";
 import ChequeBoard from "../chequeBoard/ChequeBoard";
 import { AppStateContext } from "../../appState/appStateContext";
@@ -20,29 +20,51 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const creditLimit = globalState?.selectedCustomer?.credit_limit;
 
+  const [isDuePayment, setIsDuePayment] = useState(false);
+  const [remainingPaidAmount, setRemainingPaidAmount] = useState(0);  
+
+  const location = useLocation();
+  const { transaction, customer } = location.state || {}; 
+
+  useEffect(()=>{
+    if (transaction) {         
+      setIsDuePayment(true)
+    }
+  })
 
   useEffect(() => {
-    let sum = 0;
-    globalState?.cartItems.forEach(item => {
-      const price = item.price;
-      const count = item.count;
-      sum += price * count;
-    });
-    setTotalAmount(sum);
-    setRemainingAmount(sum);
-  }, [globalState?.cartItems]);
-
-
+    if (!isDuePayment) {
+      let sum = 0;
+      globalState?.cartItems.forEach(item => {
+        const price = item.price;
+        const count = item.count;
+        sum += price * count;
+      });
+      setTotalAmount(sum);
+      setRemainingAmount(sum);
+    }else{
+      setTotalAmount(transaction.totalAmount);
+      setRemainingPaidAmount(transaction.remainingAmount); 
+    }
+  }, [globalState?.cartItems, isDuePayment]);
 
   const remainingAmountHandler = () => {
     const amountPaid = inputCostCash + inputCostCheque;
     const amountRemaining = totalAmount - amountPaid;
     setRemainingAmount(amountRemaining);
   };
+  const remainingPaidAmountHandler = () => {
+    const amountPaid = inputCostCash + inputCostCheque;
+    const amountRemaining = remainingPaidAmount - amountPaid;
+    setRemainingAmount(amountRemaining);
+  };
 
   useEffect(() => {
-    remainingAmountHandler();
-
+    if (!isDuePayment) {
+      remainingAmountHandler();    
+    } else{
+      remainingPaidAmountHandler();
+    }
     // eslint-disable-next-line
   }, [inputCostCash, inputCostCheque, totalAmount]);
 
@@ -54,13 +76,13 @@ const PaymentPage = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-  const handleCreditLimit = async () => {
+  const handleCreditLimit = async (_id = globalState?.selectedCustomer?._id) => {
     try {
       if (remainingAmount <= creditLimit) {
         const newCreditLimit = creditLimit - remainingAmount;
         const token = localStorage.getItem('token'); 
         const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL}/customers/${globalState?.selectedCustomer?._id}/credit-limit`,
+          `${process.env.REACT_APP_BASE_URL}/customers/${_id}/credit-limit`,
           {
             method: "PATCH",
             headers: {
@@ -147,10 +169,60 @@ const PaymentPage = () => {
       setLoading(false);
     }
   };
+  const updateSale = async () => {
+    const cashPaymentId = "60d5f9e9a60b2f1b4c3c1c84";
+    const chequePaymentId = "60d5f9e9a60b2f1b4c3c1c85";
+    const newPayment_id = activeTab === "tab1" ? cashPaymentId : chequePaymentId;
 
+    const cheques = globalState?.chequeList?.map((cheque) => ({
+      bank_name: cheque?.bank_name,
+      check_number: cheque?.check_number,
+      amount: cheque?.amount,
+      date: cheque?.date,
+    }));
 
+    const sale = {
+      cashAmount: inputCostCash,
+      cheques: cheques,
+      totalAmount: transaction?.totalAmount,
+      remainingAmount: transaction?.remainingAmount,
+      payment_id: newPayment_id
+    }
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
 
-
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/sales/${transaction?._id}`,
+        {
+          method: "put",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(sale),
+          credentials: "include"
+        }
+      );
+      if (response.ok) {
+        handleCreditLimit(customer?._id)
+      } else {
+        setLoading(false);
+        enqueueSnackbar("Something went wrong", { variant: "error" });
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      if (result) {
+        return true;
+      }
+    } catch (error) {
+      console.error("Error creating sale:", error);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   return (
     <div className="payment-page">
       <div className="payment-page-header-container" >
@@ -164,6 +236,13 @@ const PaymentPage = () => {
         <div className="payment-page-total-invoice">
           <div className="payment-page-total-left">
             <h4 className={remainingAmount <= 0 ? "payment-page-total-heading" : "payment-page-total-heading-red"}>{remainingAmount <= 0 ? "Return" : "Due"}: <span>{Math.abs(remainingAmount)}</span></h4>
+          </div>
+          <div className="payment-page-total-center">
+            {isDuePayment &&
+              <h4 className="payment-page-total-heading">
+                Paid: {totalAmount-remainingPaidAmount}
+              </h4>
+            }
           </div>
           <div className="payment-page-total-right">
             <h4 className="payment-page-price-heading">LKR : {totalAmount}</h4>
@@ -192,24 +271,26 @@ const PaymentPage = () => {
       <div className="payment-page-body">
         {activeTab === "tab1" && (
           <CashBoard
-            totalPrice={totalAmount}
-            onClick={createSale}
+            totalPrice={!isDuePayment ? totalAmount : remainingPaidAmount}
+            onClick={!isDuePayment ? createSale : updateSale}
             isLoading={loading}
             remainingAmount={remainingAmount}
             inputCost={inputCostCash}
             setInputCost={setInputCostCash}
             creditLimit={creditLimit}
+            customer = {customer}
           />
         )}
         {activeTab === "tab2" &&
           (isCheckAvailable ? (
             <ChequeBoard
-              totalPrice={totalAmount}
-              onClick={createSale}
+              totalPrice={!isDuePayment ? totalAmount : remainingPaidAmount}
+              onClick={!isDuePayment ? createSale : updateSale}
               isLoading={loading}
               inputCost={inputCostCheque}
               setInputCost={setInputCostCheque}
               remainingAmount={remainingAmount}
+              customer = {customer}
             />
           ) : (
             <div className="service-message">

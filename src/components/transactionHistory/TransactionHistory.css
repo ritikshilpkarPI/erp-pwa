@@ -212,6 +212,15 @@
   padding: 9px 35px;
   font: 400 12px Rubik, sans-serif;
 }
+.status-badge-button{
+  color: #fff;
+  border-radius: 5px;
+  height: 35px;
+  padding: 0 7px;
+  font: 400 12px Rubik, sans-serif;
+  background: linear-gradient(225deg, #1a72dd -15.95%, #0d62ca 88.4%);
+  border: none;
+}
 
 .visually-hidden {
   position: absolute;

@@ -7,7 +7,7 @@ import ButtonInput from "../buttonInput/ButtonInput";
 import { AppStateContext } from "../../appState/appStateContext";
 import { enqueueSnackbar } from "notistack";
 
-const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost, creditLimit }) => {
+const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost, setInputCost, creditLimit, customer = {} }) => {
   const navigate = useNavigate();
   const { globalState } = useContext(AppStateContext);
   const selectedCustomer = globalState?.selectedCustomer;
@@ -22,7 +22,8 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
     e.preventDefault();
     if (
       (chequeList && chequeList.length !== 0) && 
-      (!selectedCustomer || Object.keys(selectedCustomer).length === 0) 
+      (!selectedCustomer || Object.keys(selectedCustomer).length === 0) &&
+      (!customer || Object.keys(customer).length === 0)
     ) {
       enqueueSnackbar("Please select a customer before completing the payment.", { variant: "error" });
       return; 

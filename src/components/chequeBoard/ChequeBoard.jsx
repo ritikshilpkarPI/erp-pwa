@@ -7,7 +7,7 @@ import { AppStateContext } from "../../appState/appStateContext";
 import { enqueueSnackbar } from "notistack";
 
 
-const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAmount }) => {
+const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAmount, customer = {} }) => {
   const { globalState, dispatch } = useContext(AppStateContext);
   const [openForm, setOpenForm] = useState(false);
   const [chequeName, setChequeName] = useState("");
@@ -47,7 +47,7 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
   }, [globalState?.chequeList]);
 
   const completePaymentHandler = async () => {
-    if (!selectedCustomer || Object.keys(selectedCustomer).length === 0) {
+    if ((!selectedCustomer || Object.keys(selectedCustomer).length === 0) && (!customer || Object.keys(customer).length === 0)) {
       enqueueSnackbar("Please select a customer before completing the payment.", { variant: "error" });  
       return; 
     }

@@ -26,13 +26,8 @@
   color: #1a72dd;
 }
 
-.payment-page-total-left {
-  height: 100%;
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.payment-page-total-left,
+.payment-page-total-center,
 .payment-page-total-right {
   height: 100%;
   width: 50%;

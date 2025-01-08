@@ -14,6 +14,7 @@ const TransactionCard = ({
   customerName,
   onClick,
   remainingAmount = 0,
+  onDuePayment,
 }) => (
   <article className="transaction-card" onClick={() => onClick()}>
     <div className="transaction-details">
@@ -29,7 +30,19 @@ const TransactionCard = ({
         Trans Id - {transactionId.slice(-6)}
       </div>
     </div>
-    <div className="status-badge">{ "PAID" }</div>
+    {remainingAmount !== 0 
+      ? <button
+        onClick={(event) => {
+          event.stopPropagation()
+          onDuePayment()
+        }
+        }
+        className="status-badge-button"
+      >
+        Pay Due Payment
+      </button>
+      :<div className="status-badge">{ "PAID" }</div>
+    }
   </article>
 );
 
@@ -43,6 +56,10 @@ const TransactionGroup = ({ transactionGroup, onGetSaleById }) => {
   const handleOnClick = (transactionItem)=>{    
     onGetSaleById(transactionItem.transactionId);
   }
+  const onDuePayment = (transactionItem)=>{    
+    onGetSaleById(transactionItem.transactionId, true);
+  }
+
   return (
     <React.Fragment>
       <DateSummary
@@ -64,6 +81,7 @@ const TransactionGroup = ({ transactionGroup, onGetSaleById }) => {
             onClick={()=> handleOnClick(transactionItem)}
             customerName={transactionItem.customerName}
             remainingAmount={transactionItem?.remainingAmount || 0}
+            onDuePayment={()=>onDuePayment(transactionItem)}
           />
         );
       })}
@@ -173,7 +191,7 @@ export function TransactionHistory() {
       .filter((transaction) => transaction.items.length > 0);
   };
 
-  const GetSaleById = async (id) => {
+  const GetSaleById = async (id, isDue= false) => {
     try {
       const token = localStorage.getItem("token");
       setLoadingDetail(true);
@@ -191,8 +209,10 @@ export function TransactionHistory() {
       );
       const data = await response.json();
       setLoadingDetail(false);
-      if (response.ok) {
-        navigate("/invoice", { state: data });
+      if (response.ok) {        
+        isDue 
+        ? navigate("/payment", { state: data })
+        : navigate("/invoice", { state: data })
       }
     } catch (error) {
       console.log(error);
