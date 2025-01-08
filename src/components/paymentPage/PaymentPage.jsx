@@ -9,9 +9,7 @@ import { AppStateContext } from "../../appState/appStateContext";
 import { enqueueSnackbar } from "notistack";
 
 const PaymentPage = () => {
-  const location = useLocation();
-  const { transaction, customer } = location.state || {}; 
-
+  
   const [activeTab, setActiveTab] = useState("tab1");
   const { globalState, dispatch } = useContext(AppStateContext);
   const [isCheckAvailable] = useState(true);
@@ -22,10 +20,12 @@ const PaymentPage = () => {
   const [inputCostCheque, setInputCostCheque] = useState(0);
   const navigate = useNavigate();
   const creditLimit = globalState?.selectedCustomer?.credit_limit;
-
-  const [isDuePayment, setIsDuePayment] = useState(Boolean(transaction));
   const [remainingPaidAmount, setRemainingPaidAmount] = useState(0);  
-
+  
+  const location = useLocation();
+  const { transaction, customer } = location.state || {}; 
+  
+  const [isDuePayment, setIsDuePayment] = useState(Boolean(transaction));
 
   // useEffect(()=>{
   //   if (transaction) {         
@@ -47,7 +47,7 @@ const PaymentPage = () => {
       setTotalAmount(transaction.totalAmount);
       setRemainingPaidAmount(transaction.remainingAmount); 
     }
-  }, [globalState?.cartItems, isDuePayment]);
+  }, [globalState?.cartItems, transaction]);
 
   const remainingAmountHandler = () => {
     const amountPaid = inputCostCash + inputCostCheque;
@@ -67,7 +67,7 @@ const PaymentPage = () => {
       remainingPaidAmountHandler();
     }
     // eslint-disable-next-line
-  }, [inputCostCash, inputCostCheque, totalAmount]);
+  }, [inputCostCash, inputCostCheque, totalAmount, totalAmount, remainingPaidAmount]);
 
 
   const backFunc = () => {
