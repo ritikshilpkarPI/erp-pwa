@@ -26,11 +26,11 @@ const PaymentPage = () => {
   const location = useLocation();
   const { transaction, customer } = location.state || {}; 
 
-  useEffect(()=>{
+  useEffect(() => {
     if (transaction) {         
-      setIsDuePayment(true)
+      setIsDuePayment(true);
     }
-  })
+  }, [transaction]);
 
   useEffect(() => {
     if (!isDuePayment) {
