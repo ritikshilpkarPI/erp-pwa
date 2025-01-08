@@ -119,6 +119,9 @@ const Invoice = () => {
               <p className="invoice-header-right-p">
                 <strong>Total Amount:</strong> {data?.transaction?.totalAmount}
               </p>
+              <p className="invoice-header-right-p">
+                <strong>Remaining Amount:</strong> {data?.transaction?.remainingAmount}
+              </p>
             </div>
           </div>
         </div>
