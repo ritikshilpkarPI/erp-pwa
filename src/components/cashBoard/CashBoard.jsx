@@ -77,7 +77,8 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
           type="submit"
           className="login-submit-button-input"
           title="Complete Payment"
-          disabled={creditLimit < remainingAmount}
+          disabled={creditLimit < remainingAmount || ((!selectedCustomer || Object.keys(selectedCustomer).length === 0) && 
+            inputCost !== totalPrice)}
           isLoading={isLoading}
         />
       </form>
