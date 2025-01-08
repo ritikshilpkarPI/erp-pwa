@@ -25,13 +25,7 @@ const PaymentPage = () => {
   const location = useLocation();
   const { transaction, customer } = location.state || {}; 
   
-  const [isDuePayment, setIsDuePayment] = useState(Boolean(transaction));
-
-  // useEffect(()=>{
-  //   if (transaction) {         
-  //     setIsDuePayment(true);
-  //   }
-  // }, [transaction]);
+  const [isDuePayment] = useState(Boolean(transaction));
 
   useEffect(() => {
     if (!isDuePayment) {
@@ -47,7 +41,7 @@ const PaymentPage = () => {
       setTotalAmount(transaction.totalAmount);
       setRemainingPaidAmount(transaction.remainingAmount); 
     }
-  }, [globalState?.cartItems, transaction]);
+  }, [globalState?.cartItems, transaction, isDuePayment]);
 
   const remainingAmountHandler = () => {
     const amountPaid = inputCostCash + inputCostCheque;
