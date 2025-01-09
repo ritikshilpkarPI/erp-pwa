@@ -11,7 +11,6 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
   const navigate = useNavigate();
   const { globalState } = useContext(AppStateContext);
   const selectedCustomer = globalState?.selectedCustomer;
-  const chequeList=globalState?.chequeList
 
   const [hasEdited, setHasEdited] = useState(false);
   const handleExtractAmount = () => {
@@ -21,9 +20,9 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
   const submitHandler = async (e) => {
     e.preventDefault();
     if (
-      (chequeList && chequeList.length !== 0) && 
       (!selectedCustomer || Object.keys(selectedCustomer).length === 0) &&
-      (!customer || Object.keys(customer).length === 0)
+      (!customer || Object.keys(customer).length === 0) &&
+      (inputCost !== totalPrice) 
     ) {
       enqueueSnackbar("Please select a customer before completing the payment.", { variant: "error" });
       return; 
@@ -78,8 +77,12 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
           type="submit"
           className="login-submit-button-input"
           title="Complete Payment"
-          disabled={creditLimit < remainingAmount || ((!selectedCustomer || Object.keys(selectedCustomer).length === 0) && 
-            inputCost !== totalPrice)}
+          disabled={
+            creditLimit < remainingAmount ||
+            ((!selectedCustomer || Object.keys(selectedCustomer).length === 0) &&
+              (!customer || Object.keys(customer).length === 0) &&
+              (inputCost !== totalPrice))
+          }
           isLoading={isLoading}
         />
       </form>
