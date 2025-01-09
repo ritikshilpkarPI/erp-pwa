@@ -11,7 +11,6 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
   const navigate = useNavigate();
   const { globalState } = useContext(AppStateContext);
   const selectedCustomer = globalState?.selectedCustomer;
-  const chequeList=globalState?.chequeList
 
   const [hasEdited, setHasEdited] = useState(false);
   const handleExtractAmount = () => {

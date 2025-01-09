@@ -69,11 +69,11 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
     setOpenForm(!openForm);
   };
 
-  const isChequeListEmpty = globalState?.chequeList?.length === 0 || 
-  (!selectedCustomer || Object.keys(selectedCustomer).length === 0) && 
+  const isChequeListEmpty =( globalState?.chequeList?.length === 0 )|| 
+ ( (!selectedCustomer || Object.keys(selectedCustomer).length === 0) && 
   (!customer || Object.keys(customer).length === 0) &&
-  (remainingAmount > 0) ;
-  
+  (remainingAmount > 0)) ;
+
   const buttonClassName = isChequeListEmpty
     ? "complete-payment-button-input-disabled"
     : "complete-payment-button-input-enabled";
