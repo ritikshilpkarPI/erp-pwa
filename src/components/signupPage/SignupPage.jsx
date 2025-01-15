@@ -281,6 +281,17 @@ const SignupPage = () => {
               </h4>
             )}
           </div>
+          {isOtpSent && (
+            <TextInput
+              className="signup-user-otp-input"
+              type="number"
+              labelTitle="OTP"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              isOtp={true}
+            />
+          )}
           <TextInput
             className="signup-user-password-input"
             type="password"
@@ -294,17 +305,6 @@ const SignupPage = () => {
             <div className="validation-message">{validationMessage}</div>
           )}
 
-          {isOtpSent && (
-            <TextInput
-              className="signup-user-otp-input"
-              type="number"
-              labelTitle="OTP"
-              placeholder="Enter OTP"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              isOtp={true}
-            />
-          )}
           <ButtonInput
             type="submit"
             className="signup-submit-button-input"
