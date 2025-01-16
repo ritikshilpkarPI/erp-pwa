@@ -12,7 +12,7 @@ import AddCustomers from "../pages/AddCustomers";
 import PaymentPage from "../components/paymentPage/PaymentPage";
 import { AddProductForm } from "../pages/AddProduct";
 import { TransactionSuccessful } from "../pages/TransactionSuccessful";
-import Invoice from "../components/billPage/Invoice";
+import InvoicePrivate from "../pages/InvoicePrivate";
 import Landing from "../pages/Landing";
 import AddCategory from "../pages/AddCategory";
 import Category from "../pages/Category";
@@ -31,7 +31,7 @@ const protectedRouteMap = Object.freeze({
   "/payment": <PaymentPage />,
   "/addproduct": <AddProductForm />,
   "/transactionSuccessfull": <TransactionSuccessful />,
-  "/invoice": <Invoice />,
+  "/invoice": <InvoicePrivate />,
   "/landing": <Landing />,
   "/addCategory": <AddCategory />,
   "/category": <Category />,
