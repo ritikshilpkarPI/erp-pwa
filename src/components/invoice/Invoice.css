@@ -1,0 +1,114 @@
+.invoice {
+    .navigation-invoice-login {
+        font-family: Rubik;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 37.92px;
+        color: #1a72dd;
+    }
+
+    .invoice-container {
+        padding: 20px;
+        max-width: 800px;
+
+        .invoice-header {
+            width: 100%;
+            margin-bottom: 10px;
+
+            .invoice-header-text {
+                margin-bottom: 10px;
+            }
+
+            .invoice-header-body {
+                width: 100%;
+                text-align: left;
+
+                .invoice-header-body-p {
+                    font-size: 11px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+
+        .invoice-body {
+            margin: 5px 0px;
+
+            .invoice-body-table {
+                width: 100%;
+
+                .invoice-body-table-thead {
+                    .invoice-body-table-thead-tr {
+                        .invoice-body-table-thead-tr-th {
+                            text-align: left;
+                            font-size: 11px;
+                            padding-bottom: 5px;
+                        }
+                    }
+                }
+
+                .invoice-body-table-tbody {
+                    .invoice-body-table-tbody-tr {
+                        .invoice-body-table-tbody-tr-td {
+                            text-align: left;
+                            font-size: 11px;
+                            padding-bottom: 5px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .invoice-footer {
+            margin-top: 5px;
+
+            .invoice-body-footer-p {
+                font-size: 11px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+
+    .print-btn-outer {
+        z-index: 1;
+        width: 100%;
+        position: fixed;
+        bottom: 20px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-top: 20px;
+
+        .print-button {
+            background-color: #1a72dd;
+            color: white;
+            border-radius: 13px;
+            border: 0.2px solid gray;
+            font-size: 16px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    }
+
+
+}
+
+@media print {
+    .navigation-header-container {
+        display: none;
+    }
+
+    .invoice {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .print-btn-outer {
+            display: none;
+        }
+    }
+}
