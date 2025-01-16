@@ -13,7 +13,7 @@ const TransactionSuccessfulScreen = () => {
     globalState.selectedCustomer?.email || ""
   );
   const [isEmailLoading, setIsEmailLoading] = useState(false);
-  const [isDownloadLoading, setIsDownloadLoading] = useState(false);
+  // const [isDownloadLoading, setIsDownloadLoading] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,52 +52,52 @@ const TransactionSuccessfulScreen = () => {
     }
   };
 
-  const handleSendBtn = async () => {
-    setIsDownloadLoading(true);
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/download-invoice`,
-        {
-          method: "POST",
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(globalState?.currentTransaction),
-          credentials: "include"
-        }
-      );
+  // const handleSendBtn = async () => {
+  //   setIsDownloadLoading(true);
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     const response = await fetch(
+  //       `${process.env.REACT_APP_BASE_URL}/download-invoice`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(globalState?.currentTransaction),
+  //         credentials: "include"
+  //       }
+  //     );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
 
-      const contentType = response.headers.get("Content-Type");
-      if (contentType !== "application/pdf") {
-        throw new Error(`Expected PDF response, got ${contentType}`);
-      }
+  //     const contentType = response.headers.get("Content-Type");
+  //     if (contentType !== "application/pdf") {
+  //       throw new Error(`Expected PDF response, got ${contentType}`);
+  //     }
 
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
+  //     const blob = await response.blob();
+  //     const url = URL.createObjectURL(blob);
 
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "invoice.pdf");
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", "invoice.pdf");
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     link.remove();
 
-      URL.revokeObjectURL(url);
+  //     URL.revokeObjectURL(url);
 
-      enqueueSnackbar("PDF downloaded successfully!", { variant: "success" });
-    } catch (error) {
-      console.error("Error fetching PDF:", error);
-      enqueueSnackbar("Error downloading PDF.", { variant: "error" });
-    } finally {
-      setIsDownloadLoading(false);
-    }
-  };
+  //     enqueueSnackbar("PDF downloaded successfully!", { variant: "success" });
+  //   } catch (error) {
+  //     console.error("Error fetching PDF:", error);
+  //     enqueueSnackbar("Error downloading PDF.", { variant: "error" });
+  //   } finally {
+  //     setIsDownloadLoading(false);
+  //   }
+  // };
 
   return (
     <div className="TransactionSuccessfull" >
@@ -141,13 +141,6 @@ const TransactionSuccessfulScreen = () => {
             onClick={handleEmailSendBtn}
             title="SEND RECEIPT"
             isLoading={isEmailLoading}
-          />
-
-          <ButtonInput
-            className="TransactionSuccessfull-button-send-receipt"
-            onClick={handleSendBtn}
-            title="DOWNLOAD RECEIPT"
-            isLoading={isDownloadLoading}
           />
         </div>
       </div>

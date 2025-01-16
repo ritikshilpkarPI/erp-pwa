@@ -218,7 +218,7 @@ export const AddProduct = () => {
               onChange={handleSelectedValue}
               className="add-product-select"
             >
-              <option value="Choose a category">Choose a category</option>
+              <option value="N/A">Choose a category</option>
               {categories.map((option, index) => (
                 <option key={option._id || index} value={option.category_name.toLowerCase()}>
                   {option.category_name}
