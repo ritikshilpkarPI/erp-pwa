@@ -142,13 +142,6 @@ const TransactionSuccessfulScreen = () => {
             title="SEND RECEIPT"
             isLoading={isEmailLoading}
           />
-
-          <ButtonInput
-            className="TransactionSuccessfull-button-send-receipt"
-            onClick={handleSendBtn}
-            title="DOWNLOAD RECEIPT"
-            isLoading={isDownloadLoading}
-          />
         </div>
       </div>
 
