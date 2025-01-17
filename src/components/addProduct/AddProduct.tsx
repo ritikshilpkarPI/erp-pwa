@@ -33,11 +33,11 @@ export const AddProduct = () => {
   const [storeKeepingUnit, setStoreKeepingUnit] = useState<string>("");
   const [barcode, setBarcode] = useState<string>("");
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedValue, setSelectedValue] = useState<string>("Choose a category");
+  const [selectedValue, setSelectedValue] = useState<string>("N/A");
   const [randomNumber, setRandomNumber] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
-    categories: "Choose a category",
+    categories: "N/A",
     capitalPrice: "GNF 3410.99",
     sku: "P6516484",
     barcode: "5646546",
