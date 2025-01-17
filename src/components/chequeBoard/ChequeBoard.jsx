@@ -7,7 +7,7 @@ import { AppStateContext } from "../../appState/appStateContext";
 import { enqueueSnackbar } from "notistack";
 
 
-const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAmount, customer = {} }) => {
+const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAmount, isLoading, customer = {} }) => {
   const { globalState, dispatch } = useContext(AppStateContext);
   const [openForm, setOpenForm] = useState(false);
   const [chequeName, setChequeName] = useState("");
@@ -153,14 +153,14 @@ const ChequeBoard = ({ totalPrice, onClick, inputCost, setInputCost, remainingAm
           Add Cheque
         </button>
       )}
-
-      <button
-        className={buttonClassName}
-        disabled={isChequeListEmpty}
-        onClick={completePaymentHandler}
-      >
-        Complete Payment
-      </button>
+        <ButtonInput
+          type="submit"
+          className={buttonClassName}
+          title="Complete Payment"
+          onClick={completePaymentHandler}
+          disabled={isChequeListEmpty || isLoading}
+          isLoading={isLoading}
+        />
     </div>
   );
 };
