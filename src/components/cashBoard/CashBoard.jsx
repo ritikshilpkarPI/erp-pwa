@@ -81,7 +81,7 @@ const CashBoard = ({ totalPrice, onClick, isLoading, remainingAmount, inputCost,
             creditLimit < remainingAmount ||
             ((!selectedCustomer || Object.keys(selectedCustomer).length === 0) &&
               (!customer || Object.keys(customer).length === 0) &&
-              (inputCost !== totalPrice))
+              (inputCost !== totalPrice)) || isLoading
           }
           isLoading={isLoading}
         />
