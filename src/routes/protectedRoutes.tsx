@@ -16,7 +16,7 @@ import InvoicePrivate from "../pages/InvoicePrivate";
 import Landing from "../pages/Landing";
 import AddCategory from "../pages/AddCategory";
 import Category from "../pages/Category";
-import PolicyPage from "../components/policyPage/PolicyPage";
+// import PolicyPage from "../components/policyPage/PolicyPage";
 import PlaceOrder from "../pages/PlaceOrder";
 import Customers from "../pages/Customers";
 
@@ -35,7 +35,7 @@ const protectedRouteMap = Object.freeze({
   "/landing": <Landing />,
   "/addCategory": <AddCategory />,
   "/category": <Category />,
-  "/privacy-policy":<PolicyPage/>,
+  // "/privacy-policy":<PolicyPage/>,
   "/placeorder": <PlaceOrder />,
   "/customers": <Customers />,
 });
